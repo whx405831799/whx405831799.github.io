@@ -5,12 +5,12 @@
   
   <title>内网服务器暴露到外网（linux下的Apache2端口修改） | 再听五月天</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，其中还有企鹅的服务器。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人路由器，工作时有专门的IT服务部以及云计算部门，这些事情都不需要我们开发做；一个是A">
+  <meta name="description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，一起管理的服务器中还有给企鹅公司的服务器（bingo确实屌屌的，某部门的人绝对比大多数互联网技术更优秀）。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内网服务器暴露到外网（linux下的Apache2端口修改）">
 <meta property="og:url" content="http://yoursite.com/2015/05/12/内网服务器暴露到外网/index.html">
 <meta property="og:site_name" content="再听五月天">
-<meta property="og:description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，其中还有企鹅的服务器。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人路由器，工作时有专门的IT服务部以及云计算部门，这些事情都不需要我们开发做；一个是A">
+<meta property="og:description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，一起管理的服务器中还有给企鹅公司的服务器（bingo确实屌屌的，某部门的人绝对比大多数互联网技术更优秀）。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人">
 <meta property="og:image" content="images/yw01001.jpg">
 <meta property="og:image" content="images/yw01002.jpg">
 <meta property="og:image" content="images/yw01003.png">
@@ -18,7 +18,7 @@
 <meta property="og:image" content="images/yw01005.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内网服务器暴露到外网（linux下的Apache2端口修改）">
-<meta name="twitter:description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，其中还有企鹅的服务器。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人路由器，工作时有专门的IT服务部以及云计算部门，这些事情都不需要我们开发做；一个是A">
+<meta name="twitter:description" content="前话说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，一起管理的服务器中还有给企鹅公司的服务器（bingo确实屌屌的，某部门的人绝对比大多数互联网技术更优秀）。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人">
   
     <link rel="alternative" href="/atom.xml" title="再听五月天" type="application/atom+xml">
   
@@ -90,7 +90,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前话">前话</h2><p>说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，其中还有企鹅的服务器。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人路由器，工作时有专门的IT服务部以及云计算部门，这些事情都不需要我们开发做；一个是Apache2服务器下端口的更改，linux命令不熟，以前主要tomcat等，apache2真不熟。</p>
+        <h2 id="前话">前话</h2><p>说实话，做完了，其实很简单。做的时候还是遇到了一些问题的。解决完问题，这就是经验的积累了。我之前做运维的时候主要是做windows平台的，运维的项目也有很多个，一起管理的服务器中还有给企鹅公司的服务器（bingo确实屌屌的，某部门的人绝对比大多数互联网技术更优秀）。这次做linux的过程中，还是很不熟练。主要遇到的问题主要有两个：一个是企业路由器的设置（80端口的限制）：以前上学的时候都是个人路由器，工作时有专门的IT服务部以及云计算部门，这些事情都不需要我们开发做；一个是Apache2服务器下端口的更改，linux命令不熟，以前主要tomcat等，apache2真不熟。</p>
 <h2 id="路由器的设置">路由器的设置</h2><p>路由器的设置，其实大同小异，熟悉就好了。按下面的步骤操作。</p>
 <ul>
 <li><p>首先设置内网要暴露的ip及端口。<br><img src="images/yw01001.jpg" alt="路由器设置"> </p>
@@ -113,7 +113,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/05/12/内网服务器暴露到外网/" data-id="ci9lbksdf0009y4mcjfqwj6x5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/05/12/内网服务器暴露到外网/" data-id="ci9lc1ce10009asmc0tiie7cy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/路由器/">路由器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
