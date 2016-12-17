@@ -1,0 +1,862 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jacoco,测试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1两种方式1.1 eclipse直接安装插件测试
+install new soft 安装插件 eclemma java code coverage
+运行
+结果
+插件导出单元测试报告
+
+1.2 通过maven加入插件，打印单元测试报告pom.xml文件中加入对应的部分，plugin部分
+123456789101112131415161718192021222324252627282930313233">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://yoursite.com/2016/12/06/JAVA服务端-测试相关-jacoco测试/index.html">
+<meta property="og:site_name" content="ashine's blog">
+<meta property="og:description" content="1两种方式1.1 eclipse直接安装插件测试
+install new soft 安装插件 eclemma java code coverage
+运行
+结果
+插件导出单元测试报告
+
+1.2 通过maven加入插件，打印单元测试报告pom.xml文件中加入对应的部分，plugin部分
+123456789101112131415161718192021222324252627282930313233">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco1.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco2.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco3.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco4.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco5.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco6.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco7.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco8.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco9.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco10.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco11.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco12.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco13.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco14.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco15.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco16.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco17.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco18.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco19.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco20.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco21.png">
+<meta property="og:updated_time" content="2016-12-17T01:38:27.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hello World">
+<meta name="twitter:description" content="1两种方式1.1 eclipse直接安装插件测试
+install new soft 安装插件 eclemma java code coverage
+运行
+结果
+插件导出单元测试报告
+
+1.2 通过maven加入插件，打印单元测试报告pom.xml文件中加入对应的部分，plugin部分
+123456789101112131415161718192021222324252627282930313233">
+<meta name="twitter:image" content="http://ohoyqlwj0.bkt.clouddn.com/jacoco1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/06/JAVA服务端-测试相关-jacoco测试/"/>
+
+
+
+
+
+  <title> Hello World | ashine's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f7aba61662d6673c4cd5176f20fedcfa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ashine's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/06/JAVA服务端-测试相关-jacoco测试/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ashine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ashine's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hello World
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-06T12:06:06+08:00">
+                2016-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/06/JAVA服务端-测试相关-jacoco测试/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/06/JAVA服务端-测试相关-jacoco测试/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1两种方式"><a href="#1两种方式" class="headerlink" title="1两种方式"></a>1两种方式</h1><h2 id="1-1-eclipse直接安装插件测试"><a href="#1-1-eclipse直接安装插件测试" class="headerlink" title="1.1 eclipse直接安装插件测试"></a>1.1 eclipse直接安装插件测试</h2><p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco1.png" alt="image"></p>
+<p><strong>install new soft 安装插件 eclemma java code coverage</strong></p>
+<p>运行<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco2.png" alt="image"></p>
+<p>结果<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco3.png" alt="image"></p>
+<p>插件导出单元测试报告<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco4.png" alt="image"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco5.png" alt="image"></p>
+<h2 id="1-2-通过maven加入插件，打印单元测试报告"><a href="#1-2-通过maven加入插件，打印单元测试报告" class="headerlink" title="1.2 通过maven加入插件，打印单元测试报告"></a>1.2 通过maven加入插件，打印单元测试报告</h2><p><strong>pom.xml文件中加入对应的部分，plugin部分</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">    &lt;groupId&gt;cn.whx&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jacoco-test&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.11&lt;/version&gt;</div><div class="line">            &lt;scope&gt;compile&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line">    &lt;build&gt;</div><div class="line">          &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.jacoco&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;0.7.1.201405082137&lt;/version&gt;</div><div class="line">                &lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;prepare-agent&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;id&gt;report&lt;/id&gt;</div><div class="line">                        &lt;phase&gt;prepare-package&lt;/phase&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;report&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p><strong>maven clean package 即可有报告 在target文件中 site index.html</strong></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco6.png" alt="image"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco7.png" alt="image"></p>
+<p>结果</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco8.png" alt="image"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco9.png" alt="image"></p>
+<p><strong>注：有时候你会发现会爆出这个问题Skipping JaCoCo execution due to missing execution data file，大多数原因是因为没有编译测试类，可以使用 clean package -Dmaven.test.skip=false</strong></p>
+<h1 id="2-关于检测指标"><a href="#2-关于检测指标" class="headerlink" title="2.关于检测指标"></a>2.关于检测指标</h1><p>（可大概理解其意思，英文网址附上）<br><a href="http://note.youdao.com/" target="_blank" rel="external">http://www.eclemma.org/jacoco/trunk/doc/counters.html</a></p>
+<p><strong>Instructions (C0 Coverage)</strong></p>
+<ul>
+<li>主要是计算字节码文件的覆盖率。</li>
+</ul>
+<p><strong>Branches (C1 Coverage)</strong></p>
+<ul>
+<li>JaCoCo也计算分支覆盖所有if和 switch语句。主要是计算分支的。</li>
+<li>没有覆盖：在该行没有分支机构已执行（红钻）</li>
+<li>部分覆盖：只有在该行分支机构的一部分已经被执行（黄钻）</li>
+<li>全覆盖：在该行各分支机构已执行（绿钻）</li>
+</ul>
+<p><strong>Cyclomatic Complexity </strong></p>
+<ul>
+<li>圈复杂度(Cyclomatic Complexity)是一种代码复杂度的衡量标准。它可以用来衡量一个模块判定结构的复杂程度，数量上表现为独立现行路径条数，也可理解为覆盖所有的可能情况最少使用的测试用例数。圈复杂度大说明程序代码的判断逻辑复杂，可能质量低且难于测试和维护。程序的可能错误和高的圈复杂度有着很大关系。请注意，JaCoCo不考虑异常处理的分支机构try-catch块也不会增加复杂性。总体和分支正相关。实际上，过去几年的各种研究已经确定：一个方法的圈复杂度（或 CC）大于 10 的方法存在很大的出错风险。</li>
+<li><p>关于圈复杂度的理解，可以看以下链接。</p>
+</li>
+<li><p><a href="http://note.youdao.com/" target="_blank" rel="external">http://blog.csdn.net/lg707415323/article/details/7790660 </a></p>
+</li>
+<li><p><a href="http://note.youdao.com/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-cq03316/</a></p>
+</li>
+<li><p>以及一个图</p>
+</li>
+</ul>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco10.png" alt="image"></p>
+<p><strong>Lines</strong></p>
+<ul>
+<li>主要计算基于覆盖的实际源代码行类和源文件行覆盖。通常会标识三种状态。</li>
+<li>没有覆盖：在该行任何指令执行（红色背景）</li>
+<li>部分覆盖：只有在该行的指示的一部分已经被执行（黄色背景）</li>
+<li>全覆盖：在该行的所有指令已执行（绿色背景）</li>
+</ul>
+<p><strong>Methods</strong></p>
+<ul>
+<li>每个非抽象方法包含至少一个指令。构造函数和静态初始化都算作方法。</li>
+</ul>
+<h1 id="4-完整例子"><a href="#4-完整例子" class="headerlink" title="4.完整例子"></a>4.完整例子</h1><p><strong>先贴上代码<br>被测试类：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">package utils;</div><div class="line"></div><div class="line">import java.math.BigDecimal;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 安全转换钱的单位</div><div class="line"> * </div><div class="line"> * @author rutine</div><div class="line"> * @time Apr 28, 2015 3:52:18 PM</div><div class="line"> */</div><div class="line">public class MoneyUtil &#123;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * &lt;pre&gt;</div><div class="line">     * 功能说明 : 安全转换double类型, 将单位元的钱转为分</div><div class="line">     *     如: 19.9(元), 最终结果: 1990(分)</div><div class="line">     * &lt;/pre&gt;</div><div class="line">     * </div><div class="line">     * @param money 金额(元)</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static int getFenMoney(String money) &#123;</div><div class="line">        BigDecimal hundred = new BigDecimal(100);</div><div class="line">        BigDecimal decimalMoney = new BigDecimal(money);</div><div class="line">        return decimalMoney.multiply(hundred).intValue();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 功能说明 : 获取单价, 保留小数点两位数</div><div class="line">     * </div><div class="line">     * @param money 总金额(元)</div><div class="line">     * @param quantity 数量</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static double getUnitMoney(String money, int quantity) &#123;</div><div class="line">        if (&quot;50&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch1&quot;);</div><div class="line">        &#125;else if (&quot;60&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch2&quot;);</div><div class="line">        &#125;else if (&quot;70&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch3&quot;);</div><div class="line">        &#125;else &#123;</div><div class="line">            System.out.println(&quot;other branch&quot;);</div><div class="line">        &#125;</div><div class="line">        BigDecimal decimalMoney = new BigDecimal(money);</div><div class="line">        BigDecimal unitMoney = decimalMoney.divide(new BigDecimal(quantity), 2, BigDecimal.ROUND_HALF_UP);</div><div class="line"></div><div class="line">        return unitMoney.doubleValue();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>测试类：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line">import org.junit.Test;</div><div class="line"></div><div class="line">import utils.MoneyUtil;</div><div class="line"></div><div class="line">public class TestMoney &#123;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void testGetUnitMoney()&#123;</div><div class="line">        MoneyUtil.getUnitMoney(&quot;50&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;60&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;70&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;75&quot;, 2);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>测试结果，指标分析</strong></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco11.png" alt="image"></p>
+<p>这一项指标instructions，指的是字节码文件的行数。18/62的意思是  18为未执行的指令行数，62为总指令行数。</p>
+<p> <img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco12.png" alt="image"></p>
+<p> <img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco13.png" alt="image"></p>
+<p>这一项指标branches，指的是分支的覆盖情况。0/6中0为未执行的分支行数，6为总分支行数。这里else不会计入到分支行数中。但是如果你不写else,则覆盖率不会为100%。</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco14.png" alt="image"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco15.png" alt="image"></p>
+<p>这一项指标，为圈复杂度。missed 为未测试的数量，cxty为总数。</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco16.png" alt="image"></p>
+<p>我们来看看这个圈复杂度为啥是4</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco17.png" alt="image"></p>
+<p>简单的画个控制流图</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco18.png" alt="image"></p>
+<p>v=e-n+2   8条边 - 6个节点 + 2 = 4</p>
+<p>这一项指标，为行的覆盖情况。missed 为未测试的数量，lines为总数。</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco19.png" alt="image"></p>
+<p>同样的，看看这个例子</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco20.png" alt="image"></p>
+<p>正好是10行。未检测的是0行。</p>
+<p>这一项指标，为方法的覆盖情况。missed 为未测试的数量，methods为总数。</p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco21.png" alt="image"></p>
+<p>最后，请注意，覆盖率达到100%，不代表你的程序就ok了！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/pay/weixin.png" alt="ashine WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/pay/zhifubao.png" alt="ashine Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jacoco/" rel="tag"># jacoco</a>
+          
+            <a href="/tags/测试/" rel="tag"># 测试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/05/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/06/JAVA服务端-测试相关-jacoco测试/"
+           data-title="Hello World" data-url="http://yoursite.com/2016/12/06/JAVA服务端-测试相关-jacoco测试/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
+               alt="ashine" />
+          <p class="site-author-name" itemprop="name">ashine</p>
+          <p class="site-description motion-element" itemprop="description">人生海海</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1两种方式"><span class="nav-number">1.</span> <span class="nav-text">1两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-eclipse直接安装插件测试"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 eclipse直接安装插件测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-通过maven加入插件，打印单元测试报告"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 通过maven加入插件，打印单元测试报告</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关于检测指标"><span class="nav-number">2.</span> <span class="nav-text">2.关于检测指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-完整例子"><span class="nav-number">3.</span> <span class="nav-text">4.完整例子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ashine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ashine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
