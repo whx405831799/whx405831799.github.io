@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术问题," />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -84,37 +84,16 @@
 
 
 
-<meta name="description" content="1.String、StringBuffer与StringBuilder之间区别
-
-执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。
-线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。
-
-2.JVM加载class文件的原理机制
-
-Class">
+<meta name="description" content="redis是啥（摘自百度百科）redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，red">
 <meta property="og:type" content="article">
-<meta property="og:title" content="技术问题整理（持续更新）">
-<meta property="og:url" content="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/index.html">
+<meta property="og:title" content="redis-1.安装">
+<meta property="og:url" content="http://yoursite.com/2017/01/03/Redis-1.安装/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="1.String、StringBuffer与StringBuilder之间区别
-
-执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。
-线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。
-
-2.JVM加载class文件的原理机制
-
-Class">
-<meta property="og:updated_time" content="2016-12-17T06:33:34.856Z">
+<meta property="og:description" content="redis是啥（摘自百度百科）redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，red">
+<meta property="og:updated_time" content="2017-01-05T11:47:18.132Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="技术问题整理（持续更新）">
-<meta name="twitter:description" content="1.String、StringBuffer与StringBuilder之间区别
-
-执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。
-线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。
-
-2.JVM加载class文件的原理机制
-
-Class">
+<meta name="twitter:title" content="redis-1.安装">
+<meta name="twitter:description" content="redis是啥（摘自百度百科）redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，red">
 
 
 
@@ -142,13 +121,13 @@ Class">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/03/Redis-1.安装/"/>
 
 
 
 
 
-  <title> 技术问题整理（持续更新） | ashine's blog </title>
+  <title> redis-1.安装 | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -299,7 +278,7 @@ Class">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ashine">
@@ -323,7 +302,7 @@ Class">
             
             
               
-                技术问题整理（持续更新）
+                redis-1.安装
               
             
           </h1>
@@ -336,8 +315,8 @@ Class">
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-10T19:06:06+08:00">
-                2016-12-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
+                2017-01-03
               </time>
             
 
@@ -355,8 +334,8 @@ Class">
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
+                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-redis</span>
                   </a>
                 </span>
 
@@ -370,8 +349,8 @@ Class">
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/10/JAVA服务端-技术问题整理（持续更新）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/JAVA服务端-技术问题整理（持续更新）/" itemprop="commentCount"></span>
+                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -397,30 +376,19 @@ Class">
       
 
       
-        <p><strong>1.String、StringBuffer与StringBuilder之间区别</strong></p>
-<ul>
-<li>执行速度上：StringBuilder &gt;  StringBuffer  &gt;  String（String 每次改变都会创建一个新的对象）。</li>
-<li>线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。</li>
-</ul>
-<p><strong>2.JVM加载class文件的原理机制</strong></p>
-<ul>
-<li>Class Loader加载class(Class Loader 只管加载，只要符合文件结构就加载，至于说能不能运行，则不是它负责的，那是由Execution Engine 负责的)。</li>
-<li>Execution Engine 执行引擎,执行引擎也叫做解释器(Interpreter) ，负责解释命令，提交操作系统执行。</li>
-<li>Native Interface 本地接口，本地接口的作用是融合不同的编程语言为Java 所用，现在用的越来越少了。</li>
-<li>Runtime data area 运行数据区，运行数据区是整个JVM 的重点。我们所有写的程序都被加载到这里，之后才开始运行。</li>
-<li>整个JVM 框架由加载器加载文件，然后执行器在内存中处理数据，需要与异构系统交互是可以通过本地接口进行。</li>
-<li>当执行 java <em>*</em>.class 的时候， java.exe 会帮助我们找到 JRE ，接着找到位于 JRE 内部的 jvm.dll ，这才是真正的 Java 虚拟机器 , 最后加载动态库，激活 Java 虚拟机器。虚拟机器激活以后，会先做一些初始化的动作，比如说读取系统参数等。一旦初始化动作完成之后，就会产生第一个类加载器―― Bootstrap Loader ， Bootstrap Loader 是由 C++ 所撰写而成，这个 Bootstrap Loader 所做的初始工作中，除了一些基本的初始化动作之外，最重要的就是加载 Launcher.java 之中的 ExtClassLoader ，并设定其 Parent 为 null ，代表其父加载器为 BootstrapLoader 。然后 Bootstrap Loader 再要求加载 Launcher.java 之中的 AppClassLoader ，并设定其 Parent 为之前产生的 ExtClassLoader 实体。这两个加载器都是以静态类的形式存在的。这里要请大家注意的是， Launcher$ExtClassLoader.class 与 Launcher$AppClassLoader.class 都是由 Bootstrap Loader 所加载，所以 Parent 和由哪个类加载器加载没有关系。<br>下面的图形可以表示三者之间的关系：<br>BootstrapLoader &lt;—(Extends)—-AppClassLoader &lt;—(Extends)—-ExtClassLoader </li>
-</ul>
-<p><strong>3.char 型变量中能不能存贮一个中文汉字，为什么？</strong></p>
-<ul>
-<li>char类型可以存储一个中文汉字，因为Java中使用的编码是Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个char类型占2个字节（16比特），所以放一个中文是没问题的。</li>
-</ul>
-<p><strong>4.实现多态的方式：抽象类和接口的区别</strong></p>
-<ul>
-<li>继承：抽象类只能继承一个，接口可以多继承。</li>
-<li>语法：抽象类与普通类的区别是抽象类可以定义抽象方法，不用实现，供子类继承。私有方法是可以定义的，因为比如使用设计模式中的模板方法模式，就有必要定义private的方法。而接口，变量只能定义public final的常量，而且方法必须是public abstract的，缺省值也是这样。</li>
-<li>意义上：抽象类，是对事物的抽象，对类抽象；而接口是对行为的抽象。一个经典的例子：门和警报。门一定有open和close的能力，但是不一定有警报的能力。所以如果把三个都放到门的抽象类里并不合适，因为不是所有门都会有警报，且把三个都放在接口里也不合适，因为有些能发警报的事务并不具有open和close的能力。结论就是抽象类里定义open和close,接口定义警报。</li>
-</ul>
+        <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>（摘自百度百科）redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
+<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>==安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc==</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
+<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
+<p>接下来继续安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
+<p>启动、进入、关闭redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
+<p>也可以指定端口启动和结束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
+<p>设置密码<br>修改redis.conf</p>
+<p>==#requirepass foobared去掉注释，foobared改为自己的密码==</p>
 
       
     </div>
@@ -465,7 +433,7 @@ Class">
       
         <div class="post-tags">
           
-            <a href="/tags/技术问题/" rel="tag"># 技术问题</a>
+            <a href="/tags/redis/" rel="tag"># redis</a>
           
         </div>
       
@@ -474,8 +442,8 @@ Class">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/06/JAVA服务端-测试相关-jacoco测试/" rel="next" title="jacoco覆盖率测试">
-                <i class="fa fa-chevron-left"></i> jacoco覆盖率测试
+              <a href="/2016/12/21/linux-screen的使用/" rel="next" title="linux-screen的使用">
+                <i class="fa fa-chevron-left"></i> linux-screen的使用
               </a>
             
           </div>
@@ -483,10 +451,6 @@ Class">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/21/linux-screen的使用/" rel="prev" title="linux-screen的使用">
-                linux-screen的使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -518,8 +482,8 @@ Class">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/10/JAVA服务端-技术问题整理（持续更新）/"
-           data-title="技术问题整理（持续更新）" data-url="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/">
+      <div class="ds-thread" data-thread-key="2017/01/03/Redis-1.安装/"
+           data-title="redis-1.安装" data-url="http://yoursite.com/2017/01/03/Redis-1.安装/">
       </div>
     
   </div>
@@ -543,8 +507,17 @@ Class">
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
@@ -597,6 +570,22 @@ Class">
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis是啥"><span class="nav-number">1.</span> <span class="nav-text">redis是啥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux安装redis"><span class="nav-number">2.</span> <span class="nav-text">linux安装redis</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
