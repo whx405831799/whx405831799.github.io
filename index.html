@@ -382,8 +382,8 @@
       
         
           
-            <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>（摘自百度百科）redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
-<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>==安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc==</p>
+            <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
+<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
 <p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
@@ -394,7 +394,7 @@
 <p>也可以指定端口启动和结束</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
 <p>设置密码<br>修改redis.conf</p>
-<p>==#requirepass foobared去掉注释，foobared改为自己的密码==</p>
+<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
 
           
         
