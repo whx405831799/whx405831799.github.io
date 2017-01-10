@@ -279,6 +279,179 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-2.数据类型/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ashine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ashine's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/03/Redis-2.数据类型/" itemprop="url">
+                  Redis-2.数据类型
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/01/03/Redis-2.数据类型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-2.数据类型/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据类型及常用命令"><a href="#数据类型及常用命令" class="headerlink" title="数据类型及常用命令"></a>数据类型及常用命令</h1><h2 id="Strings-字符串类型"><a href="#Strings-字符串类型" class="headerlink" title="Strings-字符串类型"></a>Strings-字符串类型</h2><p>Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; SET name &quot;helloworld&quot;</div><div class="line">OK</div><div class="line">redis 127.0.0.1:6379&gt; GET name</div><div class="line">&quot;helloworld&quot;</div></pre></td></tr></table></figure>
+<p>在上面的例子使用Redis命令set和get，helloworld即为字符串类型。</p>
+<p>注：字符串值可以存储最大512兆字节的长度。</p>
+<h2 id="Hashes-哈希值型"><a href="#Hashes-哈希值型" class="headerlink" title="Hashes-哈希值型"></a>Hashes-哈希值型</h2><p>Redis的哈希键值对的集合。 Redis的哈希值是字符串字段和字符串值之间的映射，所以它们被用来表示对象。</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmset user:1 name ashine age 15 address shenzhen</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; hgetall user:1</div><div class="line">1) &quot;whx&quot;</div><div class="line">2) &quot;17&quot;</div><div class="line">3) &quot;name&quot;</div><div class="line">4) &quot;ashine&quot;</div><div class="line">5) &quot;age&quot;</div><div class="line">6) &quot;15&quot;</div><div class="line">7) &quot;address&quot;</div><div class="line">8) &quot;shenzhen&quot;</div><div class="line">127.0.0.1:6379&gt; hget user:1 name</div><div class="line">&quot;ashine&quot;</div></pre></td></tr></table></figure>
+<h2 id="Lists-列表"><a href="#Lists-列表" class="headerlink" title="Lists-列表"></a>Lists-列表</h2><p>Redis的列表是简单的字符串列表，排序插入顺序。可以添加元素到Redis列表的头部或尾部。</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lpush maydaylist ashine shitou</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guanyou</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guaishou</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist masha</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; lrange maydaylist 0 10</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;guaishou&quot;</div><div class="line">3) &quot;guanyou&quot;</div><div class="line">4) &quot;shitou&quot;</div><div class="line">5) &quot;ashine&quot;</div></pre></td></tr></table></figure>
+<p>列表的最大长度也很大，可以支持40亿。</p>
+<h2 id="Sets-无序集合"><a href="#Sets-无序集合" class="headerlink" title="Sets-无序集合"></a>Sets-无序集合</h2><p>set是集合，它是string类型的无序集合。<br>set是通过hash table实现的，添加，删除和查找的复杂度都是0（1）。<br>对集合我们可以取并集、交集、差集。</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; sadd maydayset shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset masha</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
+<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
+<h1 id="sorted-set有序集合"><a href="#sorted-set有序集合" class="headerlink" title="sorted set有序集合"></a>sorted set有序集合</h1><p>sortes set是set的一个升级版本，它在set的基础上增加了一个顺序属性，<br>这一属性在添加修改元素的时候可以指定，每次指定后，zset会自动重新按新的值调整顺序。<br>可以理解为有两列的MySQL表，一列存value，一列存顺序。</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 0 ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 2 shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  guanyou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; zrangebyscore sortmaydayset 0 10</div><div class="line">1) &quot;ashine&quot;</div><div class="line">2) &quot;guanyou&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
+<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
+<p>参考链接命令：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/commands.html</a></p>
+<p>参考链接数据类型：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/topics/data-types-intro.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -305,7 +478,7 @@
               
                 
                 <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
-                  redis-1.安装
+                  Redis-1.安装
                 </a>
               
             
@@ -1065,7 +1238,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
