@@ -84,16 +84,61 @@
 
 
 
-<meta name="description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
+<meta name="description" content="Redis命令-第一部分key,String,Hash1.连接redis123$ redis-cli -h host -p port -a passwordeg：redis-cli -h 127.0.0.1 -p 6379 -a redis 如果没密码 直接redis-cli
+2.Redis的键命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+SET key
+插入键
+SET mykey whx
+ok">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis-1.安装">
-<meta property="og:url" content="http://yoursite.com/2017/01/03/Redis-1.安装/index.html">
+<meta property="og:title" content="Redis-3.命令之key,String,Hash">
+<meta property="og:url" content="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
-<meta property="og:updated_time" content="2017-01-10T13:06:31.509Z">
+<meta property="og:description" content="Redis命令-第一部分key,String,Hash1.连接redis123$ redis-cli -h host -p port -a passwordeg：redis-cli -h 127.0.0.1 -p 6379 -a redis 如果没密码 直接redis-cli
+2.Redis的键命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+SET key
+插入键
+SET mykey whx
+ok">
+<meta property="og:updated_time" content="2017-02-05T01:22:20.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis-1.安装">
-<meta name="twitter:description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
+<meta name="twitter:title" content="Redis-3.命令之key,String,Hash">
+<meta name="twitter:description" content="Redis命令-第一部分key,String,Hash1.连接redis123$ redis-cli -h host -p port -a passwordeg：redis-cli -h 127.0.0.1 -p 6379 -a redis 如果没密码 直接redis-cli
+2.Redis的键命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+SET key
+插入键
+SET mykey whx
+ok">
 
 
 
@@ -121,13 +166,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/03/Redis-1.安装/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/"/>
 
 
 
 
 
-  <title> Redis-1.安装 | ashine's blog </title>
+  <title> Redis-3.命令之key,String,Hash | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +323,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ashine">
@@ -302,7 +347,7 @@
             
             
               
-                Redis-1.安装
+                Redis-3.命令之key,String,Hash
               
             
           </h1>
@@ -315,8 +360,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T19:10:01+08:00">
+                2017-01-15
               </time>
             
 
@@ -349,8 +394,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
+                <a href="/2017/01/15/Redis-3.命令-第一部分key,String,Hash/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/15/Redis-3.命令-第一部分key,String,Hash/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -376,19 +421,349 @@
       
 
       
-        <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
-<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
-<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
-<p>接下来继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
-<p>启动、进入、关闭redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
-<p>也可以指定端口启动和结束</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
-<p>设置密码<br>修改redis.conf</p>
-<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
+        <h1 id="Redis命令-第一部分key-String-Hash"><a href="#Redis命令-第一部分key-String-Hash" class="headerlink" title="Redis命令-第一部分key,String,Hash"></a>Redis命令-第一部分key,String,Hash</h1><h2 id="1-连接redis"><a href="#1-连接redis" class="headerlink" title="1.连接redis"></a>1.连接redis</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ redis-cli -h host -p port -a password</div><div class="line">eg：redis-cli -h 127.0.0.1 -p 6379 -a redis </div><div class="line">如果没密码 直接redis-cli</div></pre></td></tr></table></figure>
+<h2 id="2-Redis的键命令"><a href="#2-Redis的键命令" class="headerlink" title="2.Redis的键命令"></a>2.Redis的键命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SET key</td>
+<td>插入键</td>
+<td>SET mykey whx</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>GET key</td>
+<td>插入键</td>
+<td>GET mykey whx</td>
+<td>whx</td>
+</tr>
+<tr>
+<td>DEL key</td>
+<td>删除键</td>
+<td>DEL mykey</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>DUMP key</td>
+<td>返回存储在指定键的值的序列化版本</td>
+<td>DUMP mykey</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>EXISTS key</td>
+<td>查询键是否存在</td>
+<td>EXISTS mykey</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>EXPIRE key seconds</td>
+<td>指定键的过期时间，秒</td>
+<td>EXPIRE mykey 10</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>EXPIREAT key timestamp</td>
+<td>指定的键过期时间，时间为Unix时间戳格式</td>
+<td>EXPIREAT mykey 1484539499</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>PEXPIRE key milliseconds</td>
+<td>指定键的过期时间，毫秒</td>
+<td>PEXPIRE mykey  10000</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>PEXPIREAT key milliseconds-timestamp</td>
+<td>设置键在Unix时间戳指定为毫秒到期</td>
+<td>PEXPIREAT key 1484556630000</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>KEYS pattern</td>
+<td>查找与指定模式匹配的所有键</td>
+<td>KEYS my*</td>
+<td>mykey</td>
+</tr>
+<tr>
+<td>MOVE key db</td>
+<td>移动键到另一个数据库(select 0 就是选择0库)</td>
+<td>MOVE mykey 1</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>PERSIST key</td>
+<td>命令用于移除给定 key 的过期时间，使得 key 永不过期</td>
+<td>PERSIST mykey</td>
+<td>当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。</td>
+</tr>
+<tr>
+<td>TTL keys</td>
+<td>TTL 命令以秒为单位返回 key 的剩余过期时间</td>
+<td>TTL mykey</td>
+<td>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。</td>
+</tr>
+<tr>
+<td>PTTL key</td>
+<td>以毫秒为单位返回 key 的剩余过期时间</td>
+<td>PTTL mykey</td>
+<td>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。</td>
+</tr>
+<tr>
+<td>RANDOMKEY</td>
+<td>从当前数据库中随机返回一个 key</td>
+<td>RANDOMKEY</td>
+<td>mykey</td>
+</tr>
+<tr>
+<td>RENAME key newkey</td>
+<td>修改键的名字</td>
+<td>RENAME mykey newmykey</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>RENAMENX key newkey</td>
+<td>用于在新的 key 不存在时修改 key 的名称</td>
+<td>RENAMEX mykey newmykey</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>TYPE key</td>
+<td>用于返回 key 所储存的值的类型</td>
+<td>TYPE mykey</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-Redis的String命令"><a href="#3-Redis的String命令" class="headerlink" title="3.Redis的String命令"></a>3.Redis的String命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SET key</td>
+<td>设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型</td>
+<td>SET mykey whx</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>GET key</td>
+<td>获取指定 key 的值。如果 key 不存在，返回 nil 。如果key 储存的值不是字符串类型，返回一个错误</td>
+<td>GET mykey whx</td>
+<td>whx</td>
+</tr>
+<tr>
+<td>GETRANGE KEY_NAME start end</td>
+<td>获取存储在指定 key 中字符串的子字符串。字符串的截取范围由 start 和 end决定</td>
+<td>GETRANGE mykey 0 1</td>
+<td>wh</td>
+</tr>
+<tr>
+<td>GETSET KEY_NAME VALUE</td>
+<td>设置指定 key 的值，并返回 key 旧的值</td>
+<td>GETSET mykey 666</td>
+<td>whx</td>
+</tr>
+<tr>
+<td>GETBIT KEY_NAME OFFSET</td>
+<td>命令用于对 key 所储存的字符串值，获取指定偏移量上的位(bit)</td>
+<td>GETBIT mykey 5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MGET KEY1 KEY2 .. KEYN</td>
+<td>命令返回所有(一个或多个)给定 key 的值</td>
+<td>MGET mykey mykey1 mykey2</td>
+<td>1) “666” 2) “888” 3) (nil)</td>
+</tr>
+<tr>
+<td>SETBIT KEY_NAME OFFSET</td>
+<td>用于对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)</td>
+<td>同get</td>
+<td>同get</td>
+</tr>
+<tr>
+<td>SETEX KEY_NAME TIMEOUT VALUE</td>
+<td>为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。</td>
+<td>SETEX mykey 20 new666</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>PSETEX KEY_NAME TIMEOUT VALUE</td>
+<td>以毫秒为单位设置 key 的生存时间。如果 key 已经存在， SETEX 命令将会替换旧的值。</td>
+<td>PSETEX mykey 1000 666</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>SETNX KEY_NAME VALUE</td>
+<td>命令在指定的 key 不存在时，为 key 设置指定的值,设置成功，返回 1 。 设置失败，返回 0</td>
+<td>SETNX mykey 666</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>SETRANGE KEY_NAME OFFSET VALUE</td>
+<td>指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量 offset 开始</td>
+<td>SETRANGE mykey 1 whx</td>
+<td>5whx(只会返回数字，这里是get拿到的)</td>
+</tr>
+<tr>
+<td>STRLEN KEY_NAME</td>
+<td>用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</td>
+<td>STRLEN mykey</td>
+<td>(integer) 4</td>
+</tr>
+<tr>
+<td>MSET key1 value1 key2 value2 .. keyN valueN</td>
+<td>用于同时设置一个或多个 key-value</td>
+<td>MSET key1 “Hello” key2 “World”</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>MSETNX key1 value1 key2 value2 .. keyN valueN</td>
+<td>用于所有给定 key 都不存在时，同时设置一个或多个 key-value,所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0</td>
+<td>MSETNX key1 “Hello” key2 “World”</td>
+<td>0</td>
+</tr>
+<tr>
+<td>INCR KEY_NAME</td>
+<td>Redis Incr 命令将 key 中储存的数字值增一。如果 key 不存在，那么 key的值会先被初始化为 0 ，然后再执行 INCR 操作。如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。本操作的值限制在 64 位(bit)有符号数字表示之内</td>
+<td>incr num</td>
+<td>2</td>
+</tr>
+<tr>
+<td>INCRBY KEY_NAME INCR_AMOUNT</td>
+<td>命令将 key 中储存的数字加上指定的增量值,如果 key 不存在，那么 key的值会先被初始化为 0 ，然后再执行 INCRBY 命令</td>
+<td>INCRBY num 10</td>
+<td>12</td>
+</tr>
+<tr>
+<td>INCRBYFLOAT KEY_NAME INCR_AMOUNT</td>
+<td>为 key 中所储存的值加上指定的浮点数增量值,如果 key 不存在，那么 INCRBYFLOAT 会先将 key 的值设为 0 ，再执行加法操作</td>
+<td>INCRBYFLOAT num 10.01</td>
+<td>22.01</td>
+</tr>
+<tr>
+<td>DECR KEY_NAME</td>
+<td>Redis Decr 命令将 key 中储存的数字值减一</td>
+<td>incr num1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>DECRBY KEY_NAME DECREMENT_AMOUNT</td>
+<td>命令将 key 中储存的数字减去上指定的值</td>
+<td>DECRBY num1 10</td>
+<td>-8</td>
+</tr>
+<tr>
+<td>APPEND KEY_NAME NEW_VALUE</td>
+<td>命令用于为指定的 key 追加值,如果 key 不存在， APPEND 就简单地将给定 key 设为 value</td>
+<td>APPEND mykey 888</td>
+<td>返回数字</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-Hash的键命令"><a href="#2-Hash的键命令" class="headerlink" title="2.Hash的键命令"></a>2.Hash的键命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HSET KEY_NAME FIELD VALUE</td>
+<td>用于为哈希表中的字段赋值</td>
+<td>HSET ashine name whx</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>HMSET KEY_NAME FIELD1 VALUE1 …FIELDN VALUEN</td>
+<td>用于同时将多个 field-value (字段-值)对设置到哈希表中</td>
+<td>HMSET ashine name wuhanxiao age 25 sex man</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>HSETNX KEY_NAME FIELD VALUE</td>
+<td>用于为哈希表中不存在的的字段赋值</td>
+<td>HSETNX ashine name whx1</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>HGET KEY_NAME FIELD_NAME</td>
+<td>用于返回哈希表中指定字段的值</td>
+<td>HGET ashine name</td>
+<td>whx</td>
+</tr>
+<tr>
+<td>HMGET KEY_NAME FIELD1…FIELDN</td>
+<td>用于返回哈希表中，一个或多个给定字段的值</td>
+<td>HMGET ashine name age</td>
+<td>1) whx 2)25</td>
+</tr>
+<tr>
+<td>HGETALL KEY_NAME</td>
+<td>用于返回哈希表中，所有的字段和值,在返回值里，紧跟每个字段名(field name)之后是字段的值(value)，所以返回值的长度是哈希表大小的两倍</td>
+<td>HGETALL ashine</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>HEXISTS KEY_NAME FIELD_NAME</td>
+<td>用于查看哈希表的指定字段是否存在</td>
+<td>HEXSITS ashine name</td>
+<td>如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 </td>
+</tr>
+<tr>
+<td>HDEL KEY_NAME FIELD1.. FIELDN</td>
+<td>用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</td>
+<td>HDEL ashine name age</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>HINCRBY KEY_NAME FIELD_NAME INCR_BY_NUMBER</td>
+<td>用于为哈希表中的字段值加上指定增量值,如果type不对，会返回错误</td>
+<td>HINCRBY ashine age 12</td>
+<td>(integer)15</td>
+</tr>
+<tr>
+<td>HINCRBYFLOAT KEY_NAME FIELD_NAME INCR_BY_NUMBER</td>
+<td>用于为哈希表中的字段值加上指定浮点数增量值</td>
+<td>HINCRBYFLOAT ashine age 1.5</td>
+<td>16.5</td>
+</tr>
+<tr>
+<td>HKEYS KEY_NAME</td>
+<td>用于获取哈希表中的所有字段名</td>
+<td>HKEYS ashine</td>
+<td>字段的list</td>
+</tr>
+<tr>
+<td>HLEN KEY_NAME</td>
+<td>命令用于获取哈希表中字段的数量</td>
+<td>HLEN ashine</td>
+<td>(integer) 4</td>
+</tr>
+<tr>
+<td>HVALS KEY_NAME</td>
+<td>返回哈希表所有字段的值</td>
+<td>HVALS ashine</td>
+<td>字段值的list</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -442,8 +817,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/21/linux-screen的使用/" rel="next" title="linux-screen的使用">
-                <i class="fa fa-chevron-left"></i> linux-screen的使用
+              <a href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" rel="next" title="Redis-3.命令之list,set,sorted set">
+                <i class="fa fa-chevron-left"></i> Redis-3.命令之list,set,sorted set
               </a>
             
           </div>
@@ -452,8 +827,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/03/Redis-2.数据类型/" rel="prev" title="Redis-2.数据类型">
-                Redis-2.数据类型 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/05/Redis-5.服务器相关命令/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -486,8 +861,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/03/Redis-1.安装/"
-           data-title="Redis-1.安装" data-url="http://yoursite.com/2017/01/03/Redis-1.安装/">
+      <div class="ds-thread" data-thread-key="2017/01/15/Redis-3.命令-第一部分key,String,Hash/"
+           data-title="Redis-3.命令之key,String,Hash" data-url="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/">
       </div>
     
   </div>
@@ -584,7 +959,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis是啥"><span class="nav-number">1.</span> <span class="nav-text">redis是啥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux安装redis"><span class="nav-number">2.</span> <span class="nav-text">linux安装redis</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis命令-第一部分key-String-Hash"><span class="nav-number">1.</span> <span class="nav-text">Redis命令-第一部分key,String,Hash</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-连接redis"><span class="nav-number">1.1.</span> <span class="nav-text">1.连接redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Redis的键命令"><span class="nav-number">1.2.</span> <span class="nav-text">2.Redis的键命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Redis的String命令"><span class="nav-number">1.3.</span> <span class="nav-text">3.Redis的String命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Hash的键命令"><span class="nav-number">1.4.</span> <span class="nav-text">2.Hash的键命令</span></a></li></ol></li></ol></div>
             
 
           </div>

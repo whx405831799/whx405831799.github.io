@@ -1,0 +1,1092 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Redis命令-第二部分list,set,sorted set5.Redis的list命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+LPUSH KEY_NAME VALUE1.. VALUEN
+Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误
+LPUSH newlist wuk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis-3.命令之list,set,sorted set">
+<meta property="og:url" content="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/index.html">
+<meta property="og:site_name" content="ashine's blog">
+<meta property="og:description" content="Redis命令-第二部分list,set,sorted set5.Redis的list命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+LPUSH KEY_NAME VALUE1.. VALUEN
+Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误
+LPUSH newlist wuk">
+<meta property="og:updated_time" content="2017-02-05T01:20:01.360Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis-3.命令之list,set,sorted set">
+<meta name="twitter:description" content="Redis命令-第二部分list,set,sorted set5.Redis的list命令
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+LPUSH KEY_NAME VALUE1.. VALUEN
+Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误
+LPUSH newlist wuk">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/"/>
+
+
+
+
+
+  <title> Redis-3.命令之list,set,sorted set | ashine's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f7aba61662d6673c4cd5176f20fedcfa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ashine's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ashine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ashine's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Redis-3.命令之list,set,sorted set
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T19:10:01+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Redis命令-第二部分list-set-sorted-set"><a href="#Redis命令-第二部分list-set-sorted-set" class="headerlink" title="Redis命令-第二部分list,set,sorted set"></a>Redis命令-第二部分list,set,sorted set</h1><h2 id="5-Redis的list命令"><a href="#5-Redis的list命令" class="headerlink" title="5.Redis的list命令"></a>5.Redis的list命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LPUSH KEY_NAME VALUE1.. VALUEN</td>
+<td>Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误</td>
+<td>LPUSH newlist wukong sanzang bajie</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>LPUSHX KEY_NAME VALUE1.. VALUEN</td>
+<td>将一个或多个值插入到已存在的列表头部，列表不存在时操作无效</td>
+<td>LPUSHX listnew wukong</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>RPUSH KEY_NAME VALUE1..VALUEN</td>
+<td>用于将一个或多个值插入到列表的尾部(最右边)。如果列表不存在，一个空列表会被创建并执行 RPUSH 操作。 当列表存在但不是列表类型时，返回一个错误</td>
+<td>RPUSH newlist bailongma shashen</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>RPUSHX KEY_NAME VALUE1..VALUEN</td>
+<td>将一个或多个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</td>
+<td>RPUSHX listnew wukong</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>LPOP KEY_NAME</td>
+<td>移除并返回列表的第一个元素</td>
+<td>LPOP newlist</td>
+<td>“bajie”</td>
+</tr>
+<tr>
+<td>BLPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
+<td>移出并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BLPOP maydaylist newlist 10</td>
+<td>1) “maydaylist”2) “masha”注意你写多个list,按顺序下来，哪个先弹出及返回，并不是所有list都弹出一个。</td>
+</tr>
+<tr>
+<td>RPOP KEY_NAME</td>
+<td>移除并返回列表的最后一个元素</td>
+<td>RPOP newlist</td>
+<td>同lpop</td>
+</tr>
+<tr>
+<td>BRPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
+<td>移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BRPOP maydayli newlist 10</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>RPOPLPUSH SOURCE_KEY_NAME DESTINATION_KEY_NAME</td>
+<td>移除列表的最后一个元素，并将该元素添加到另一个列表并返回</td>
+<td>RPOPLPUSH newlist xiyoulist</td>
+<td>“shashen”</td>
+</tr>
+<tr>
+<td>BRPOPLPUSH LIST1 ANOTHER_LIST TIMEOUT</td>
+<td>从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BRPOPLPUSH newlist xiyoulist 10</td>
+<td>“bailongma”</td>
+</tr>
+<tr>
+<td>LINDEX KEY_NAME INDEX_POSITION</td>
+<td>通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
+<td>LINDEX newlist -1</td>
+<td>“wukong”</td>
+</tr>
+<tr>
+<td>LINSERT KEY_NAME BEFORE/AFTER EXISTING_VALUE NEW_VALUE</td>
+<td>在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作。 当列表不存在时，被视为空列表，不执行任何操作。 如果 key 不是列表类型，返回一个错误</td>
+<td>LINSERT newlist BEFORE bailongma beforetudi</td>
+<td>(integer) 6</td>
+</tr>
+<tr>
+<td>LLEN KEY_NAME</td>
+<td>用于返回列表的长度。 如果列表 key 不存在，则 key 被解释为一个空列表，返回 0 。 如果 key 不是列表类型，返回一个错误</td>
+<td>LLEN newlist</td>
+<td>(integer) 6</td>
+</tr>
+<tr>
+<td>LREM KEY_NAME COUNT VALUE</td>
+<td>根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素。count &gt; 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。count &lt; 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值</td>
+<td>LREM newlist -2 wukong</td>
+<td>(integer) 2 </td>
+</tr>
+<tr>
+<td>LSET KEY_NAME INDEX VALUE</td>
+<td>通过索引来设置元素的值。当索引参数超出范围，或对一个空列表进行 LSET 时，返回一个错误</td>
+<td>LSET newlist 0 newwukong</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>LTRIM KEY_NAME START STOP</td>
+<td>对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。下标 0 表示列表的第一个元素，以 1 表示列表的第二个元素，以此类推。 你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
+<td>LTRIM newlist 1 -1</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-Redis的set命令"><a href="#6-Redis的set命令" class="headerlink" title="6.Redis的set命令"></a>6.Redis的set命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SADD KEY_NAME VALUE1..VALUEN</td>
+<td>将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略。假如集合 key 不存在，则创建一个只包含添加的元素作成员的集合。当集合 key 不是集合类型时，返回一个错误</td>
+<td>SADD xiyouset wukong wujing wuneng sanzang bailongma</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>SCARD KEY_NAME</td>
+<td>返回集合中元素的数量</td>
+<td>SCARD xiyouset</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>SDIFF FIRST_KEY OTHER_KEY1..OTHER_KEYN</td>
+<td>返回给定集合之间的差集(后面的与第一个的差积)。不存在的集合 key 将视为空集</td>
+<td>SDIFF maydayset xiyouset newset</td>
+<td>返回了maydayset中wukong以外的值</td>
+</tr>
+<tr>
+<td>SDIFFSTORE DESTINATION_KEY KEY1..KEYN</td>
+<td>将给定集合之间的差集存储在指定的集合中。如果指定的集合 key 已存在，则会被覆盖</td>
+<td>SDIFFSTORE diffset maydayset xiyouset</td>
+<td>(integer) 4</td>
+</tr>
+<tr>
+<td>SINTER KEY KEY1..KEYN</td>
+<td>返回给定所有给定集合的交集。 不存在的集合 key 被视为空集。 当给定集合当中有一个空集时，结果也为空集</td>
+<td>SINTER xiyouset maydayset</td>
+<td>“wukong”</td>
+</tr>
+<tr>
+<td>SINTERSTORE DESTINATION_KEY KEY KEY1..KEYN</td>
+<td>将给定集合之间的交集存储在指定的集合中。如果指定的集合已经存在，则将其覆盖</td>
+<td>SINTERSTORE hahaset xiyouset maydayset</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SUNION KEY KEY1..KEYN</td>
+<td>返回给定集合的并集。不存在的集合 key 被视为空集</td>
+<td>SUNION xiyouset maydayset</td>
+<td>返回并集</td>
+</tr>
+<tr>
+<td>SISMEMBER KEY VALUE</td>
+<td>判断成员元素是否是集合的成员</td>
+<td>SISMEMBER xiyouset wukong</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SUNIONSTORE DESTINATION KEY KEY1..KEYN</td>
+<td>命令将给定集合的并集存储在指定的集合 destination 中</td>
+<td>SUNIONSTORE newhahaset xiyouset maydayset</td>
+<td>(integer) 9</td>
+</tr>
+<tr>
+<td>SISMEMBER KEY VALUE</td>
+<td>判断成员元素是否是集合的成员</td>
+<td>SISMEMBER xiyouset wukong</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SRANDMEMBER KEY [count]</td>
+<td>用于返回集合中的一个随机元素。如果 count为正数，且小于集合基数，返回一个包含count个元素的数组，不重复。如果 count 大于等于集合长度，返回整个集合。如果count为负数，返回一个数组，元素可重复，数的长度为 count 的绝对值</td>
+<td>SRANDMEMBER xiyouset 3</td>
+<td>随机返回了三个元素</td>
+</tr>
+<tr>
+<td>SMOVE SOURCE DESTINATION MEMBER</td>
+<td>将指定成员 member元素从source集合移动到destination集合，是原子性操作。source 集合不存在或不包含指定的 member 元素，则不执行操作，返回0；否则，移除元素，并添加到 destination 集合中</td>
+<td>SMOVE xiyouset maydayset wujing</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SPOP KEY</td>
+<td>用于移除并返回集合中的一个随机元素</td>
+<td>SPOP maydayset</td>
+<td>“guaishou”</td>
+</tr>
+<tr>
+<td>SREM KEY MEMBER1..MEMBERN</td>
+<td>用于移除集合中的一个或多个成员元素，不存在的成员元素会被忽略</td>
+<td>SREM maydayset shitou guaishou</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>SSCAN KEY [MATCH pattern] [COUNT count]</td>
+<td>用于迭代集合键中的元素</td>
+<td>SSCAN maydayset 0 MATCH a* COUNT 3</td>
+<td>1) “1” 2) 1)  “ashine2” 2) “a5” 3) “a3”  这里的游标还不太清楚（当scan命令的游标为0时，服务器开始新的迭代，当服务器返回值为0的游标时，表示迭代结束）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-Redis的sorted-set命令"><a href="#7-Redis的sorted-set命令" class="headerlink" title="7.Redis的sorted set命令"></a>7.Redis的sorted set命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN</td>
+<td>将一个或多个成员元素及其分数值加入到有序集当中</td>
+<td>ZADD sortedkey 1 whx 2 ashine 3 tmac</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>ZCARD KEY_NAME</td>
+<td>返回集合中元素的数量</td>
+<td>ZCARD sortedkey</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>ZCOUNT key min max</td>
+<td>计算有序集合中指定分数区间的成员数量</td>
+<td>ZCOUNT sortedkey 1 2</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZINCRBY key increment member</td>
+<td>对有序集合中指定成员的分数加上增量 increment,可增加负数</td>
+<td>ZINCRBY sortedkey -6 tmac</td>
+<td>“-3”</td>
+</tr>
+<tr>
+<td>ZRANGE key start stop [WITHSCORES]</td>
+<td>返回有序集中，指定区间内的成员，顺序默认按分数从小到大，相同分数按字典顺序，0表示第一个成员，1表示第二个成员；-1表示最后，-2表示倒数第二个</td>
+<td>ZRANGE sortedkey 0 -1</td>
+<td>1) “tmac” 2) “whx” 3) “ashine”</td>
+</tr>
+<tr>
+<td>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</td>
+<td>返回有序集合中指定分数区间的成员列表，区间的取值使用闭区间 (小于等于或大于等于)，也可以通过给参数前增加 (符号来使用可选的开区间 (小于或大于)</td>
+<td>ZRANGEBYSCORE zset (1 5</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>ZREVRANGE key start stop [WITHSCORES]</td>
+<td>返回有序集中，指定区间内的成员，从大到小</td>
+<td>ZREVRANGE sortedkey 0 -1 WITHSCORES</td>
+<td>1) “ashine” 2) “2” 3) “whx” 4) “1” 5) “tmac” 6) “-3”</td>
+</tr>
+<tr>
+<td>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</td>
+<td>返回有序集中指定分数区间内的所有的成员</td>
+<td>ZREVRANGEBYSCORE sortedkey   2 0</td>
+<td>1) “ashine” 2) “whx”</td>
+</tr>
+<tr>
+<td>ZRANK key member</td>
+<td>返回有序集中指定成员的排名。其中有序集成员按分数值递增(从小到大)顺序排列 如果成员不是有序集 key 的成员，返回 nil。</td>
+<td>ZRANK sortedkey tmac</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>ZREVRANK key member</td>
+<td>返回有序集中成员的排名。其中有序集成员按分数值递减(从大到小)排序，最大位0</td>
+<td>ZREVRANK sortedkey whx</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>ZREM key member</td>
+<td>移除有序集中的一个或多个成员，不存在的成员将被忽略</td>
+<td>ZREM sortedkey tmac ashine</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZREMRANGEBYRANK key start stop</td>
+<td>用于移除有序集中，指定排名(rank)区间内的所有成员</td>
+</tr>
+<tr>
+<td></td>
+<td>ZREMRANGEBYRANK sortedkey 1 2</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZREMRANGEBYSCORE key min max</td>
+<td>用于移除有序集中，指定分数（score）区间内的所有成员</td>
+<td>ZREMRANGEBYSCORE sortedkey 0 1</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td> ZSCORE key member</td>
+<td>返回有序集中，成员的分数值。 如果成员元素不是有序集 key 的成员，或 key 不存在，返回 nil</td>
+<td>SREM ZSCORE sortedkey whx</td>
+<td>“1”</td>
+</tr>
+</tbody>
+</table>
+<p>有序列表还有交集，并集及迭代，还有字典遍历相关，需要时再查询。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/pay/weixin.png" alt="ashine WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/pay/zhifubao.png" alt="ashine Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/03/Redis-2.数据类型/" rel="next" title="Redis-2.数据类型">
+                <i class="fa fa-chevron-left"></i> Redis-2.数据类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/15/Redis-3.命令-第一部分key,String,Hash/" rel="prev" title="Redis-3.命令之key,String,Hash">
+                Redis-3.命令之key,String,Hash <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/15/Redis-3.命令-第二部分list,set,sorted set/"
+           data-title="Redis-3.命令之list,set,sorted set" data-url="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
+               alt="ashine" />
+          <p class="site-author-name" itemprop="name">ashine</p>
+          <p class="site-description motion-element" itemprop="description">人生海海</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis命令-第二部分list-set-sorted-set"><span class="nav-number">1.</span> <span class="nav-text">Redis命令-第二部分list,set,sorted set</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Redis的list命令"><span class="nav-number">1.1.</span> <span class="nav-text">5.Redis的list命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Redis的set命令"><span class="nav-number">1.2.</span> <span class="nav-text">6.Redis的set命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Redis的sorted-set命令"><span class="nav-number">1.3.</span> <span class="nav-text">7.Redis的sorted set命令</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ashine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ashine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

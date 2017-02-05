@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="screen,linux," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,34 +84,16 @@
 
 
 
-<meta name="description" content="什么是screen简单来说，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。操作的时候可以理解为像操作浏览器一样的。
-安装screen1yum install -y screen
-使用screen-创建窗口
-方式1：直接在命令行输入screen命令(建议使用，最好加上名字)
-
-1[root@localhost ~]# screen
-1[root@localhost ~]# s">
+<meta name="description" content="Redis-4.深入-HyperLogLog、事务、发布订阅等1.HyperLogLog HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux-screen的使用">
-<meta property="og:url" content="http://yoursite.com/2016/12/21/linux-screen的使用/index.html">
+<meta property="og:title" content="ashine's blog">
+<meta property="og:url" content="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="什么是screen简单来说，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。操作的时候可以理解为像操作浏览器一样的。
-安装screen1yum install -y screen
-使用screen-创建窗口
-方式1：直接在命令行输入screen命令(建议使用，最好加上名字)
-
-1[root@localhost ~]# screen
-1[root@localhost ~]# s">
-<meta property="og:updated_time" content="2017-01-05T11:45:49.438Z">
+<meta property="og:description" content="Redis-4.深入-HyperLogLog、事务、发布订阅等1.HyperLogLog HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了">
+<meta property="og:updated_time" content="2017-02-05T08:37:28.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux-screen的使用">
-<meta name="twitter:description" content="什么是screen简单来说，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。操作的时候可以理解为像操作浏览器一样的。
-安装screen1yum install -y screen
-使用screen-创建窗口
-方式1：直接在命令行输入screen命令(建议使用，最好加上名字)
-
-1[root@localhost ~]# screen
-1[root@localhost ~]# s">
+<meta name="twitter:title" content="ashine's blog">
+<meta name="twitter:description" content="Redis-4.深入-HyperLogLog、事务、发布订阅等1.HyperLogLog HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了">
 
 
 
@@ -139,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/21/linux-screen的使用/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/"/>
 
 
 
 
 
-  <title> linux-screen的使用 | ashine's blog </title>
+  <title>  | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -296,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/linux-screen的使用/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ashine">
@@ -320,7 +302,7 @@
             
             
               
-                linux-screen的使用
+                
               
             
           </h1>
@@ -333,8 +315,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-21T17:06:06+08:00">
-                2016-12-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T16:37:54+08:00">
+                2017-02-05
               </time>
             
 
@@ -344,31 +326,13 @@
           </span>
 
           
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/21/linux-screen的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/21/linux-screen的使用/" itemprop="commentCount"></span>
+                <a href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/05/Redis-4.深入-HyperLogLog、事务等/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -394,78 +358,138 @@
       
 
       
-        <h1 id="什么是screen"><a href="#什么是screen" class="headerlink" title="什么是screen"></a>什么是screen</h1><p>简单来说，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。操作的时候可以理解为像操作浏览器一样的。</p>
-<h1 id="安装screen"><a href="#安装screen" class="headerlink" title="安装screen"></a>安装screen</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y screen</div></pre></td></tr></table></figure>
-<h1 id="使用screen-创建窗口"><a href="#使用screen-创建窗口" class="headerlink" title="使用screen-创建窗口"></a>使用screen-创建窗口</h1><ul>
-<li><strong>方式1：直接在命令行输入screen命令(建议使用，最好加上名字)</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen -S my_screen_name</div></pre></td></tr></table></figure>
-<blockquote>
-<p>screen可以创建一个执行shell的窗口。你可以执行任意shell。在该窗口中使用exit退出该窗口，如果这是该screen会话的唯一窗口，该screen会话退出，否则screen自动切换到前一个窗口。</p>
-</blockquote>
-<ul>
-<li><strong>方式2：screen命令后跟你要执行的程序</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen vi a.txt</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>screen创建一个执行vi a.txt的单窗口会话，退出vi将退出该窗口/会话。</p>
-</blockquote>
-<ul>
-<li><strong>方式3：可以在一个已有screen会话中创建新的窗口。在当前screen窗口中键入c+a然后 c(或者再输入一次screen)，即Ctrl键+a键，之后再按下c键，screen 在该会话内生成一个新的窗口并切换到该窗口。</strong></li>
-</ul>
-<h1 id="使用screen-中断会话和回复会话"><a href="#使用screen-中断会话和回复会话" class="headerlink" title="使用screen-中断会话和回复会话"></a>使用screen-中断会话和回复会话</h1><ul>
-<li><strong>先创建一个screen窗口然后编辑vi a.txt</strong></li>
-<li><strong>假如有其他的事情需要退出，那么在screen窗口键入C-a d，Screen会给出detached提示，这样就中断了会话。</strong></li>
-<li><strong>如果需要恢复会话，使用screen -r 即可恢复。（如果是有多个screen，则加上窗口号使用screen -r 10038即可恢复）</strong></li>
-</ul>
-<h1 id="关于c-a绑定键"><a href="#关于c-a绑定键" class="headerlink" title="关于c-a绑定键"></a>关于c-a绑定键</h1><table>
+        <h1 id="Redis-4-深入-HyperLogLog、事务、发布订阅等"><a href="#Redis-4-深入-HyperLogLog、事务、发布订阅等" class="headerlink" title="Redis-4.深入-HyperLogLog、事务、发布订阅等"></a>Redis-4.深入-HyperLogLog、事务、发布订阅等</h1><h2 id="1-HyperLogLog"><a href="#1-HyperLogLog" class="headerlink" title="1.HyperLogLog"></a>1.HyperLogLog</h2><p> HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了比上面效率更高的算法。</p>
+<p>顾名思义，Hyper LogLog计数器就是估算Nmax为基数的数据集仅需使用loglog(Nmax)+O(1) bits就可以。如线性计数器的Hyper LogLog计数器允许设计人员指定所需的精度值，在Hyper LogLog的情况下，这是通过定义所需的相对标准差和预期要计数的最大基数。大部分计数器通过一个输入数据流M，并应用一个哈希函数设置h(M)来工作。这将产生一个S = h(M) of {0,1}^∞字符串的可观测结果。通过分割哈希输入流成m个子字符串，并对每个子输入流保持m的值可观测 ，这就是相当一个新Hyper LogLog（一个子m就是一个新的Hyper LogLog）。利用额外的观测值的平均值，产生一个计数器，其精度随着m的增长而提高，这只需要对输入集合中的每个元素执行几步操作就可以完成。其结果是，这个计数器可以仅使用1.5 kb的空间计算精度为2%的十亿个不同的数据元素。与执行 HashSet所需的120 兆字节进行比较，这种算法的效率很明显。这就是传说中的”如何仅用1.5KB内存为十亿对象计数“。（还需多研究，此处很多地方还不是很理解）</p>
+<p>以上摘自</p>
+<p><a href="http://blog.csdn.net/Androidlushangderen/article/details/40683763" target="_blank" rel="external">http://blog.csdn.net/Androidlushangderen/article/details/40683763</a></p>
+<p><a href="http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html" target="_blank" rel="external">http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html</a></p>
+<table>
 <thead>
 <tr>
-<th>c-a 键</th>
-<th>键的功能</th>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>c-a w</td>
-<td>显示所有窗口列表</td>
+<td>PFADD key element [element …]</td>
+<td>将所有元素参数添加到 HyperLogLog 数据结构中</td>
+<td>PFADD hyperlogtest ashine shitou masha guanyou guaishou</td>
+<td>如果至少有个元素被添加返回 1， 否则返回 0</td>
 </tr>
 <tr>
-<td>c-a c-a</td>
-<td>切换到之前显示的窗口</td>
+<td>PFCOUNT key [key …]</td>
+<td>返回给定 HyperLogLog 的基数估算值</td>
+<td>PFCOUNT hyperlogtest hyperlogtest1</td>
+<td>整数，返回给定 HyperLogLog 的基数值，如果多个 HyperLogLog 则返回基数估值之和</td>
 </tr>
 <tr>
-<td>c-a c</td>
-<td>创建一个新的运行shell的窗口并切换到该窗口</td>
+<td>PFMERGE destkey sourcekey [sourcekey …]</td>
+<td>将多个 HyperLogLog 合并为一个 HyperLogLog ，合并后的 HyperLogLog 的基数估算值是通过对所有 给定 HyperLogLog 进行并集计算得出的</td>
+<td>PFMERGE hypermain hyperlogtest hyperlogtest1</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2.事务"></a>2.事务</h2><p>事务，和关系型数据库的事务应该是一个道理。<br>事务四大特性(简称ACID) </p>
+<ul>
+<li>1、原子性(Atomicity)：事务中的全部操作在数据库中是不可分割的，要么全部完成，要么均不执行。</li>
+<li>2、一致性(Consistency)：几个并行执行的事务，其执行结果必须与按某一顺序串行执行的结果相一致。</li>
+<li>3、隔离性(Isolation)：事务的执行不受其他事务的干扰。</li>
+<li>4、持久性(Durability)：对于任意已提交事务，系统必须保证该事务对数据库的改变不被丢失，即使数据库出现故障。 </li>
+</ul>
+<p>我们主要来看下下面的命令。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi</td>
+<td>用于标记一个事务块的开始。事务块内的多条命令会按照先后顺序被放进一个队列当中，最后由 EXEC 命令原子性(atomic)地执行。</td>
+<td>MULTI 然后INCR test 然后INCR test 然后EXEC 执行</td>
+<td>事务块内所有命令的返回值，按命令执行的先后顺序排列。 当操作被打断时，返回空值 nil </td>
 </tr>
 <tr>
-<td>c-a n</td>
-<td>切换到下一个窗口</td>
+<td>Exec</td>
+<td>执行所有事务块内的命令</td>
+<td>同上</td>
+<td>同上一起用</td>
 </tr>
 <tr>
-<td>c-a p</td>
-<td>切换到前一个窗口(与C-a n相对)</td>
+<td>Watch</td>
+<td>用于监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断</td>
+<td>WATCH test test1</td>
+<td>OK</td>
 </tr>
 <tr>
-<td>c-a 0..9</td>
-<td>切换到窗口0..9</td>
+<td>UNWATCH</td>
+<td>用于取消 WATCH 命令对所有 key 的监视</td>
+<td>UNWATCH</td>
+<td>OK</td>
 </tr>
 <tr>
-<td>c-a d</td>
-<td>暂时断开screen会话</td>
+<td>DISCARD</td>
+<td>用于取消事务，放弃执行事务块内的所有命令</td>
+<td>DISCARD</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-发布订阅"><a href="#3-发布订阅" class="headerlink" title="3.发布订阅"></a>3.发布订阅</h2><p>Redis 发布订阅(pub/sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。</p>
+<p>Redis 客户端可以订阅任意数量的频道。 </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUBSCRIBE channel [channel…]</td>
+<td>用于订阅给定的一个或多个频道的信息</td>
+<td>SUBSCRIBE musicnews</td>
+<td>1) “subscribe” 2) “musicnews” 3) (integer) 1 </td>
 </tr>
 <tr>
-<td>c-a k</td>
-<td>杀掉当前窗口</td>
+<td>PUBLISH channel message</td>
+<td>用于将信息发送到指定的频道</td>
+<td>PUBLISH musicnews mayday</td>
+<td>命令返回接收到信息的订阅者数量；而在订阅此channel的客户端出现如下结果1) “message” 2) “musicnews” 3) “mayday”</td>
 </tr>
 <tr>
-<td>c-a a</td>
-<td>发送 c-a到当前窗口</td>
+<td>UNSUBSCRIBE channel [channel …]</td>
+<td>用于退订给定的一个或多个频道的信息</td>
+<td>UNSUBSCRIBE musicnews</td>
+<td>在不同的客户端中有不同的表现</td>
 </tr>
 <tr>
-<td>c-a [</td>
-<td>进入拷贝/回滚模式</td>
+<td>PSUBSCRIBE pattern [pattern …]</td>
+<td>订阅一个或多个符合给定模式的频道。每个模式以 <em> 作为匹配符，比如 it</em> 匹配所有以 it 开头的频道( it.news 、 it.blog 、 it.tweets 等等)</td>
+<td>PSUBSCRIBE *news</td>
+<td>接收到的信息</td>
+</tr>
+<tr>
+<td>PUNSUBSCRIBE [pattern [pattern …]]</td>
+<td>用于退订所有给定模式的频道</td>
+<td>PUNSUBSCRIBE *news</td>
+<td>在不同的客户端中有不同的表现</td>
+</tr>
+<tr>
+<td>PUBSUB <subcommand> [argument [argument …]]</subcommand></td>
+<td>用于退订所有给定模式的频道</td>
+<td>PUBSUB CHANNELS(后面不接即打出所有) s*</td>
+<td>由活跃频道组成的列表</td>
 </tr>
 </tbody>
 </table>
@@ -511,21 +535,13 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/screen/" rel="tag"># screen</a>
-          
-            <a href="/tags/linux/" rel="tag"># linux</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/10/JAVA服务端-技术问题整理（持续更新）/" rel="next" title="技术问题整理（持续更新）">
-                <i class="fa fa-chevron-left"></i> 技术问题整理（持续更新）
+              <a href="/2017/02/05/Redis-5.服务器相关命令/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -533,10 +549,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/03/Redis-1.安装/" rel="prev" title="Redis-1.安装">
-                Redis-1.安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,8 +580,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/21/linux-screen的使用/"
-           data-title="linux-screen的使用" data-url="http://yoursite.com/2016/12/21/linux-screen的使用/">
+      <div class="ds-thread" data-thread-key="2017/02/05/Redis-4.深入-HyperLogLog、事务等/"
+           data-title="" data-url="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/">
       </div>
     
   </div>
@@ -666,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是screen"><span class="nav-number">1.</span> <span class="nav-text">什么是screen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装screen"><span class="nav-number">2.</span> <span class="nav-text">安装screen</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用screen-创建窗口"><span class="nav-number">3.</span> <span class="nav-text">使用screen-创建窗口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用screen-中断会话和回复会话"><span class="nav-number">4.</span> <span class="nav-text">使用screen-中断会话和回复会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于c-a绑定键"><span class="nav-number">5.</span> <span class="nav-text">关于c-a绑定键</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-4-深入-HyperLogLog、事务、发布订阅等"><span class="nav-number">1.</span> <span class="nav-text">Redis-4.深入-HyperLogLog、事务、发布订阅等</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HyperLogLog"><span class="nav-number">1.1.</span> <span class="nav-text">1.HyperLogLog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-事务"><span class="nav-number">1.2.</span> <span class="nav-text">2.事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-发布订阅"><span class="nav-number">1.3.</span> <span class="nav-text">3.发布订阅</span></a></li></ol></li></ol></div>
             
 
           </div>
