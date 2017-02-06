@@ -84,16 +84,94 @@
 
 
 
-<meta name="description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
+<meta name="description" content="Redis-5.服务器相关命令Redis 服务器命令主要是用于管理 redis 服务
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+Info
+命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值
+Info
+省略
+
+
+DBSIZE
+返回当前数据库的 key 的数量
+DBSIZE
+(integer) 5
+
+
+FLUSHDB
+用于清空当前数据库中的所有 key
+FLUSHDB
+OK">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis-1.安装">
-<meta property="og:url" content="http://yoursite.com/2017/01/03/Redis-1.安装/index.html">
+<meta property="og:title" content="Redis-5.服务器相关命令">
+<meta property="og:url" content="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
-<meta property="og:updated_time" content="2017-01-10T13:06:31.509Z">
+<meta property="og:description" content="Redis-5.服务器相关命令Redis 服务器命令主要是用于管理 redis 服务
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+Info
+命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值
+Info
+省略
+
+
+DBSIZE
+返回当前数据库的 key 的数量
+DBSIZE
+(integer) 5
+
+
+FLUSHDB
+用于清空当前数据库中的所有 key
+FLUSHDB
+OK">
+<meta property="og:updated_time" content="2017-02-06T09:30:07.923Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis-1.安装">
-<meta name="twitter:description" content="redis是啥redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同">
+<meta name="twitter:title" content="Redis-5.服务器相关命令">
+<meta name="twitter:description" content="Redis-5.服务器相关命令Redis 服务器命令主要是用于管理 redis 服务
+
+
+命令
+作用
+例子
+结果
+
+
+
+
+Info
+命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值
+Info
+省略
+
+
+DBSIZE
+返回当前数据库的 key 的数量
+DBSIZE
+(integer) 5
+
+
+FLUSHDB
+用于清空当前数据库中的所有 key
+FLUSHDB
+OK">
 
 
 
@@ -121,13 +199,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/03/Redis-1.安装/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/"/>
 
 
 
 
 
-  <title> Redis-1.安装 | ashine's blog </title>
+  <title> Redis-5.服务器相关命令 | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +356,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ashine">
@@ -302,7 +380,7 @@
             
             
               
-                Redis-1.安装
+                Redis-5.服务器相关命令
               
             
           </h1>
@@ -315,8 +393,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-06T20:38:03+08:00">
+                2017-02-06
               </time>
             
 
@@ -349,8 +427,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
+                <a href="/2017/02/06/Redis-5.服务器相关命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/06/Redis-5.服务器相关命令/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -376,19 +454,79 @@
       
 
       
-        <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
-<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
-<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
-<p>接下来继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
-<p>启动、进入、关闭redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
-<p>也可以指定端口启动和结束</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
-<p>设置密码<br>修改redis.conf</p>
-<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
+        <h1 id="Redis-5-服务器相关命令"><a href="#Redis-5-服务器相关命令" class="headerlink" title="Redis-5.服务器相关命令"></a>Redis-5.服务器相关命令</h1><h2 id="Redis-服务器命令主要是用于管理-redis-服务"><a href="#Redis-服务器命令主要是用于管理-redis-服务" class="headerlink" title="Redis 服务器命令主要是用于管理 redis 服务"></a>Redis 服务器命令主要是用于管理 redis 服务</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Info</td>
+<td>命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值</td>
+<td>Info</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>DBSIZE</td>
+<td>返回当前数据库的 key 的数量</td>
+<td>DBSIZE</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>FLUSHDB</td>
+<td>用于清空当前数据库中的所有 key</td>
+<td>FLUSHDB</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>FLUSHALL</td>
+<td>用于清空整个 Redis 服务器的数据(删除所有数据库的所有 key )</td>
+<td>FLUSHALL</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>SAVE</td>
+<td>执行一个同步保存操作，将当前 Redis 实例的所有数据快照(snapshot)以 RDB 文件的形式保存到硬盘</td>
+<td>SAVE</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>ROLE</td>
+<td>查看主从实例所属的角色，角色有master, slave, sentinel</td>
+<td>ROLE</td>
+<td>所属角色</td>
+</tr>
+<tr>
+<td>MONITOR</td>
+<td>用于实时打印出 Redis 服务器接收到的命令，调试用</td>
+<td>MONITOR</td>
+<td>打印出正在执行的语句</td>
+</tr>
+<tr>
+<td>LASTSAVE</td>
+<td>返回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示</td>
+<td>LASTSAVE</td>
+<td>1486282788</td>
+</tr>
+<tr>
+<td>SLOWLOG subcommand [argument]</td>
+<td>Redis 用来记录查询执行时间的日志系统</td>
+<td>slowlog get:列出所有;slowlog get N:列出最近N条;SLOWLOG LEN 日志数量;SLOWLOG RESET 清空日志</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>SLAVEOF host port</td>
+<td>将当前服务器转变为指定服务器的从属服务器(slave server)</td>
+<td>SLAVEOF 127.0.0.1 6379</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<p>还有更多命令可以参考<a href="http://www.redis.net.cn/tutorial/3518.html" target="_blank" rel="external">http://www.redis.net.cn/tutorial/3518.html</a></p>
 
       
     </div>
@@ -442,8 +580,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/03/Redis-2.数据类型/" rel="next" title="Redis-2.数据类型">
-                <i class="fa fa-chevron-left"></i> Redis-2.数据类型
+              <a href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/" rel="next" title="Redis-4.深入HyperLogLog、事务、发布订阅等">
+                <i class="fa fa-chevron-left"></i> Redis-4.深入HyperLogLog、事务、发布订阅等
               </a>
             
           </div>
@@ -451,10 +589,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" rel="prev" title="Redis-3.命令之list,set,sorted set">
-                Redis-3.命令之list,set,sorted set <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -486,8 +620,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/03/Redis-1.安装/"
-           data-title="Redis-1.安装" data-url="http://yoursite.com/2017/01/03/Redis-1.安装/">
+      <div class="ds-thread" data-thread-key="2017/02/06/Redis-5.服务器相关命令/"
+           data-title="Redis-5.服务器相关命令" data-url="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/">
       </div>
     
   </div>
@@ -584,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis是啥"><span class="nav-number">1.</span> <span class="nav-text">redis是啥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux安装redis"><span class="nav-number">2.</span> <span class="nav-text">linux安装redis</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-5-服务器相关命令"><span class="nav-number">1.</span> <span class="nav-text">Redis-5.服务器相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-服务器命令主要是用于管理-redis-服务"><span class="nav-number">1.1.</span> <span class="nav-text">Redis 服务器命令主要是用于管理 redis 服务</span></a></li></ol></li></ol></div>
             
 
           </div>
