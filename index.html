@@ -279,6 +279,344 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/关于RocketMQ-第二篇-安装及启动/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ashine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ashine's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/13/关于RocketMQ-第二篇-安装及启动/" itemprop="url">
+                  关于RocketMQ-第二篇-安装及启动
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T21:51:15+08:00">
+                2017-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端-RocketMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-RocketMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/13/关于RocketMQ-第二篇-安装及启动/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/关于RocketMQ-第二篇-安装及启动/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一-安装RocketMQ"><a href="#一-安装RocketMQ" class="headerlink" title="一.安装RocketMQ"></a>一.安装RocketMQ</h1><h2 id="1-安装环境"><a href="#1-安装环境" class="headerlink" title="1.安装环境"></a>1.安装环境</h2><ul>
+<li>linux 64位 我用的centos7</li>
+<li>JDK 1.7 自带了，可以 yum install java（命令默认安装的是open jdk，也可以安装oracle的）</li>
+<li>Git 1.8.X yum install git</li>
+<li>screen yum install screen</li>
+<li>Maven 3.X yum install apache-maven(如果报错，则按下面的方式)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget http://repos.fedorapeople.org/repos/dchen/apache‐maven/epel‐apache‐maven.repo ‐O</div><div class="line">/etc/yum.repos.d/epel‐apache‐maven.repo</div><div class="line">yum ‐y install apache‐maven</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-clone-RocketMQ"><a href="#2-clone-RocketMQ" class="headerlink" title="2.clone RocketMQ"></a>2.clone RocketMQ</h2><ul>
+<li>进入建好的文件夹</li>
+<li>git clone <a href="https://github.com/alibaba/RocketMQ.git" target="_blank" rel="external">https://github.com/alibaba/RocketMQ.git</a></li>
+<li>bash install.sh</li>
+</ul>
+<p>安装成功后可以看到devenv文件夹，内含所有必须的文件和库。其实这个文件是<br>/RocketMQ/target/alibaba-xxxx的快捷方式。</p>
+<h2 id="3-设置环境变量"><a href="#3-设置环境变量" class="headerlink" title="3.设置环境变量"></a>3.设置环境变量</h2><ul>
+<li>切记java环境变量设置正确，保证jdk单一。</li>
+<li>设置ROCKETMQ_HOME环境变量：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd devenv</div><div class="line">  echo &quot;ROCKETMQ_HOME=`pwd`&quot; &gt;&gt; ~/.bash_profile //将当前路径赋予全局常量写到.bash_profile中，方便后面调用</div><div class="line">  source ~/.bash_profile //使新的环境变量生效</div></pre></td></tr></table></figure>
+<h1 id="二-启动RocketMQ"><a href="#二-启动RocketMQ" class="headerlink" title="二.启动RocketMQ"></a>二.启动RocketMQ</h1><h2 id="1-启动NameServer"><a href="#1-启动NameServer" class="headerlink" title="1.启动NameServer"></a>1.启动NameServer</h2><p>进入devenv目录的bin目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">screen -S &apos;nameserver&apos; //建个窗口取名叫nameserver</div><div class="line">bash mqnamesrv</div><div class="line">如果您看到The Name Server boot success. serializeType=JSON ，这意味着名称服务器成功启动。按Ctrl +</div><div class="line">A ，然后按D 断开会话。</div></pre></td></tr></table></figure></p>
+<h2 id="2-启动broker服务"><a href="#2-启动broker服务" class="headerlink" title="2.启动broker服务"></a>2.启动broker服务</h2><p>同样在这个目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">screen bash mqbroker ‐n localhost:9876</div><div class="line">//‐n 是mqbroker服务一个可选参数，意为选择nameserver地址，此处默认本机ip，端口9876</div></pre></td></tr></table></figure>
+<p>如果看到如下输出：<br>The broker[localhost.localdomain, 192.168.1.72:10911] boot success. serializeType=JSON and name server is localhost:9876 表示启动成功</p>
+<h2 id="3-发送及接收消息"><a href="#3-发送及接收消息" class="headerlink" title="3.发送及接收消息"></a>3.发送及接收消息</h2><p>在发送/接收消息之前，我们需要告诉客户端名称服务器所在的位置。为了简单起见，我们使用环境变量<br>NAMESRV_ADDR ，（producer/consumer初始化时会调用NAMESRV_ADDR，设置成环境变量或者代码里直接声明<br>都可以）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export NAMESRV_ADDR = localhost:9876</div></pre></td></tr></table></figure>
+<p><strong>发送消息</strong></p>
+<p>bash tools.sh com.alibaba.rocketmq.example.quickstart.Producer</p>
+<p><strong>接收消息</strong></p>
+<p>bash tools.sh com.alibaba.rocketmq.example.quickstart.Consumer</p>
+<h1 id="三-遇到问题"><a href="#三-遇到问题" class="headerlink" title="三.遇到问题"></a>三.遇到问题</h1><ul>
+<li><strong>1.在虚拟机中遇到”VM warning: INFO: OS::commit_memory(0x00000006c0000000, 2147483648, 0) faild; error=’Cannot allocate memory’”</strong></li>
+<li><p>原因是内存不够，要加大内存，我加到了3G；还需要修改下启动脚本 runserver.sh 、runbroker.sh 中对于内存的限制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">runserver.sh</div><div class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms512m -Xmx512m -Xmn256m -XX:PermSize=512m -XX:MaxPermSize=512m&quot;</div><div class="line">runbroker.sh</div><div class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms2g -Xmx2g -Xmn512m -XX:PermSize=512m -XX:MaxPermSize=512m&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>2.启动Broker遇到提示cannot stat ‘/root/rmq_bk_gc.log’:No such file or directory</strong></p>
+</li>
+<li>解决方法：多等一会，直到出现成功。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="ashine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ashine's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/12/关于RocketMQ-第一篇-介绍/" itemprop="url">
+                  关于RocketMQ-第一篇-介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T18:56:06+08:00">
+                2017-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端-RocketMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-RocketMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/12/关于RocketMQ-第一篇-介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/12/关于RocketMQ-第一篇-介绍/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一-什么是消息中间件"><a href="#一-什么是消息中间件" class="headerlink" title="一.什么是消息中间件"></a>一.什么是消息中间件</h1><h2 id="1-什么是消息中间件？"><a href="#1-什么是消息中间件？" class="headerlink" title="1.什么是消息中间件？"></a>1.什么是消息中间件？</h2><p>消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解<br>决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分<br>布式系统不可缺少的中间件。</p>
+<h2 id="2-消息中间件工作场景"><a href="#2-消息中间件工作场景" class="headerlink" title="2.消息中间件工作场景"></a>2.消息中间件工作场景</h2><ul>
+<li>消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操作。发送者将消息发送给消息服务器，消息服务器将消息存放在若干队列中，在合适的时候再将消息转发给接收者。</li>
+<li>消息中间件能在不同平台之间通信，它常被用来屏蔽掉各种平台及协议之间的特性，实现应用程序之间的协同，其优点在于能够在客户和服务器之间提供同步和异步的连接，并且在任何时刻都可以将消息进行传送或者存储转发，这也是它比远程过程调用更进一步的原因。</li>
+</ul>
+<h1 id="二-关于RocketMQ"><a href="#二-关于RocketMQ" class="headerlink" title="二.关于RocketMQ"></a>二.关于RocketMQ</h1><h2 id="1-RocketMQ产品定义"><a href="#1-RocketMQ产品定义" class="headerlink" title="1.RocketMQ产品定义"></a>1.RocketMQ产品定义</h2><p>产品基于高可用分布式集群技术，提供消息发布订阅、消息轨迹查询、定时（延时）消息、资源统计、监控<br>报警等一系列消息云服务，是企业级互联网架构的核心产品。</p>
+<h2 id="2-RocketMQ的角色"><a href="#2-RocketMQ的角色" class="headerlink" title="2.RocketMQ的角色"></a>2.RocketMQ的角色</h2><p><img src="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png" alt="image"></p>
+<ul>
+<li>Producer消息生产者，一般由业务系统产生消息。</li>
+<li>Consumer消息消费者，一般由服务端异步消费。（有两种，push consumer;pull consumer）</li>
+<li>Broker消息中转角色，存储消息，转发消息。(很多线上部署是用的多主无从)</li>
+<li>NameServer无状态节点，用来保存活跃的broker列表，topic列表。（可集群部署）</li>
+</ul>
+<h2 id="3-流程"><a href="#3-流程" class="headerlink" title="3.流程"></a>3.流程</h2><ul>
+<li>先需要一个NameServer节点。类似于路由。Producer,Consumer,Broker之间的联系都需要通过访问NameServer，拿到需要的路由信息才能进行联系。</li>
+<li>启动Broker</li>
+<li>启动NameServer和Broker后则可以在控制台进行topic的增加和订阅。之后Producer就可以发送已有的topic消息，Consumer被broker允许后，便可以收到生产者的消息。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/10/JAVA位运算/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -446,10 +784,9 @@
 </ul>
 <h2 id="4-深入"><a href="#4-深入" class="headerlink" title="4.深入"></a>4.深入</h2><p>为什么要使用反码，补码，是因为想让计算机的计算尽量简单，只做加法运算！<br>更多细节可以看下面这个blog,写的很好！<br><a href="http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html" target="_blank" rel="external">http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html</a></p>
 <h1 id="四-运算方式–与或非等"><a href="#四-运算方式–与或非等" class="headerlink" title="四.运算方式–与或非等"></a>四.运算方式–与或非等</h1><ul>
-<li>如果两个输入位都是1，则按位“与”操作符（&amp;）生成一个输出位1，否则是0。（负数要用补码的形式做运算）</li>
-</ul>
+<li><p>如果两个输入位都是1，则按位“与”操作符（&amp;）生成一个输出位1，否则是0。（负数要用补码的形式做运算）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">与运算例子：2&amp;-1 （记住-1要用补码运算）</div><div class="line">-1的原码是 10000001</div><div class="line">-1的反码是 11111110</div><div class="line">-1的补码是 11111111</div><div class="line"> 2的原码是 00000010</div><div class="line"> 按位与运算 00000010</div><div class="line"> 结果为2</div></pre></td></tr></table></figure>
-<ul>
+</li>
 <li><p>如果两个输入位只要有一个是1，则按位“或”（|）生成一个输出位1，只有两个输入位都是0的情况，才输出位0。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">或运算例子：-2&amp;1 （记住-2要用补码运算）</div><div class="line">-2的原码是 10000010</div><div class="line">-2的反码是 11111101</div><div class="line">-2的补码是 11111110</div><div class="line"> 1的原码是 00000001</div><div class="line"> 按位或运算 11111111</div><div class="line"> 因为计算机里全是用补码表示，所以转换为十进制 减一 取反 为 原码  结果为 -1</div><div class="line"> 也可以这么计算 负数按位取反+1 =负数的绝对值</div></pre></td></tr></table></figure>
 </li>
@@ -461,15 +798,14 @@
 </li>
 </ul>
 <h1 id="四-运算方式–移位"><a href="#四-运算方式–移位" class="headerlink" title="四.运算方式–移位"></a>四.运算方式–移位</h1><ul>
-<li>左移运算符 &lt;&lt;左移，将左边的操作数的二进制数据向左移动n位，移动后低位补0。（在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方）</li>
-</ul>
+<li><p>左移运算符 &lt;&lt;左移，将左边的操作数的二进制数据向左移动n位，移动后低位补0。（在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &lt;&lt; 2  00010100 </div><div class="line">结果为 5 * 2^2 = 20</div></pre></td></tr></table></figure>
-<ul>
+</li>
 <li><p>右移运算符&gt;&gt; ，二进制数据向右移动n位，如果为正数，则再高位插入0，若为负数，则再高位插入1。（右移一位相当于除2，右移n位相当于除以2的n次方）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &gt;&gt; 2  00000001 </div><div class="line">结果为 5/(2^2) 1</div></pre></td></tr></table></figure>
 </li>
 <li><p>无符号的右移运算符&gt;&gt;&gt; ，忽略符号位，无论正负，都在高位插入0.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">-5的二进制 10000101</div><div class="line">5 &gt;&gt;&gt; 1  00000010 </div><div class="line">结果为 2</div></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">-5 &gt;&gt;&gt; 1</div><div class="line">-5的二进制 10000101</div><div class="line">-5的补码是 11111011</div><div class="line">右移一个则为01111101</div><div class="line">原码为本身（因为是正数）</div><div class="line"> 01111101</div><div class="line">结果为 2147483645</div></pre></td></tr></table></figure></li>
 </ul>
 
           
@@ -2413,387 +2749,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/linux-screen的使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ashine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ashine's blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/21/linux-screen的使用/" itemprop="url">
-                  linux-screen的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-21T17:06:06+08:00">
-                2016-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/21/linux-screen的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/21/linux-screen的使用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="什么是screen"><a href="#什么是screen" class="headerlink" title="什么是screen"></a>什么是screen</h1><p>简单来说，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。操作的时候可以理解为像操作浏览器一样的。</p>
-<h1 id="安装screen"><a href="#安装screen" class="headerlink" title="安装screen"></a>安装screen</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y screen</div></pre></td></tr></table></figure>
-<h1 id="使用screen-创建窗口"><a href="#使用screen-创建窗口" class="headerlink" title="使用screen-创建窗口"></a>使用screen-创建窗口</h1><ul>
-<li><strong>方式1：直接在命令行输入screen命令(建议使用，最好加上名字)</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen -S my_screen_name</div></pre></td></tr></table></figure>
-<blockquote>
-<p>screen可以创建一个执行shell的窗口。你可以执行任意shell。在该窗口中使用exit退出该窗口，如果这是该screen会话的唯一窗口，该screen会话退出，否则screen自动切换到前一个窗口。</p>
-</blockquote>
-<ul>
-<li><strong>方式2：screen命令后跟你要执行的程序</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# screen vi a.txt</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>screen创建一个执行vi a.txt的单窗口会话，退出vi将退出该窗口/会话。</p>
-</blockquote>
-<ul>
-<li><strong>方式3：可以在一个已有screen会话中创建新的窗口。在当前screen窗口中键入c+a然后 c(或者再输入一次screen)，即Ctrl键+a键，之后再按下c键，screen 在该会话内生成一个新的窗口并切换到该窗口。</strong></li>
-</ul>
-<h1 id="使用screen-中断会话和回复会话"><a href="#使用screen-中断会话和回复会话" class="headerlink" title="使用screen-中断会话和回复会话"></a>使用screen-中断会话和回复会话</h1><ul>
-<li><strong>先创建一个screen窗口然后编辑vi a.txt</strong></li>
-<li><strong>假如有其他的事情需要退出，那么在screen窗口键入C-a d，Screen会给出detached提示，这样就中断了会话。</strong></li>
-<li><strong>如果需要恢复会话，使用screen -r 即可恢复。（如果是有多个screen，则加上窗口号使用screen -r 10038即可恢复）</strong></li>
-</ul>
-<h1 id="关于c-a绑定键"><a href="#关于c-a绑定键" class="headerlink" title="关于c-a绑定键"></a>关于c-a绑定键</h1><table>
-<thead>
-<tr>
-<th>c-a 键</th>
-<th>键的功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>c-a w</td>
-<td>显示所有窗口列表</td>
-</tr>
-<tr>
-<td>c-a c-a</td>
-<td>切换到之前显示的窗口</td>
-</tr>
-<tr>
-<td>c-a c</td>
-<td>创建一个新的运行shell的窗口并切换到该窗口</td>
-</tr>
-<tr>
-<td>c-a n</td>
-<td>切换到下一个窗口</td>
-</tr>
-<tr>
-<td>c-a p</td>
-<td>切换到前一个窗口(与C-a n相对)</td>
-</tr>
-<tr>
-<td>c-a 0..9</td>
-<td>切换到窗口0..9</td>
-</tr>
-<tr>
-<td>c-a d</td>
-<td>暂时断开screen会话</td>
-</tr>
-<tr>
-<td>c-a k</td>
-<td>杀掉当前窗口</td>
-</tr>
-<tr>
-<td>c-a a</td>
-<td>发送 c-a到当前窗口</td>
-</tr>
-<tr>
-<td>c-a [</td>
-<td>进入拷贝/回滚模式</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="ashine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ashine's blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="ashine's blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/10/JAVA服务端-技术问题整理（持续更新）/" itemprop="url">
-                  技术问题整理（持续更新）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-10T19:06:06+08:00">
-                2016-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/10/JAVA服务端-技术问题整理（持续更新）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/JAVA服务端-技术问题整理（持续更新）/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1.String、StringBuffer与StringBuilder之间区别</strong></p>
-<ul>
-<li>执行速度上：StringBuilder &gt;  StringBuffer  &gt;  String（String 每次改变都会创建一个新的对象）。</li>
-<li>线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。</li>
-</ul>
-<p><strong>2.JVM加载class文件的原理机制</strong></p>
-<ul>
-<li>Class Loader加载class(Class Loader 只管加载，只要符合文件结构就加载，至于说能不能运行，则不是它负责的，那是由Execution Engine 负责的)。</li>
-<li>Execution Engine 执行引擎,执行引擎也叫做解释器(Interpreter) ，负责解释命令，提交操作系统执行。</li>
-<li>Native Interface 本地接口，本地接口的作用是融合不同的编程语言为Java 所用，现在用的越来越少了。</li>
-<li>Runtime data area 运行数据区，运行数据区是整个JVM 的重点。我们所有写的程序都被加载到这里，之后才开始运行。</li>
-<li>整个JVM 框架由加载器加载文件，然后执行器在内存中处理数据，需要与异构系统交互是可以通过本地接口进行。</li>
-<li>当执行 java <em>*</em>.class 的时候， java.exe 会帮助我们找到 JRE ，接着找到位于 JRE 内部的 jvm.dll ，这才是真正的 Java 虚拟机器 , 最后加载动态库，激活 Java 虚拟机器。虚拟机器激活以后，会先做一些初始化的动作，比如说读取系统参数等。一旦初始化动作完成之后，就会产生第一个类加载器―― Bootstrap Loader ， Bootstrap Loader 是由 C++ 所撰写而成，这个 Bootstrap Loader 所做的初始工作中，除了一些基本的初始化动作之外，最重要的就是加载 Launcher.java 之中的 ExtClassLoader ，并设定其 Parent 为 null ，代表其父加载器为 BootstrapLoader 。然后 Bootstrap Loader 再要求加载 Launcher.java 之中的 AppClassLoader ，并设定其 Parent 为之前产生的 ExtClassLoader 实体。这两个加载器都是以静态类的形式存在的。这里要请大家注意的是， Launcher$ExtClassLoader.class 与 Launcher$AppClassLoader.class 都是由 Bootstrap Loader 所加载，所以 Parent 和由哪个类加载器加载没有关系。<br>下面的图形可以表示三者之间的关系：<br>BootstrapLoader &lt;—(Extends)—-AppClassLoader &lt;—(Extends)—-ExtClassLoader </li>
-</ul>
-<p><strong>3.char 型变量中能不能存贮一个中文汉字，为什么？</strong></p>
-<ul>
-<li>char类型可以存储一个中文汉字，因为Java中使用的编码是Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个char类型占2个字节（16比特），所以放一个中文是没问题的。</li>
-</ul>
-<p><strong>4.实现多态的方式：抽象类和接口的区别</strong></p>
-<ul>
-<li>继承：抽象类只能继承一个，接口可以多继承。</li>
-<li>语法：抽象类与普通类的区别是抽象类可以定义抽象方法，不用实现，供子类继承。私有方法是可以定义的，因为比如使用设计模式中的模板方法模式，就有必要定义private的方法。而接口，变量只能定义public final的常量，而且方法必须是public abstract的，缺省值也是这样。</li>
-<li>意义上：抽象类，是对事物的抽象，对类抽象；而接口是对行为的抽象。一个经典的例子：门和警报。门一定有open和close的能力，但是不一定有警报的能力。所以如果把三个都放到门的抽象类里并不合适，因为不是所有门都会有警报，且把三个都放在接口里也不合适，因为有些能发警报的事务并不具有open和close的能力。结论就是抽象类里定义open和close,接口定义警报。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2839,7 +2794,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2847,7 +2802,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2856,7 +2811,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

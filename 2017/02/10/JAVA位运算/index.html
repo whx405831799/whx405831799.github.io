@@ -102,7 +102,7 @@
 
 数据类型
 位数">
-<meta property="og:updated_time" content="2017-02-10T03:37:52.081Z">
+<meta property="og:updated_time" content="2017-02-10T05:10:20.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA位运算">
 <meta name="twitter:description" content="一.总述JAVA位运算是通过按位操作符操作整数基本数据类型中的单个“比特”（bit）即二进制位安慰操作符会对两个参数中对应的位执行布尔代数运算，最终生成一个结果。(＞＞,＜＜,＞＞＞,&amp;amp;,|,^,～)
@@ -458,10 +458,9 @@
 </ul>
 <h2 id="4-深入"><a href="#4-深入" class="headerlink" title="4.深入"></a>4.深入</h2><p>为什么要使用反码，补码，是因为想让计算机的计算尽量简单，只做加法运算！<br>更多细节可以看下面这个blog,写的很好！<br><a href="http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html" target="_blank" rel="external">http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html</a></p>
 <h1 id="四-运算方式–与或非等"><a href="#四-运算方式–与或非等" class="headerlink" title="四.运算方式–与或非等"></a>四.运算方式–与或非等</h1><ul>
-<li>如果两个输入位都是1，则按位“与”操作符（&amp;）生成一个输出位1，否则是0。（负数要用补码的形式做运算）</li>
-</ul>
+<li><p>如果两个输入位都是1，则按位“与”操作符（&amp;）生成一个输出位1，否则是0。（负数要用补码的形式做运算）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">与运算例子：2&amp;-1 （记住-1要用补码运算）</div><div class="line">-1的原码是 10000001</div><div class="line">-1的反码是 11111110</div><div class="line">-1的补码是 11111111</div><div class="line"> 2的原码是 00000010</div><div class="line"> 按位与运算 00000010</div><div class="line"> 结果为2</div></pre></td></tr></table></figure>
-<ul>
+</li>
 <li><p>如果两个输入位只要有一个是1，则按位“或”（|）生成一个输出位1，只有两个输入位都是0的情况，才输出位0。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">或运算例子：-2&amp;1 （记住-2要用补码运算）</div><div class="line">-2的原码是 10000010</div><div class="line">-2的反码是 11111101</div><div class="line">-2的补码是 11111110</div><div class="line"> 1的原码是 00000001</div><div class="line"> 按位或运算 11111111</div><div class="line"> 因为计算机里全是用补码表示，所以转换为十进制 减一 取反 为 原码  结果为 -1</div><div class="line"> 也可以这么计算 负数按位取反+1 =负数的绝对值</div></pre></td></tr></table></figure>
 </li>
@@ -473,15 +472,14 @@
 </li>
 </ul>
 <h1 id="四-运算方式–移位"><a href="#四-运算方式–移位" class="headerlink" title="四.运算方式–移位"></a>四.运算方式–移位</h1><ul>
-<li>左移运算符 &lt;&lt;左移，将左边的操作数的二进制数据向左移动n位，移动后低位补0。（在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方）</li>
-</ul>
+<li><p>左移运算符 &lt;&lt;左移，将左边的操作数的二进制数据向左移动n位，移动后低位补0。（在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &lt;&lt; 2  00010100 </div><div class="line">结果为 5 * 2^2 = 20</div></pre></td></tr></table></figure>
-<ul>
+</li>
 <li><p>右移运算符&gt;&gt; ，二进制数据向右移动n位，如果为正数，则再高位插入0，若为负数，则再高位插入1。（右移一位相当于除2，右移n位相当于除以2的n次方）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &gt;&gt; 2  00000001 </div><div class="line">结果为 5/(2^2) 1</div></pre></td></tr></table></figure>
 </li>
 <li><p>无符号的右移运算符&gt;&gt;&gt; ，忽略符号位，无论正负，都在高位插入0.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">-5的二进制 10000101</div><div class="line">5 &gt;&gt;&gt; 1  00000010 </div><div class="line">结果为 2</div></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">-5 &gt;&gt;&gt; 1</div><div class="line">-5的二进制 10000101</div><div class="line">-5的补码是 11111011</div><div class="line">右移一个则为01111101</div><div class="line">原码为本身（因为是正数）</div><div class="line"> 01111101</div><div class="line">结果为 2147483645</div></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -545,6 +543,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/12/关于RocketMQ-第一篇-介绍/" rel="prev" title="关于RocketMQ-第一篇-介绍">
+                关于RocketMQ-第一篇-介绍 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -622,7 +624,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -630,7 +632,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -639,7 +641,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

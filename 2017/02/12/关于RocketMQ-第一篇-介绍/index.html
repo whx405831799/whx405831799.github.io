@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="redis," />
+  <meta name="keywords" content="RocketMQ," />
 
 
 
@@ -84,28 +84,24 @@
 
 
 
-<meta name="description" content="数据类型及常用命令Strings-字符串类型Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。
-
-例子
-
-1234redis 127.0.0.1:6379&amp;gt; SET name &amp;quot;helloworld&amp;quot;OKredis 127.0.0.1:6379&amp;gt;">
+<meta name="description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。
+2.消息中间件工作场景
+消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis-2.数据类型">
-<meta property="og:url" content="http://yoursite.com/2017/01/03/Redis-2.数据类型/index.html">
+<meta property="og:title" content="关于RocketMQ-第一篇-介绍">
+<meta property="og:url" content="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="数据类型及常用命令Strings-字符串类型Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。
-
-例子
-
-1234redis 127.0.0.1:6379&amp;gt; SET name &amp;quot;helloworld&amp;quot;OKredis 127.0.0.1:6379&amp;gt;">
-<meta property="og:updated_time" content="2017-01-10T13:06:23.274Z">
+<meta property="og:description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。
+2.消息中间件工作场景
+消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
+<meta property="og:image" content="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png">
+<meta property="og:updated_time" content="2017-02-13T13:36:17.961Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis-2.数据类型">
-<meta name="twitter:description" content="数据类型及常用命令Strings-字符串类型Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。
-
-例子
-
-1234redis 127.0.0.1:6379&amp;gt; SET name &amp;quot;helloworld&amp;quot;OKredis 127.0.0.1:6379&amp;gt;">
+<meta name="twitter:title" content="关于RocketMQ-第一篇-介绍">
+<meta name="twitter:description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。
+2.消息中间件工作场景
+消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
+<meta name="twitter:image" content="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png">
 
 
 
@@ -133,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/03/Redis-2.数据类型/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/"/>
 
 
 
 
 
-  <title> Redis-2.数据类型 | ashine's blog </title>
+  <title> 关于RocketMQ-第一篇-介绍 | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -290,7 +286,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-2.数据类型/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="ashine">
@@ -314,7 +310,7 @@
             
             
               
-                Redis-2.数据类型
+                关于RocketMQ-第一篇-介绍
               
             
           </h1>
@@ -327,8 +323,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T18:56:06+08:00">
+                2017-02-12
               </time>
             
 
@@ -346,8 +342,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
+                  <a href="/categories/JAVA服务端-RocketMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端-RocketMQ</span>
                   </a>
                 </span>
 
@@ -361,8 +357,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/03/Redis-2.数据类型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-2.数据类型/" itemprop="commentCount"></span>
+                <a href="/2017/02/12/关于RocketMQ-第一篇-介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/12/关于RocketMQ-第一篇-介绍/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,38 +384,24 @@
       
 
       
-        <h1 id="数据类型及常用命令"><a href="#数据类型及常用命令" class="headerlink" title="数据类型及常用命令"></a>数据类型及常用命令</h1><h2 id="Strings-字符串类型"><a href="#Strings-字符串类型" class="headerlink" title="Strings-字符串类型"></a>Strings-字符串类型</h2><p>Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; SET name &quot;helloworld&quot;</div><div class="line">OK</div><div class="line">redis 127.0.0.1:6379&gt; GET name</div><div class="line">&quot;helloworld&quot;</div></pre></td></tr></table></figure>
-<p>在上面的例子使用Redis命令set和get，helloworld即为字符串类型。</p>
-<p>注：字符串值可以存储最大512兆字节的长度。</p>
-<h2 id="Hashes-哈希值型"><a href="#Hashes-哈希值型" class="headerlink" title="Hashes-哈希值型"></a>Hashes-哈希值型</h2><p>Redis的哈希键值对的集合。 Redis的哈希值是字符串字段和字符串值之间的映射，所以它们被用来表示对象。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmset user:1 name ashine age 15 address shenzhen</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; hgetall user:1</div><div class="line">1) &quot;whx&quot;</div><div class="line">2) &quot;17&quot;</div><div class="line">3) &quot;name&quot;</div><div class="line">4) &quot;ashine&quot;</div><div class="line">5) &quot;age&quot;</div><div class="line">6) &quot;15&quot;</div><div class="line">7) &quot;address&quot;</div><div class="line">8) &quot;shenzhen&quot;</div><div class="line">127.0.0.1:6379&gt; hget user:1 name</div><div class="line">&quot;ashine&quot;</div></pre></td></tr></table></figure>
-<h2 id="Lists-列表"><a href="#Lists-列表" class="headerlink" title="Lists-列表"></a>Lists-列表</h2><p>Redis的列表是简单的字符串列表，排序插入顺序。可以添加元素到Redis列表的头部或尾部。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lpush maydaylist ashine shitou</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guanyou</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guaishou</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist masha</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; lrange maydaylist 0 10</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;guaishou&quot;</div><div class="line">3) &quot;guanyou&quot;</div><div class="line">4) &quot;shitou&quot;</div><div class="line">5) &quot;ashine&quot;</div></pre></td></tr></table></figure>
-<p>列表的最大长度也很大，可以支持40亿。</p>
-<h2 id="Sets-无序集合"><a href="#Sets-无序集合" class="headerlink" title="Sets-无序集合"></a>Sets-无序集合</h2><p>set是集合，它是string类型的无序集合。<br>set是通过hash table实现的，添加，删除和查找的复杂度都是0（1）。<br>对集合我们可以取并集、交集、差集。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; sadd maydayset shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset masha</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
-<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
-<h1 id="sorted-set有序集合"><a href="#sorted-set有序集合" class="headerlink" title="sorted set有序集合"></a>sorted set有序集合</h1><p>sortes set是set的一个升级版本，它在set的基础上增加了一个顺序属性，<br>这一属性在添加修改元素的时候可以指定，每次指定后，zset会自动重新按新的值调整顺序。<br>可以理解为有两列的MySQL表，一列存value，一列存顺序。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 0 ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 2 shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  guanyou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; zrangebyscore sortmaydayset 0 10</div><div class="line">1) &quot;ashine&quot;</div><div class="line">2) &quot;guanyou&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
-<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
-<p>参考链接命令：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/commands.html</a></p>
-<p>参考链接数据类型：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/topics/data-types-intro.html</a></p>
+        <h1 id="一-什么是消息中间件"><a href="#一-什么是消息中间件" class="headerlink" title="一.什么是消息中间件"></a>一.什么是消息中间件</h1><h2 id="1-什么是消息中间件？"><a href="#1-什么是消息中间件？" class="headerlink" title="1.什么是消息中间件？"></a>1.什么是消息中间件？</h2><p>消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解<br>决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分<br>布式系统不可缺少的中间件。</p>
+<h2 id="2-消息中间件工作场景"><a href="#2-消息中间件工作场景" class="headerlink" title="2.消息中间件工作场景"></a>2.消息中间件工作场景</h2><ul>
+<li>消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操作。发送者将消息发送给消息服务器，消息服务器将消息存放在若干队列中，在合适的时候再将消息转发给接收者。</li>
+<li>消息中间件能在不同平台之间通信，它常被用来屏蔽掉各种平台及协议之间的特性，实现应用程序之间的协同，其优点在于能够在客户和服务器之间提供同步和异步的连接，并且在任何时刻都可以将消息进行传送或者存储转发，这也是它比远程过程调用更进一步的原因。</li>
+</ul>
+<h1 id="二-关于RocketMQ"><a href="#二-关于RocketMQ" class="headerlink" title="二.关于RocketMQ"></a>二.关于RocketMQ</h1><h2 id="1-RocketMQ产品定义"><a href="#1-RocketMQ产品定义" class="headerlink" title="1.RocketMQ产品定义"></a>1.RocketMQ产品定义</h2><p>产品基于高可用分布式集群技术，提供消息发布订阅、消息轨迹查询、定时（延时）消息、资源统计、监控<br>报警等一系列消息云服务，是企业级互联网架构的核心产品。</p>
+<h2 id="2-RocketMQ的角色"><a href="#2-RocketMQ的角色" class="headerlink" title="2.RocketMQ的角色"></a>2.RocketMQ的角色</h2><p><img src="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png" alt="image"></p>
+<ul>
+<li>Producer消息生产者，一般由业务系统产生消息。</li>
+<li>Consumer消息消费者，一般由服务端异步消费。（有两种，push consumer;pull consumer）</li>
+<li>Broker消息中转角色，存储消息，转发消息。(很多线上部署是用的多主无从)</li>
+<li>NameServer无状态节点，用来保存活跃的broker列表，topic列表。（可集群部署）</li>
+</ul>
+<h2 id="3-流程"><a href="#3-流程" class="headerlink" title="3.流程"></a>3.流程</h2><ul>
+<li>先需要一个NameServer节点。类似于路由。Producer,Consumer,Broker之间的联系都需要通过访问NameServer，拿到需要的路由信息才能进行联系。</li>
+<li>启动Broker</li>
+<li>启动NameServer和Broker后则可以在控制台进行topic的增加和订阅。之后Producer就可以发送已有的topic消息，Consumer被broker允许后，便可以收到生产者的消息。</li>
+</ul>
 
       
     </div>
@@ -464,7 +446,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/redis/" rel="tag"># redis</a>
+            <a href="/tags/RocketMQ/" rel="tag"># RocketMQ</a>
           
         </div>
       
@@ -473,8 +455,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/03/Redis-1.安装/" rel="next" title="Redis-1.安装">
-                <i class="fa fa-chevron-left"></i> Redis-1.安装
+              <a href="/2017/02/10/JAVA位运算/" rel="next" title="JAVA位运算">
+                <i class="fa fa-chevron-left"></i> JAVA位运算
               </a>
             
           </div>
@@ -483,8 +465,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/15/Redis-3.命令-第一部分key,String,Hash/" rel="prev" title="Redis-3.命令之key,String,Hash">
-                Redis-3.命令之key,String,Hash <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/13/关于RocketMQ-第二篇-安装及启动/" rel="prev" title="关于RocketMQ-第二篇-安装及启动">
+                关于RocketMQ-第二篇-安装及启动 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -517,8 +499,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/03/Redis-2.数据类型/"
-           data-title="Redis-2.数据类型" data-url="http://yoursite.com/2017/01/03/Redis-2.数据类型/">
+      <div class="ds-thread" data-thread-key="2017/02/12/关于RocketMQ-第一篇-介绍/"
+           data-title="关于RocketMQ-第一篇-介绍" data-url="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/">
       </div>
     
   </div>
@@ -615,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型及常用命令"><span class="nav-number">1.</span> <span class="nav-text">数据类型及常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Strings-字符串类型"><span class="nav-number">1.1.</span> <span class="nav-text">Strings-字符串类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hashes-哈希值型"><span class="nav-number">1.2.</span> <span class="nav-text">Hashes-哈希值型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lists-列表"><span class="nav-number">1.3.</span> <span class="nav-text">Lists-列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sets-无序集合"><span class="nav-number">1.4.</span> <span class="nav-text">Sets-无序集合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sorted-set有序集合"><span class="nav-number">2.</span> <span class="nav-text">sorted set有序集合</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-什么是消息中间件"><span class="nav-number">1.</span> <span class="nav-text">一.什么是消息中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是消息中间件？"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是消息中间件？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-消息中间件工作场景"><span class="nav-number">1.2.</span> <span class="nav-text">2.消息中间件工作场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-关于RocketMQ"><span class="nav-number">2.</span> <span class="nav-text">二.关于RocketMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RocketMQ产品定义"><span class="nav-number">2.1.</span> <span class="nav-text">1.RocketMQ产品定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RocketMQ的角色"><span class="nav-number">2.2.</span> <span class="nav-text">2.RocketMQ的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-流程"><span class="nav-number">2.3.</span> <span class="nav-text">3.流程</span></a></li></ol></li></ol></div>
             
 
           </div>
