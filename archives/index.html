@@ -27,6 +27,9 @@
 
 
 
+
+
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
@@ -101,7 +104,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -135,6 +138,8 @@
 
 
 
+
+
   <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
@@ -152,34 +157,40 @@
 
 
 
+
+
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">ashine's blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ashine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <p class="site-subtitle"></p>
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -596,9 +607,9 @@
 
       <h1 class="post-title">
         
-            <a class="post-title-link" href="/2017/01/03/Redis-2.数据类型/" itemprop="url">
+            <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
               
-                <span itemprop="name">Redis-2.数据类型</span>
+                <span itemprop="name">Redis-1.安装</span>
               
             </a>
         
@@ -633,9 +644,9 @@
 
       <h1 class="post-title">
         
-            <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
+            <a class="post-title-link" href="/2017/01/03/Redis-2.数据类型/" itemprop="url">
               
-                <span itemprop="name">Redis-1.安装</span>
+                <span itemprop="name">Redis-2.数据类型</span>
               
             </a>
         
@@ -697,19 +708,26 @@
                src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
                alt="ashine" />
           <p class="site-author-name" itemprop="name">ashine</p>
-          <p class="site-description motion-element" itemprop="description">人生海海</p>
+           
+              <p class="site-description motion-element" itemprop="description">人生海海</p>
+          
         </div>
         <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">13</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
 
           
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
             <div class="site-state-item site-state-categories">
-              <a href="/categories">
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
@@ -717,8 +735,10 @@
           
 
           
+            
+            
             <div class="site-state-item site-state-tags">
-              <a href="/tags">
+              <a href="/tags/index.html">
                 <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
@@ -746,6 +766,8 @@
 
       
 
+      
+
     </div>
   </aside>
 
@@ -758,7 +780,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  2016 - 
+  &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -785,9 +807,13 @@
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
   </div>
 
   
@@ -807,6 +833,9 @@
 
 
   
+
+
+
 
 
 
@@ -896,8 +925,19 @@
 
 
 
+
+
+
+
+
+
+
+
   
-  
+
+
+
+
 
   
 
@@ -906,7 +946,6 @@
   
 
   
-
 
 </body>
 </html>
