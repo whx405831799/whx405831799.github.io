@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术问题," />
+  <meta name="keywords" content="缓存穿透," />
 
 
 
@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="1.String、StringBuffer与StringBuilder之间区别  执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。 线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。  2.JVM加载class文件的原理机制  Class">
-<meta name="keywords" content="技术问题">
+<meta name="description" content="1.缓存穿透1.1 什么是缓存穿透使用缓存时，一次请求数据，会先先检查缓存中是否存在此数据，如果存在直接返回缓存的数据，如果不存在就回去查询数据库然后再缓存查询结果并返回。如果查询的某个数据在缓存中一直不存在，就会造成每一次请求都查询DB（数据库），这样就会一直穿透缓存，在流量特别大时，数据库就有可能崩溃。 1.2 如何解决缓存穿透 如果查询数据库也没有值，则直接设置一个默认值存存到缓存，这样第二">
+<meta name="keywords" content="缓存穿透">
 <meta property="og:type" content="article">
-<meta property="og:title" content="技术问题整理（持续更新）">
-<meta property="og:url" content="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/index.html">
+<meta property="og:title" content="缓存穿透和缓存雪崩">
+<meta property="og:url" content="http://yoursite.com/2017/04/01/缓存穿透和缓存雪崩/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="1.String、StringBuffer与StringBuilder之间区别  执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。 线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。  2.JVM加载class文件的原理机制  Class">
-<meta property="og:updated_time" content="2017-04-19T10:41:36.155Z">
+<meta property="og:description" content="1.缓存穿透1.1 什么是缓存穿透使用缓存时，一次请求数据，会先先检查缓存中是否存在此数据，如果存在直接返回缓存的数据，如果不存在就回去查询数据库然后再缓存查询结果并返回。如果查询的某个数据在缓存中一直不存在，就会造成每一次请求都查询DB（数据库），这样就会一直穿透缓存，在流量特别大时，数据库就有可能崩溃。 1.2 如何解决缓存穿透 如果查询数据库也没有值，则直接设置一个默认值存存到缓存，这样第二">
+<meta property="og:updated_time" content="2017-04-24T04:33:32.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="技术问题整理（持续更新）">
-<meta name="twitter:description" content="1.String、StringBuffer与StringBuilder之间区别  执行速度上：StringBuilder &amp;gt;  StringBuffer  &amp;gt;  String（String 每次改变都会创建一个新的对象）。 线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。  2.JVM加载class文件的原理机制  Class">
+<meta name="twitter:title" content="缓存穿透和缓存雪崩">
+<meta name="twitter:description" content="1.缓存穿透1.1 什么是缓存穿透使用缓存时，一次请求数据，会先先检查缓存中是否存在此数据，如果存在直接返回缓存的数据，如果不存在就回去查询数据库然后再缓存查询结果并返回。如果查询的某个数据在缓存中一直不存在，就会造成每一次请求都查询DB（数据库），这样就会一直穿透缓存，在流量特别大时，数据库就有可能崩溃。 1.2 如何解决缓存穿透 如果查询数据库也没有值，则直接设置一个默认值存存到缓存，这样第二">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/01/缓存穿透和缓存雪崩/"/>
 
 
 
 
 
-  <title> 技术问题整理（持续更新） | ashine's blog </title>
+  <title> 缓存穿透和缓存雪崩 | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -290,7 +290,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/01/缓存穿透和缓存雪崩/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ashine">
@@ -311,7 +311,7 @@
             
             
               
-                技术问题整理（持续更新）
+                缓存穿透和缓存雪崩
               
             
           </h1>
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T19:06:06+08:00">
-                2016-12-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T15:36:56+08:00">
+                2017-04-01
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
                   </a>
                 </span>
 
@@ -367,8 +367,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/12/10/JAVA服务端-技术问题整理（持续更新）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/JAVA服务端-技术问题整理（持续更新）/" itemprop="commentCount"></span>
+                <a href="/2017/04/01/缓存穿透和缓存雪崩/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/缓存穿透和缓存雪崩/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -394,30 +394,18 @@
       
 
       
-        <p><strong>1.String、StringBuffer与StringBuilder之间区别</strong></p>
-<ul>
-<li>执行速度上：StringBuilder &gt;  StringBuffer  &gt;  String（String 每次改变都会创建一个新的对象）。</li>
-<li>线程安全上：String和StringBuffer是线程安全的，StringBuilder是非线程安全的。</li>
+        <h2 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1.缓存穿透"></a>1.缓存穿透</h2><h3 id="1-1-什么是缓存穿透"><a href="#1-1-什么是缓存穿透" class="headerlink" title="1.1 什么是缓存穿透"></a>1.1 什么是缓存穿透</h3><p>使用缓存时，一次请求数据，会先先检查缓存中是否存在此数据，如果存在直接返回缓存的数据，如果不存在就回去查询数据库然后再缓存查询结果并返回。如果查询的某个数据在缓存中一直不存在，就会造成每一次请求都查询DB（数据库），这样就会一直穿透缓存，在流量特别大时，数据库就有可能崩溃。</p>
+<h3 id="1-2-如何解决缓存穿透"><a href="#1-2-如何解决缓存穿透" class="headerlink" title="1.2 如何解决缓存穿透"></a>1.2 如何解决缓存穿透</h3><ul>
+<li>如果查询数据库也没有值，则直接设置一个默认值存存到缓存，这样第二次到缓存中获取就有值了。</li>
+<li>布隆过滤器，将所有可能存在的数据哈希到一个足够大的BitSet中，不存在的数据将会被拦截掉，从而避免了对底层存储系统的查询压力。</li>
+<li></li>
 </ul>
-<p><strong>2.JVM加载class文件的原理机制</strong></p>
-<ul>
-<li>Class Loader加载class(Class Loader 只管加载，只要符合文件结构就加载，至于说能不能运行，则不是它负责的，那是由Execution Engine 负责的)。</li>
-<li>Execution Engine 执行引擎,执行引擎也叫做解释器(Interpreter) ，负责解释命令，提交操作系统执行。</li>
-<li>Native Interface 本地接口，本地接口的作用是融合不同的编程语言为Java 所用，现在用的越来越少了。</li>
-<li>Runtime data area 运行数据区，运行数据区是整个JVM 的重点。我们所有写的程序都被加载到这里，之后才开始运行。</li>
-<li>整个JVM 框架由加载器加载文件，然后执行器在内存中处理数据，需要与异构系统交互是可以通过本地接口进行。</li>
-<li>当执行 java <em>*</em>.class 的时候， java.exe 会帮助我们找到 JRE ，接着找到位于 JRE 内部的 jvm.dll ，这才是真正的 Java 虚拟机器 , 最后加载动态库，激活 Java 虚拟机器。虚拟机器激活以后，会先做一些初始化的动作，比如说读取系统参数等。一旦初始化动作完成之后，就会产生第一个类加载器―― Bootstrap Loader ， Bootstrap Loader 是由 C++ 所撰写而成，这个 Bootstrap Loader 所做的初始工作中，除了一些基本的初始化动作之外，最重要的就是加载 Launcher.java 之中的 ExtClassLoader ，并设定其 Parent 为 null ，代表其父加载器为 BootstrapLoader 。然后 Bootstrap Loader 再要求加载 Launcher.java 之中的 AppClassLoader ，并设定其 Parent 为之前产生的 ExtClassLoader 实体。这两个加载器都是以静态类的形式存在的。这里要请大家注意的是， Launcher$ExtClassLoader.class 与 Launcher$AppClassLoader.class 都是由 Bootstrap Loader 所加载，所以 Parent 和由哪个类加载器加载没有关系。<br>下面的图形可以表示三者之间的关系：<br>BootstrapLoader &lt;—(Extends)—-AppClassLoader &lt;—(Extends)—-ExtClassLoader </li>
+<h2 id="2-缓存雪崩"><a href="#2-缓存雪崩" class="headerlink" title="2.缓存雪崩"></a>2.缓存雪崩</h2><h3 id="2-1-什么是缓存雪崩"><a href="#2-1-什么是缓存雪崩" class="headerlink" title="2.1 什么是缓存雪崩"></a>2.1 什么是缓存雪崩</h3><p>缓存雪崩大多数情况是是因为缓存同一时间大规模的失效，从而所有请求都去查询数据库，导致数据库CPU和内存负载过高，甚至会宕机。</p>
+<h3 id="2-2-如何解决缓存雪崩"><a href="#2-2-如何解决缓存雪崩" class="headerlink" title="2.2 如何解决缓存雪崩"></a>2.2 如何解决缓存雪崩</h3><ul>
+<li>分析用户行为，尽量让失效时间点均匀分布。避免同时失效。</li>
+<li>如果是因为缓存服务器宕机，可以考虑做redis主从。</li>
 </ul>
-<p><strong>3.char 型变量中能不能存贮一个中文汉字，为什么？</strong></p>
-<ul>
-<li>char类型可以存储一个中文汉字，因为Java中使用的编码是Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个char类型占2个字节（16比特），所以放一个中文是没问题的。</li>
-</ul>
-<p><strong>4.实现多态的方式：抽象类和接口的区别</strong></p>
-<ul>
-<li>继承：抽象类只能继承一个，接口可以多继承。</li>
-<li>语法：抽象类与普通类的区别是抽象类可以定义抽象方法，不用实现，供子类继承。私有方法是可以定义的，因为比如使用设计模式中的模板方法模式，就有必要定义private的方法。而接口，变量只能定义public final的常量，而且方法必须是public abstract的，缺省值也是这样。</li>
-<li>意义上：抽象类，是对事物的抽象，对类抽象；而接口是对行为的抽象。一个经典的例子：门和警报。门一定有open和close的能力，但是不一定有警报的能力。所以如果把三个都放到门的抽象类里并不合适，因为不是所有门都会有警报，且把三个都放在接口里也不合适，因为有些能发警报的事务并不具有open和close的能力。结论就是抽象类里定义open和close,接口定义警报。</li>
-</ul>
+<h2 id="3-缓存预热"><a href="#3-缓存预热" class="headerlink" title="3.缓存预热"></a>3.缓存预热</h2><p>缓存预热是指系统上线前，将数据加载到缓存中。</p>
 
       
     </div>
@@ -447,7 +435,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技术问题/" rel="tag"># 技术问题</a>
+            <a href="/tags/缓存穿透/" rel="tag"># 缓存穿透</a>
           
         </div>
       
@@ -460,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/21/linux-screen的使用/" rel="next" title="linux-screen的使用">
-                <i class="fa fa-chevron-left"></i> linux-screen的使用
+              <a href="/2017/04/05/多线程系列-1.初识Java多线程/" rel="next" title="多线程系列-1.初识Java多线程">
+                <i class="fa fa-chevron-left"></i> 多线程系列-1.初识Java多线程
               </a>
             
           </div>
@@ -470,8 +458,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/06/JAVA服务端-测试相关-jacoco测试/" rel="prev" title="jacoco覆盖率测试">
-                jacoco覆盖率测试 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/13/关于RocketMQ-第二篇-安装及启动/" rel="prev" title="关于RocketMQ-第二篇-安装及启动">
+                关于RocketMQ-第二篇-安装及启动 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,8 +492,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/10/JAVA服务端-技术问题整理（持续更新）/"
-           data-title="技术问题整理（持续更新）" data-url="http://yoursite.com/2016/12/10/JAVA服务端-技术问题整理（持续更新）/">
+      <div class="ds-thread" data-thread-key="2017/04/01/缓存穿透和缓存雪崩/"
+           data-title="缓存穿透和缓存雪崩" data-url="http://yoursite.com/2017/04/01/缓存穿透和缓存雪崩/">
       </div>
     
   </div>
@@ -529,8 +517,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
@@ -592,6 +589,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-缓存穿透"><span class="nav-number">1.</span> <span class="nav-text">1.缓存穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-什么是缓存穿透"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是缓存穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-如何解决缓存穿透"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 如何解决缓存穿透</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缓存雪崩"><span class="nav-number">2.</span> <span class="nav-text">2.缓存雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-什么是缓存雪崩"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 什么是缓存雪崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-如何解决缓存雪崩"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 如何解决缓存雪崩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-缓存预热"><span class="nav-number">3.</span> <span class="nav-text">3.缓存预热</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -1,0 +1,800 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="多线程," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.进程和线程进程：进程是程序和任务的执行过程，持有资源和进程。（例如运行游览器或者qq等）线程：进程里的任务可以理解为线程。比如qq里的聊天，收发文件等。 2.Thread的常用方法2.1 线程的创建1234- Thread()- Thread(String name)- Thread(Runnable target)- Thread(Runnable target,String name) 2">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程系列-1.初识Java多线程">
+<meta property="og:url" content="http://yoursite.com/2017/04/05/多线程系列-1.初识Java多线程/index.html">
+<meta property="og:site_name" content="ashine's blog">
+<meta property="og:description" content="1.进程和线程进程：进程是程序和任务的执行过程，持有资源和进程。（例如运行游览器或者qq等）线程：进程里的任务可以理解为线程。比如qq里的聊天，收发文件等。 2.Thread的常用方法2.1 线程的创建1234- Thread()- Thread(String name)- Thread(Runnable target)- Thread(Runnable target,String name) 2">
+<meta property="og:updated_time" content="2017-04-24T04:34:32.510Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程系列-1.初识Java多线程">
+<meta name="twitter:description" content="1.进程和线程进程：进程是程序和任务的执行过程，持有资源和进程。（例如运行游览器或者qq等）线程：进程里的任务可以理解为线程。比如qq里的聊天，收发文件等。 2.Thread的常用方法2.1 线程的创建1234- Thread()- Thread(String name)- Thread(Runnable target)- Thread(Runnable target,String name) 2">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/05/多线程系列-1.初识Java多线程/"/>
+
+
+
+
+
+  <title> 多线程系列-1.初识Java多线程 | ashine's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f7aba61662d6673c4cd5176f20fedcfa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ashine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/多线程系列-1.初识Java多线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多线程系列-1.初识Java多线程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-05T19:26:35+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/05/多线程系列-1.初识Java多线程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/05/多线程系列-1.初识Java多线程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-进程和线程"><a href="#1-进程和线程" class="headerlink" title="1.进程和线程"></a>1.进程和线程</h2><p>进程：进程是程序和任务的执行过程，持有资源和进程。（例如运行游览器或者qq等）<br>线程：进程里的任务可以理解为线程。比如qq里的聊天，收发文件等。</p>
+<h2 id="2-Thread的常用方法"><a href="#2-Thread的常用方法" class="headerlink" title="2.Thread的常用方法"></a>2.Thread的常用方法</h2><h3 id="2-1-线程的创建"><a href="#2-1-线程的创建" class="headerlink" title="2.1 线程的创建"></a>2.1 线程的创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- Thread()</div><div class="line">- Thread(String name)</div><div class="line">- Thread(Runnable target)</div><div class="line">- Thread(Runnable target,String name)</div></pre></td></tr></table></figure>
+<h3 id="2-2-线程的方法"><a href="#2-2-线程的方法" class="headerlink" title="2.2 线程的方法"></a>2.2 线程的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- static void sleep(long millis) //睡眠毫秒数</div><div class="line">- static void sleep(long millis,int nanos)</div><div class="line">- void start() //线程启动  //睡眠还可以指定增加纳秒数</div><div class="line">- void join() //使其他线程等待当前线程终止</div><div class="line">- void join(long millis) //同上，加上时间限制</div><div class="line">- void join(long millis,int nanos) //同上，加上时间限制</div><div class="line">- static void yield() //当前运行线程释放处理器资源</div><div class="line">- static native Thread currentThread() //返回当前运行的线程引用</div></pre></td></tr></table></figure>
+<h3 id="2-3-如何正确停止Java中的线程"><a href="#2-3-如何正确停止Java中的线程" class="headerlink" title="2.3 如何正确停止Java中的线程"></a>2.3 如何正确停止Java中的线程</h3><ul>
+<li>别用stop(),stop立即停止，都不知道进行到了哪一步。官方已经不推荐;</li>
+<li>正确的方式是设置退出标识：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class ArmyRunnable implements Runnable &#123;</div><div class="line">    //保证内存可见性（线程修改变量后立马被其他线程看到），退出标识</div><div class="line">    static volatile boolean keepRunning = true;</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        //发动五连击</div><div class="line">        while(keepRunning)&#123;</div><div class="line">            for (int i = 1;i&lt;6;i++)&#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;进攻对方&quot; + i + &quot;次&quot;);</div><div class="line">                //让出处理器时间，下次进攻不一定是自己</div><div class="line">                Thread.yield();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        System.out.println(Thread.currentThread().getName() + &quot;结束战斗！&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-4-关于interrupt方法（不能使线程停止，只是设置状态）"><a href="#2-4-关于interrupt方法（不能使线程停止，只是设置状态）" class="headerlink" title="2.4 关于interrupt方法（不能使线程停止，只是设置状态）"></a>2.4 关于interrupt方法（不能使线程停止，只是设置状态）</h3><ul>
+<li>用法是使用interrupt设置状态，然后用isInterrupt做为2.3中的判断标识</li>
+<li>interrupt：置线程的中断状态</li>
+<li>isInterrupt：线程是否中断</li>
+<li>interrupted：返回线程的上次的中断状态，并清除中断状态</li>
+<li>下面两块是interrupt方法的注释，说的是第一，当线程属于阻塞状态时，调用了join，sleep等方法后，再调用interrupt，则会导致线程的interrupt状态的值被clear，而且线程将得到一个interrupted异常；第二，如果没有上述阻塞状态，则线程的interrupt status将会被设置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">* &lt;p&gt; If this thread is blocked in an invocation of the &#123;@link</div><div class="line">     * Object#wait() wait()&#125;, &#123;@link Object#wait(long) wait(long)&#125;, or &#123;@link</div><div class="line">     * Object#wait(long, int) wait(long, int)&#125; methods of the &#123;@link Object&#125;</div><div class="line">     * class, or of the &#123;@link #join()&#125;, &#123;@link #join(long)&#125;, &#123;@link</div><div class="line">     * #join(long, int)&#125;, &#123;@link #sleep(long)&#125;, or &#123;@link #sleep(long, int)&#125;,</div><div class="line">     * methods of this class, then its interrupt status will be cleared and it</div><div class="line">     * will receive an &#123;@link InterruptedException&#125;.</div><div class="line">     </div><div class="line">* &lt;p&gt; If none of the previous conditions hold then this thread&apos;s interrupt</div><div class="line">     * status will be set. &lt;/p&gt;</div></pre></td></tr></table></figure>
+<h2 id="3-线程的交互-synchronized-wait-notify-notifyAll"><a href="#3-线程的交互-synchronized-wait-notify-notifyAll" class="headerlink" title="3.线程的交互-synchronized,wait,notify,notifyAll"></a>3.线程的交互-synchronized,wait,notify,notifyAll</h2><h3 id="3-1-同一时刻只能有一个线程获取锁对象访问同步代码块"><a href="#3-1-同一时刻只能有一个线程获取锁对象访问同步代码块" class="headerlink" title="3.1 同一时刻只能有一个线程获取锁对象访问同步代码块"></a>3.1 同一时刻只能有一个线程获取锁对象访问同步代码块</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Private final Object lockObj = new Object();</div><div class="line">...</div><div class="line">public void doSomething()&#123;</div><div class="line">    synchronized(lockObj)&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-2-wait-notify-notifyAll"><a href="#3-2-wait-notify-notifyAll" class="headerlink" title="3.2 wait,notify,notifyAll"></a>3.2 wait,notify,notifyAll</h3><p>上述三个方法都是Object的方法，而不是Thread的方法。<br>wait()–让当前线程等待，让出对象锁，让当前线程进入wait set中；<br>notify()–随机从wait set中唤醒一个等待对象锁的线程；<br>notifyAll()–唤醒所有wait set中的等待线程，让它们竞争对象锁。</p>
+<h4 id="注意：Thread和Runnable的区别"><a href="#注意：Thread和Runnable的区别" class="headerlink" title="*注意：Thread和Runnable的区别"></a>*注意：Thread和Runnable的区别</h4><ul>
+<li>首先Runnable是接口，可以更好的扩展。</li>
+<li>其次，runnable可以实现资源共享，网上卖票的例子可以说明。runnable其实像是任务，和callable一样。（callable是可以有返回的任务）</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/Java常见的几种内存溢出产生的原因及解决方案/" rel="next" title="Java常见的几种内存溢出产生的原因及解决方案">
+                <i class="fa fa-chevron-left"></i> Java常见的几种内存溢出产生的原因及解决方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/01/缓存穿透和缓存雪崩/" rel="prev" title="缓存穿透和缓存雪崩">
+                缓存穿透和缓存雪崩 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/05/多线程系列-1.初识Java多线程/"
+           data-title="多线程系列-1.初识Java多线程" data-url="http://yoursite.com/2017/04/05/多线程系列-1.初识Java多线程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
+               alt="ashine" />
+          <p class="site-author-name" itemprop="name">ashine</p>
+           
+              <p class="site-description motion-element" itemprop="description">人生海海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-进程和线程"><span class="nav-number">1.</span> <span class="nav-text">1.进程和线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Thread的常用方法"><span class="nav-number">2.</span> <span class="nav-text">2.Thread的常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-线程的创建"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 线程的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-线程的方法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 线程的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-如何正确停止Java中的线程"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 如何正确停止Java中的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-关于interrupt方法（不能使线程停止，只是设置状态）"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 关于interrupt方法（不能使线程停止，只是设置状态）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-线程的交互-synchronized-wait-notify-notifyAll"><span class="nav-number">3.</span> <span class="nav-text">3.线程的交互-synchronized,wait,notify,notifyAll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-同一时刻只能有一个线程获取锁对象访问同步代码块"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 同一时刻只能有一个线程获取锁对象访问同步代码块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-wait-notify-notifyAll"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 wait,notify,notifyAll</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意：Thread和Runnable的区别"><span class="nav-number">3.2.1.</span> <span class="nav-text">*注意：Thread和Runnable的区别</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ashine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ashine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -290,6 +290,526 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/Java常见的几种内存溢出产生的原因及解决方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/11/Java常见的几种内存溢出产生的原因及解决方案/" itemprop="url">
+                  Java常见的几种内存溢出产生的原因及解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T12:21:35+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/11/Java常见的几种内存溢出产生的原因及解决方案/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/Java常见的几种内存溢出产生的原因及解决方案/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-栈溢出-StackOverflowError"><a href="#1-栈溢出-StackOverflowError" class="headerlink" title="1.栈溢出-StackOverflowError"></a>1.栈溢出-StackOverflowError</h2><h3 id="1-1-解释"><a href="#1-1-解释" class="headerlink" title="1.1 解释"></a>1.1 解释</h3><ul>
+<li>java方法执行的内存模型,每个方法执行都会创建一个栈帧，用于存储局部变量表，操作栈，动态链接，方法出口等信息，每一个方法被调用直至执行完成的过程。</li>
+<li>栈溢出抛出java.lang.StackOverflowError异常，出现此种情况是因为方法运行的时候栈的深度超过了虚拟机容许的最大深度所致。一般情况下是程序错误所致的，比如写了一个死递归，就有可能造成此种情况。例如下面例子：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 测试栈溢出</div><div class="line"> */</div><div class="line">public class TestStackOverflow &#123;</div><div class="line">    public void testRecursion()&#123;</div><div class="line">        testRecursion();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestStackOverflow testStackOverflow = new TestStackOverflow();</div><div class="line">        testStackOverflow.testRecursion();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Exception in thread &quot;main&quot; java.lang.StackOverflowError</div><div class="line">	at jvm.TestStackOverflow.testRecursion(TestStackOverflow.java:8)</div><div class="line">	at jvm.TestStackOverflow.testRecursion(TestStackOverflow.java:8)</div><div class="line">	at jvm.TestStackOverflow.testRecursion(TestStackOverflow.java:8)</div><div class="line">	at jvm.TestStackOverflow.testRecursion(TestStackOverflow.java:8)</div></pre></td></tr></table></figure>
+<h3 id="1-2-解决"><a href="#1-2-解决" class="headerlink" title="1.2 解决"></a>1.2 解决</h3><p>检查程序的错误。</p>
+<h2 id="2-堆溢出-OutOfMemoryError-java-heap-space"><a href="#2-堆溢出-OutOfMemoryError-java-heap-space" class="headerlink" title="2.堆溢出-OutOfMemoryError:java heap space"></a>2.堆溢出-OutOfMemoryError:java heap space</h2><h3 id="2-1-解释及处理方式"><a href="#2-1-解释及处理方式" class="headerlink" title="2.1 解释及处理方式"></a>2.1 解释及处理方式</h3><ul>
+<li>堆内存溢出的时候，虚拟机会抛出java.lang.OutOfMemoryError:java heap space,出现此种情况的时候，我们需要根据内存溢出的时候产生的dump文件来具体分析（需要增加-XX:+HeapDumpOnOutOfMemoryErrorjvm启动参数）。出现此种问题的时候有可能是内存泄露，也有可能是内存溢出了。要具体分析。</li>
+<li>如果内存泄露，我们要找出泄露的对象是怎么被GC ROOT引用起来，然后通过引用链来具体分析泄露的原因。如果出现了内存溢出问题，这往往是程序本生需要的内存大于了我们给虚拟机配置的内存，这种情况下，我们可以采用调大-Xmx来解决这种问题。</li>
+<li>-Xms 初始堆大小，默认大小物理内存的64分之1，不超过1G；默认(MinHeapFreeRatio参数可以调整)空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制。</li>
+<li>-Xmx 最大堆大小，默认大小为物理内存的4分之1，不超过1G；默认(MaxHeapFreeRatio参数可以调整)空余堆内存大于70%时，JVM会减少堆直到 -Xms的最小限制。</li>
+<li>-Xmn     年轻代大小,sun推荐8分之3。<h3 id="2-2-例子测试"><a href="#2-2-例子测试" class="headerlink" title="2.2 例子测试"></a>2.2 例子测试</h3></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 测试outofmemory</div><div class="line"> */</div><div class="line">public class TestOutOfMemory &#123;</div><div class="line">    public static void main(String args[])&#123;</div><div class="line">        List&lt;byte[]&gt; buffer = new ArrayList&lt;&gt;();</div><div class="line">        buffer.add(new byte[10*1024*1024]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在运行main方法时加上jvm参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Xmn10M -Xms20M -Xmx20M -XX:+HeapDumpOnOutOfMemoryError -Xloggc:D:\heap_trace.txt</div></pre></td></tr></table></figure>
+<p>结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.lang.OutOfMemoryError: Java heap space</div><div class="line">Dumping heap to java_pid12708.hprof ...</div><div class="line">Heap dump file created [1787890 bytes in 0.021 secs]</div><div class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</div><div class="line">	at jvm.TestOutOfMemory.main(TestOutOfMemory.java:12)</div></pre></td></tr></table></figure>
+<p>GC信息为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">0.381: [GC [PSYoungGen: 1348K-&gt;600K(9216K)] 1348K-&gt;600K(19456K), 0.0320335 secs] [Times: user=0.00 sys=0.00, real=0.03 secs] </div><div class="line">0.413: [GC [PSYoungGen: 600K-&gt;568K(9216K)] 600K-&gt;568K(19456K), 0.0157791 secs] [Times: user=0.02 sys=0.00, real=0.02 secs] </div><div class="line">0.429: [Full GC [PSYoungGen: 568K-&gt;0K(9216K)] [ParOldGen: 0K-&gt;524K(10240K)] 568K-&gt;524K(19456K) [PSPermGen: 2863K-&gt;2862K(21504K)], 0.1693650 secs] [Times: user=0.16 sys=0.00, real=0.17 secs] </div><div class="line">0.599: [GC [PSYoungGen: 0K-&gt;0K(9216K)] 524K-&gt;524K(19456K), 0.0651178 secs] [Times: user=0.06 sys=0.00, real=0.07 secs] </div><div class="line">0.664: [Full GC [PSYoungGen: 0K-&gt;0K(9216K)] [ParOldGen: 524K-&gt;512K(10240K)] 524K-&gt;512K(19456K) [PSPermGen: 2862K-&gt;2862K(21504K)], 0.0350643 secs] [Times: user=0.02 sys=0.00, real=0.03 secs]</div><div class="line">解释：</div><div class="line">日志最开始的GC和Full GC表示垃圾回收的停顿类型;</div><div class="line">PSYoungGen中最前面的PS代表垃圾收集器是Parallel Scavenge收集器,回收的区域是新生代(YoungGen)</div><div class="line">ParOldGen中最前面的Par代表垃圾收集器是Parallel Old收集器,回收的区域是老年代(OldGen).</div><div class="line">方括号内的9216K-&gt;1024K(9216K)中9表示GC前该内存区域使用容量-&gt;GC后该内存区域已使用容量(该内存区域总容量).</div><div class="line">1246196K-&gt;1246220K(1287040K)表示GC前Java堆已使用容量-&gt;GC后Java对已使用容量(Java对总容量).</div><div class="line">0.2398360 secs表示GC所占有时间.</div></pre></td></tr></table></figure>
+<h2 id="3-持久带溢出-OutOfMemoryError-PermGen-space"><a href="#3-持久带溢出-OutOfMemoryError-PermGen-space" class="headerlink" title="3.持久带溢出-OutOfMemoryError: PermGen space"></a>3.持久带溢出-OutOfMemoryError: PermGen space</h2><h3 id="3-1-解释"><a href="#3-1-解释" class="headerlink" title="3.1 解释"></a>3.1 解释</h3><p>永久保存区域（permanent generation），它们不属于Java堆的一部分，用来存放类和类的描述（常量池，字段，方法数据等）。当永久保存区域的空间耗尽时OutOfMemoryError： PermGen space就会发生，这个错误一般是由于内存泄漏导致的。所谓内存泄漏，是指java类和类加载器在被取消部署后不能被垃圾回收。</p>
+<h3 id="3-2-解决方法"><a href="#3-2-解决方法" class="headerlink" title="3.2 解决方法"></a>3.2 解决方法</h3><p>当遇到java.lang.OutOfMemoryError：PermGen space错误时，我们可以做的第一件事情是增加永久保存区域的最大尺寸，该尺寸的缺省设置是64 M，我们可以将它设置成128 M以上。通过-XX:PermSize和-XX:MaxPermSize来设置。</p>
+<h2 id="4-OutOfMemoryError-unable-to-create-native-thread"><a href="#4-OutOfMemoryError-unable-to-create-native-thread" class="headerlink" title="4.OutOfMemoryError-unable to create native thread"></a>4.OutOfMemoryError-unable to create native thread</h2><h3 id="4-1-解释"><a href="#4-1-解释" class="headerlink" title="4.1 解释"></a>4.1 解释</h3><ul>
+<li>《深入理解JAVA虚拟机》中有介绍：当给虚拟机分配的内存过大，会导致创建线程的时候需要的native内存太少。</li>
+<li>操作系统对每个进程的内存是有限制的，我们启动Jvm,相当于启动了一个进程，假如我们一个进程占用了4G的内存，那么通过下面的公式计算出来的剩余内存就是建立线程栈的时候可以用的内存。 线程栈总可用内存=4G-（-Xmx的值）- （-XX:MaxPermSize的值）- 程序计数器占用的内存 通过上面的公式我们可以看出，-Xmx 和 MaxPermSize的值越大，那么留给线程栈可用的空间就越小，在-Xss参数配置的栈容量不变的情况下，可以创建的线程数也就越小。</li>
+</ul>
+<blockquote>
+<p>注：-Xss128k:设置每个线程的堆栈大小.JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K.更具应用的线程所需内存大小进行 调整.在相同物理内存下,减小这个值能生成更多的线程.但是操作系统对一个进程内的线程数还是有限制的,不能无限生成,经验值在3000~5000左右.</p>
+<h3 id="4-2-解决办法"><a href="#4-2-解决办法" class="headerlink" title="4.2 解决办法"></a>4.2 解决办法</h3><p>增大进程所占用的总内存，或者减少-Xmx或者-Xss来达到创建更多线程。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/多线程系列-1.初识Java多线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/05/多线程系列-1.初识Java多线程/" itemprop="url">
+                  多线程系列-1.初识Java多线程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-05T19:26:35+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/05/多线程系列-1.初识Java多线程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/05/多线程系列-1.初识Java多线程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-进程和线程"><a href="#1-进程和线程" class="headerlink" title="1.进程和线程"></a>1.进程和线程</h2><p>进程：进程是程序和任务的执行过程，持有资源和进程。（例如运行游览器或者qq等）<br>线程：进程里的任务可以理解为线程。比如qq里的聊天，收发文件等。</p>
+<h2 id="2-Thread的常用方法"><a href="#2-Thread的常用方法" class="headerlink" title="2.Thread的常用方法"></a>2.Thread的常用方法</h2><h3 id="2-1-线程的创建"><a href="#2-1-线程的创建" class="headerlink" title="2.1 线程的创建"></a>2.1 线程的创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- Thread()</div><div class="line">- Thread(String name)</div><div class="line">- Thread(Runnable target)</div><div class="line">- Thread(Runnable target,String name)</div></pre></td></tr></table></figure>
+<h3 id="2-2-线程的方法"><a href="#2-2-线程的方法" class="headerlink" title="2.2 线程的方法"></a>2.2 线程的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- static void sleep(long millis) //睡眠毫秒数</div><div class="line">- static void sleep(long millis,int nanos)</div><div class="line">- void start() //线程启动  //睡眠还可以指定增加纳秒数</div><div class="line">- void join() //使其他线程等待当前线程终止</div><div class="line">- void join(long millis) //同上，加上时间限制</div><div class="line">- void join(long millis,int nanos) //同上，加上时间限制</div><div class="line">- static void yield() //当前运行线程释放处理器资源</div><div class="line">- static native Thread currentThread() //返回当前运行的线程引用</div></pre></td></tr></table></figure>
+<h3 id="2-3-如何正确停止Java中的线程"><a href="#2-3-如何正确停止Java中的线程" class="headerlink" title="2.3 如何正确停止Java中的线程"></a>2.3 如何正确停止Java中的线程</h3><ul>
+<li>别用stop(),stop立即停止，都不知道进行到了哪一步。官方已经不推荐;</li>
+<li>正确的方式是设置退出标识：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class ArmyRunnable implements Runnable &#123;</div><div class="line">    //保证内存可见性（线程修改变量后立马被其他线程看到），退出标识</div><div class="line">    static volatile boolean keepRunning = true;</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        //发动五连击</div><div class="line">        while(keepRunning)&#123;</div><div class="line">            for (int i = 1;i&lt;6;i++)&#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;进攻对方&quot; + i + &quot;次&quot;);</div><div class="line">                //让出处理器时间，下次进攻不一定是自己</div><div class="line">                Thread.yield();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        System.out.println(Thread.currentThread().getName() + &quot;结束战斗！&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-4-关于interrupt方法（不能使线程停止，只是设置状态）"><a href="#2-4-关于interrupt方法（不能使线程停止，只是设置状态）" class="headerlink" title="2.4 关于interrupt方法（不能使线程停止，只是设置状态）"></a>2.4 关于interrupt方法（不能使线程停止，只是设置状态）</h3><ul>
+<li>用法是使用interrupt设置状态，然后用isInterrupt做为2.3中的判断标识</li>
+<li>interrupt：置线程的中断状态</li>
+<li>isInterrupt：线程是否中断</li>
+<li>interrupted：返回线程的上次的中断状态，并清除中断状态</li>
+<li>下面两块是interrupt方法的注释，说的是第一，当线程属于阻塞状态时，调用了join，sleep等方法后，再调用interrupt，则会导致线程的interrupt状态的值被clear，而且线程将得到一个interrupted异常；第二，如果没有上述阻塞状态，则线程的interrupt status将会被设置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">* &lt;p&gt; If this thread is blocked in an invocation of the &#123;@link</div><div class="line">     * Object#wait() wait()&#125;, &#123;@link Object#wait(long) wait(long)&#125;, or &#123;@link</div><div class="line">     * Object#wait(long, int) wait(long, int)&#125; methods of the &#123;@link Object&#125;</div><div class="line">     * class, or of the &#123;@link #join()&#125;, &#123;@link #join(long)&#125;, &#123;@link</div><div class="line">     * #join(long, int)&#125;, &#123;@link #sleep(long)&#125;, or &#123;@link #sleep(long, int)&#125;,</div><div class="line">     * methods of this class, then its interrupt status will be cleared and it</div><div class="line">     * will receive an &#123;@link InterruptedException&#125;.</div><div class="line">     </div><div class="line">* &lt;p&gt; If none of the previous conditions hold then this thread&apos;s interrupt</div><div class="line">     * status will be set. &lt;/p&gt;</div></pre></td></tr></table></figure>
+<h2 id="3-线程的交互-synchronized-wait-notify-notifyAll"><a href="#3-线程的交互-synchronized-wait-notify-notifyAll" class="headerlink" title="3.线程的交互-synchronized,wait,notify,notifyAll"></a>3.线程的交互-synchronized,wait,notify,notifyAll</h2><h3 id="3-1-同一时刻只能有一个线程获取锁对象访问同步代码块"><a href="#3-1-同一时刻只能有一个线程获取锁对象访问同步代码块" class="headerlink" title="3.1 同一时刻只能有一个线程获取锁对象访问同步代码块"></a>3.1 同一时刻只能有一个线程获取锁对象访问同步代码块</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Private final Object lockObj = new Object();</div><div class="line">...</div><div class="line">public void doSomething()&#123;</div><div class="line">    synchronized(lockObj)&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-2-wait-notify-notifyAll"><a href="#3-2-wait-notify-notifyAll" class="headerlink" title="3.2 wait,notify,notifyAll"></a>3.2 wait,notify,notifyAll</h3><p>上述三个方法都是Object的方法，而不是Thread的方法。<br>wait()–让当前线程等待，让出对象锁，让当前线程进入wait set中；<br>notify()–随机从wait set中唤醒一个等待对象锁的线程；<br>notifyAll()–唤醒所有wait set中的等待线程，让它们竞争对象锁。</p>
+<h4 id="注意：Thread和Runnable的区别"><a href="#注意：Thread和Runnable的区别" class="headerlink" title="*注意：Thread和Runnable的区别"></a>*注意：Thread和Runnable的区别</h4><ul>
+<li>首先Runnable是接口，可以更好的扩展。</li>
+<li>其次，runnable可以实现资源共享，网上卖票的例子可以说明。runnable其实像是任务，和callable一样。（callable是可以有返回的任务）</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/01/缓存穿透和缓存雪崩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/01/缓存穿透和缓存雪崩/" itemprop="url">
+                  缓存穿透和缓存雪崩
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T15:36:56+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/01/缓存穿透和缓存雪崩/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/缓存穿透和缓存雪崩/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1.缓存穿透"></a>1.缓存穿透</h2><h3 id="1-1-什么是缓存穿透"><a href="#1-1-什么是缓存穿透" class="headerlink" title="1.1 什么是缓存穿透"></a>1.1 什么是缓存穿透</h3><p>使用缓存时，一次请求数据，会先先检查缓存中是否存在此数据，如果存在直接返回缓存的数据，如果不存在就回去查询数据库然后再缓存查询结果并返回。如果查询的某个数据在缓存中一直不存在，就会造成每一次请求都查询DB（数据库），这样就会一直穿透缓存，在流量特别大时，数据库就有可能崩溃。</p>
+<h3 id="1-2-如何解决缓存穿透"><a href="#1-2-如何解决缓存穿透" class="headerlink" title="1.2 如何解决缓存穿透"></a>1.2 如何解决缓存穿透</h3><ul>
+<li>如果查询数据库也没有值，则直接设置一个默认值存存到缓存，这样第二次到缓存中获取就有值了。</li>
+<li>布隆过滤器，将所有可能存在的数据哈希到一个足够大的BitSet中，不存在的数据将会被拦截掉，从而避免了对底层存储系统的查询压力。</li>
+<li></li>
+</ul>
+<h2 id="2-缓存雪崩"><a href="#2-缓存雪崩" class="headerlink" title="2.缓存雪崩"></a>2.缓存雪崩</h2><h3 id="2-1-什么是缓存雪崩"><a href="#2-1-什么是缓存雪崩" class="headerlink" title="2.1 什么是缓存雪崩"></a>2.1 什么是缓存雪崩</h3><p>缓存雪崩大多数情况是是因为缓存同一时间大规模的失效，从而所有请求都去查询数据库，导致数据库CPU和内存负载过高，甚至会宕机。</p>
+<h3 id="2-2-如何解决缓存雪崩"><a href="#2-2-如何解决缓存雪崩" class="headerlink" title="2.2 如何解决缓存雪崩"></a>2.2 如何解决缓存雪崩</h3><ul>
+<li>分析用户行为，尽量让失效时间点均匀分布。避免同时失效。</li>
+<li>如果是因为缓存服务器宕机，可以考虑做redis主从。</li>
+</ul>
+<h2 id="3-缓存预热"><a href="#3-缓存预热" class="headerlink" title="3.缓存预热"></a>3.缓存预热</h2><p>缓存预热是指系统上线前，将数据加载到缓存中。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/关于RocketMQ-第二篇-安装及启动/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1123,8 +1643,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
                   </a>
                 </span>
 
@@ -1348,8 +1868,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
                   </a>
                 </span>
 
@@ -1635,8 +2155,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
                   </a>
                 </span>
 
@@ -2026,850 +2546,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/15/Redis-3.命令-第一部分key,String,Hash/" itemprop="url">
-                  Redis-3.命令之key,String,Hash
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T19:10:01+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/15/Redis-3.命令-第一部分key,String,Hash/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/15/Redis-3.命令-第一部分key,String,Hash/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Redis命令-第一部分key-String-Hash"><a href="#Redis命令-第一部分key-String-Hash" class="headerlink" title="Redis命令-第一部分key,String,Hash"></a>Redis命令-第一部分key,String,Hash</h1><h2 id="1-连接redis"><a href="#1-连接redis" class="headerlink" title="1.连接redis"></a>1.连接redis</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ redis-cli -h host -p port -a password</div><div class="line">eg：redis-cli -h 127.0.0.1 -p 6379 -a redis </div><div class="line">如果没密码 直接redis-cli</div></pre></td></tr></table></figure>
-<h2 id="2-Redis的键命令"><a href="#2-Redis的键命令" class="headerlink" title="2.Redis的键命令"></a>2.Redis的键命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SET key</td>
-<td>插入键</td>
-<td>SET mykey whx</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>GET key</td>
-<td>插入键</td>
-<td>GET mykey whx</td>
-<td>whx</td>
-</tr>
-<tr>
-<td>DEL key</td>
-<td>删除键</td>
-<td>DEL mykey</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>DUMP key</td>
-<td>返回存储在指定键的值的序列化版本</td>
-<td>DUMP mykey</td>
-<td>省略</td>
-</tr>
-<tr>
-<td>EXISTS key</td>
-<td>查询键是否存在</td>
-<td>EXISTS mykey</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>EXPIRE key seconds</td>
-<td>指定键的过期时间，秒</td>
-<td>EXPIRE mykey 10</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>EXPIREAT key timestamp</td>
-<td>指定的键过期时间，时间为Unix时间戳格式</td>
-<td>EXPIREAT mykey 1484539499</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>PEXPIRE key milliseconds</td>
-<td>指定键的过期时间，毫秒</td>
-<td>PEXPIRE mykey  10000</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>PEXPIREAT key milliseconds-timestamp</td>
-<td>设置键在Unix时间戳指定为毫秒到期</td>
-<td>PEXPIREAT key 1484556630000</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>KEYS pattern</td>
-<td>查找与指定模式匹配的所有键</td>
-<td>KEYS my*</td>
-<td>mykey</td>
-</tr>
-<tr>
-<td>MOVE key db</td>
-<td>移动键到另一个数据库(select 0 就是选择0库)</td>
-<td>MOVE mykey 1</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>PERSIST key</td>
-<td>命令用于移除给定 key 的过期时间，使得 key 永不过期</td>
-<td>PERSIST mykey</td>
-<td>当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。</td>
-</tr>
-<tr>
-<td>TTL keys</td>
-<td>TTL 命令以秒为单位返回 key 的剩余过期时间</td>
-<td>TTL mykey</td>
-<td>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。</td>
-</tr>
-<tr>
-<td>PTTL key</td>
-<td>以毫秒为单位返回 key 的剩余过期时间</td>
-<td>PTTL mykey</td>
-<td>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。</td>
-</tr>
-<tr>
-<td>RANDOMKEY</td>
-<td>从当前数据库中随机返回一个 key</td>
-<td>RANDOMKEY</td>
-<td>mykey</td>
-</tr>
-<tr>
-<td>RENAME key newkey</td>
-<td>修改键的名字</td>
-<td>RENAME mykey newmykey</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>RENAMENX key newkey</td>
-<td>用于在新的 key 不存在时修改 key 的名称</td>
-<td>RENAMEX mykey newmykey</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>TYPE key</td>
-<td>用于返回 key 所储存的值的类型</td>
-<td>TYPE mykey</td>
-<td>String</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-Redis的String命令"><a href="#3-Redis的String命令" class="headerlink" title="3.Redis的String命令"></a>3.Redis的String命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SET key</td>
-<td>设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型</td>
-<td>SET mykey whx</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>GET key</td>
-<td>获取指定 key 的值。如果 key 不存在，返回 nil 。如果key 储存的值不是字符串类型，返回一个错误</td>
-<td>GET mykey whx</td>
-<td>whx</td>
-</tr>
-<tr>
-<td>GETRANGE KEY_NAME start end</td>
-<td>获取存储在指定 key 中字符串的子字符串。字符串的截取范围由 start 和 end决定</td>
-<td>GETRANGE mykey 0 1</td>
-<td>wh</td>
-</tr>
-<tr>
-<td>GETSET KEY_NAME VALUE</td>
-<td>设置指定 key 的值，并返回 key 旧的值</td>
-<td>GETSET mykey 666</td>
-<td>whx</td>
-</tr>
-<tr>
-<td>GETBIT KEY_NAME OFFSET</td>
-<td>命令用于对 key 所储存的字符串值，获取指定偏移量上的位(bit)</td>
-<td>GETBIT mykey 5</td>
-<td>1</td>
-</tr>
-<tr>
-<td>MGET KEY1 KEY2 .. KEYN</td>
-<td>命令返回所有(一个或多个)给定 key 的值</td>
-<td>MGET mykey mykey1 mykey2</td>
-<td>1) “666” 2) “888” 3) (nil)</td>
-</tr>
-<tr>
-<td>SETBIT KEY_NAME OFFSET</td>
-<td>用于对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)</td>
-<td>同get</td>
-<td>同get</td>
-</tr>
-<tr>
-<td>SETEX KEY_NAME TIMEOUT VALUE</td>
-<td>为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。</td>
-<td>SETEX mykey 20 new666</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>PSETEX KEY_NAME TIMEOUT VALUE</td>
-<td>以毫秒为单位设置 key 的生存时间。如果 key 已经存在， SETEX 命令将会替换旧的值。</td>
-<td>PSETEX mykey 1000 666</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>SETNX KEY_NAME VALUE</td>
-<td>命令在指定的 key 不存在时，为 key 设置指定的值,设置成功，返回 1 。 设置失败，返回 0</td>
-<td>SETNX mykey 666</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>SETRANGE KEY_NAME OFFSET VALUE</td>
-<td>指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量 offset 开始</td>
-<td>SETRANGE mykey 1 whx</td>
-<td>5whx(只会返回数字，这里是get拿到的)</td>
-</tr>
-<tr>
-<td>STRLEN KEY_NAME</td>
-<td>用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</td>
-<td>STRLEN mykey</td>
-<td>(integer) 4</td>
-</tr>
-<tr>
-<td>MSET key1 value1 key2 value2 .. keyN valueN</td>
-<td>用于同时设置一个或多个 key-value</td>
-<td>MSET key1 “Hello” key2 “World”</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>MSETNX key1 value1 key2 value2 .. keyN valueN</td>
-<td>用于所有给定 key 都不存在时，同时设置一个或多个 key-value,所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0</td>
-<td>MSETNX key1 “Hello” key2 “World”</td>
-<td>0</td>
-</tr>
-<tr>
-<td>INCR KEY_NAME</td>
-<td>Redis Incr 命令将 key 中储存的数字值增一。如果 key 不存在，那么 key的值会先被初始化为 0 ，然后再执行 INCR 操作。如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。本操作的值限制在 64 位(bit)有符号数字表示之内</td>
-<td>incr num</td>
-<td>2</td>
-</tr>
-<tr>
-<td>INCRBY KEY_NAME INCR_AMOUNT</td>
-<td>命令将 key 中储存的数字加上指定的增量值,如果 key 不存在，那么 key的值会先被初始化为 0 ，然后再执行 INCRBY 命令</td>
-<td>INCRBY num 10</td>
-<td>12</td>
-</tr>
-<tr>
-<td>INCRBYFLOAT KEY_NAME INCR_AMOUNT</td>
-<td>为 key 中所储存的值加上指定的浮点数增量值,如果 key 不存在，那么 INCRBYFLOAT 会先将 key 的值设为 0 ，再执行加法操作</td>
-<td>INCRBYFLOAT num 10.01</td>
-<td>22.01</td>
-</tr>
-<tr>
-<td>DECR KEY_NAME</td>
-<td>Redis Decr 命令将 key 中储存的数字值减一</td>
-<td>incr num1</td>
-<td>2</td>
-</tr>
-<tr>
-<td>DECRBY KEY_NAME DECREMENT_AMOUNT</td>
-<td>命令将 key 中储存的数字减去上指定的值</td>
-<td>DECRBY num1 10</td>
-<td>-8</td>
-</tr>
-<tr>
-<td>APPEND KEY_NAME NEW_VALUE</td>
-<td>命令用于为指定的 key 追加值,如果 key 不存在， APPEND 就简单地将给定 key 设为 value</td>
-<td>APPEND mykey 888</td>
-<td>返回数字</td>
-</tr>
-</tbody>
-</table>
-<h2 id="2-Hash的键命令"><a href="#2-Hash的键命令" class="headerlink" title="2.Hash的键命令"></a>2.Hash的键命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>HSET KEY_NAME FIELD VALUE</td>
-<td>用于为哈希表中的字段赋值</td>
-<td>HSET ashine name whx</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>HMSET KEY_NAME FIELD1 VALUE1 …FIELDN VALUEN</td>
-<td>用于同时将多个 field-value (字段-值)对设置到哈希表中</td>
-<td>HMSET ashine name wuhanxiao age 25 sex man</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>HSETNX KEY_NAME FIELD VALUE</td>
-<td>用于为哈希表中不存在的的字段赋值</td>
-<td>HSETNX ashine name whx1</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>HGET KEY_NAME FIELD_NAME</td>
-<td>用于返回哈希表中指定字段的值</td>
-<td>HGET ashine name</td>
-<td>whx</td>
-</tr>
-<tr>
-<td>HMGET KEY_NAME FIELD1…FIELDN</td>
-<td>用于返回哈希表中，一个或多个给定字段的值</td>
-<td>HMGET ashine name age</td>
-<td>1) whx 2)25</td>
-</tr>
-<tr>
-<td>HGETALL KEY_NAME</td>
-<td>用于返回哈希表中，所有的字段和值,在返回值里，紧跟每个字段名(field name)之后是字段的值(value)，所以返回值的长度是哈希表大小的两倍</td>
-<td>HGETALL ashine</td>
-<td>省略</td>
-</tr>
-<tr>
-<td>HEXISTS KEY_NAME FIELD_NAME</td>
-<td>用于查看哈希表的指定字段是否存在</td>
-<td>HEXSITS ashine name</td>
-<td>如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 </td>
-</tr>
-<tr>
-<td>HDEL KEY_NAME FIELD1.. FIELDN</td>
-<td>用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</td>
-<td>HDEL ashine name age</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td>HINCRBY KEY_NAME FIELD_NAME INCR_BY_NUMBER</td>
-<td>用于为哈希表中的字段值加上指定增量值,如果type不对，会返回错误</td>
-<td>HINCRBY ashine age 12</td>
-<td>(integer)15</td>
-</tr>
-<tr>
-<td>HINCRBYFLOAT KEY_NAME FIELD_NAME INCR_BY_NUMBER</td>
-<td>用于为哈希表中的字段值加上指定浮点数增量值</td>
-<td>HINCRBYFLOAT ashine age 1.5</td>
-<td>16.5</td>
-</tr>
-<tr>
-<td>HKEYS KEY_NAME</td>
-<td>用于获取哈希表中的所有字段名</td>
-<td>HKEYS ashine</td>
-<td>字段的list</td>
-</tr>
-<tr>
-<td>HLEN KEY_NAME</td>
-<td>命令用于获取哈希表中字段的数量</td>
-<td>HLEN ashine</td>
-<td>(integer) 4</td>
-</tr>
-<tr>
-<td>HVALS KEY_NAME</td>
-<td>返回哈希表所有字段的值</td>
-<td>HVALS ashine</td>
-<td>字段值的list</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
-                  Redis-1.安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
-<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
-<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
-<p>接下来继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
-<p>启动、进入、关闭redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
-<p>也可以指定端口启动和结束</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
-<p>设置密码<br>修改redis.conf</p>
-<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-2.数据类型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/03/Redis-2.数据类型/" itemprop="url">
-                  Redis-2.数据类型
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-redis/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/03/Redis-2.数据类型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-2.数据类型/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="数据类型及常用命令"><a href="#数据类型及常用命令" class="headerlink" title="数据类型及常用命令"></a>数据类型及常用命令</h1><h2 id="Strings-字符串类型"><a href="#Strings-字符串类型" class="headerlink" title="Strings-字符串类型"></a>Strings-字符串类型</h2><p>Redis的字符串是字节序列。在Redis中字符串是二进制安全的，这意味着他们有一个已知的长度，是没有任何特殊字符终止决定的，所以可以存储任何东西，最大长度可达512兆。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; SET name &quot;helloworld&quot;</div><div class="line">OK</div><div class="line">redis 127.0.0.1:6379&gt; GET name</div><div class="line">&quot;helloworld&quot;</div></pre></td></tr></table></figure>
-<p>在上面的例子使用Redis命令set和get，helloworld即为字符串类型。</p>
-<p>注：字符串值可以存储最大512兆字节的长度。</p>
-<h2 id="Hashes-哈希值型"><a href="#Hashes-哈希值型" class="headerlink" title="Hashes-哈希值型"></a>Hashes-哈希值型</h2><p>Redis的哈希键值对的集合。 Redis的哈希值是字符串字段和字符串值之间的映射，所以它们被用来表示对象。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmset user:1 name ashine age 15 address shenzhen</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; hgetall user:1</div><div class="line">1) &quot;whx&quot;</div><div class="line">2) &quot;17&quot;</div><div class="line">3) &quot;name&quot;</div><div class="line">4) &quot;ashine&quot;</div><div class="line">5) &quot;age&quot;</div><div class="line">6) &quot;15&quot;</div><div class="line">7) &quot;address&quot;</div><div class="line">8) &quot;shenzhen&quot;</div><div class="line">127.0.0.1:6379&gt; hget user:1 name</div><div class="line">&quot;ashine&quot;</div></pre></td></tr></table></figure>
-<h2 id="Lists-列表"><a href="#Lists-列表" class="headerlink" title="Lists-列表"></a>Lists-列表</h2><p>Redis的列表是简单的字符串列表，排序插入顺序。可以添加元素到Redis列表的头部或尾部。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lpush maydaylist ashine shitou</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guanyou</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist guaishou</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; lpush maydaylist masha</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; lrange maydaylist 0 10</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;guaishou&quot;</div><div class="line">3) &quot;guanyou&quot;</div><div class="line">4) &quot;shitou&quot;</div><div class="line">5) &quot;ashine&quot;</div></pre></td></tr></table></figure>
-<p>列表的最大长度也很大，可以支持40亿。</p>
-<h2 id="Sets-无序集合"><a href="#Sets-无序集合" class="headerlink" title="Sets-无序集合"></a>Sets-无序集合</h2><p>set是集合，它是string类型的无序集合。<br>set是通过hash table实现的，添加，删除和查找的复杂度都是0（1）。<br>对集合我们可以取并集、交集、差集。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; sadd maydayset shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd maydayset masha</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div><div class="line">127.0.0.1:6379&gt; smembers maydayset</div><div class="line">1) &quot;masha&quot;</div><div class="line">2) &quot;ashine&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
-<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
-<h1 id="sorted-set有序集合"><a href="#sorted-set有序集合" class="headerlink" title="sorted set有序集合"></a>sorted set有序集合</h1><p>sortes set是set的一个升级版本，它在set的基础上增加了一个顺序属性，<br>这一属性在添加修改元素的时候可以指定，每次指定后，zset会自动重新按新的值调整顺序。<br>可以理解为有两列的MySQL表，一列存value，一列存顺序。</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 0 ashine</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 2 shitou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  guanyou</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd sortmaydayset 1  ashine</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; zrangebyscore sortmaydayset 0 10</div><div class="line">1) &quot;ashine&quot;</div><div class="line">2) &quot;guanyou&quot;</div><div class="line">3) &quot;shitou&quot;</div></pre></td></tr></table></figure>
-<p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
-<p>参考链接命令：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/commands.html</a></p>
-<p>参考链接数据类型：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/topics/data-types-intro.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2919,7 +2595,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2930,7 +2606,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2941,7 +2617,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
