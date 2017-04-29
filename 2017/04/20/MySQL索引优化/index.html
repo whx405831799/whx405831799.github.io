@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="RocketMQ," />
+  <meta name="keywords" content="mysql,索引," />
 
 
 
@@ -87,19 +87,20 @@
 
 
 
-<meta name="description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。 2.消息中间件工作场景 消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
-<meta name="keywords" content="RocketMQ">
+<meta name="description" content="[toc] 1.索引的类型 普通索引：最基本的索引类型，没唯一性之类限制。 唯一索引unique：和普通索引基本相同，但所有的索引列值保持唯一性。 主键索引：是一种唯一索引，但必须指定为primary key。 全文索引：全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。但是全文索引对中文的支持很弱，所以基本上做全文检索时不用mysql的全文索引。 哈希">
+<meta name="keywords" content="mysql,索引">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于RocketMQ-第一篇-介绍">
-<meta property="og:url" content="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/index.html">
+<meta property="og:title" content="MySQL索引介绍及建议">
+<meta property="og:url" content="http://yoursite.com/2017/04/20/MySQL索引优化/index.html">
 <meta property="og:site_name" content="ashine's blog">
-<meta property="og:description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。 2.消息中间件工作场景 消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
-<meta property="og:image" content="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png">
-<meta property="og:updated_time" content="2017-04-19T10:41:36.000Z">
+<meta property="og:description" content="[toc] 1.索引的类型 普通索引：最基本的索引类型，没唯一性之类限制。 唯一索引unique：和普通索引基本相同，但所有的索引列值保持唯一性。 主键索引：是一种唯一索引，但必须指定为primary key。 全文索引：全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。但是全文索引对中文的支持很弱，所以基本上做全文检索时不用mysql的全文索引。 哈希">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AE%B5%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/gender-weixin-%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png">
+<meta property="og:updated_time" content="2017-04-29T13:18:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于RocketMQ-第一篇-介绍">
-<meta name="twitter:description" content="一.什么是消息中间件1.什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分布式系统不可缺少的中间件。 2.消息中间件工作场景 消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操">
-<meta name="twitter:image" content="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png">
+<meta name="twitter:title" content="MySQL索引介绍及建议">
+<meta name="twitter:description" content="[toc] 1.索引的类型 普通索引：最基本的索引类型，没唯一性之类限制。 唯一索引unique：和普通索引基本相同，但所有的索引列值保持唯一性。 主键索引：是一种唯一索引，但必须指定为primary key。 全文索引：全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。但是全文索引对中文的支持很弱，所以基本上做全文检索时不用mysql的全文索引。 哈希">
+<meta name="twitter:image" content="http://ohoyqlwj0.bkt.clouddn.com/%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AE%B5%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png">
 
 
 
@@ -127,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/20/MySQL索引优化/"/>
 
 
 
 
 
-  <title> 关于RocketMQ-第一篇-介绍 | ashine's blog </title>
+  <title> MySQL索引介绍及建议 | ashine's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -292,7 +293,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/MySQL索引优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ashine">
@@ -313,7 +314,7 @@
             
             
               
-                关于RocketMQ-第一篇-介绍
+                MySQL索引介绍及建议
               
             
           </h1>
@@ -328,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-12T18:56:06+08:00">
-                2017-02-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T20:16:32+08:00">
+                2017-04-20
               </time>
             
 
@@ -351,8 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端-RocketMQ/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端-RocketMQ</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -369,8 +370,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/12/关于RocketMQ-第一篇-介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/12/关于RocketMQ-第一篇-介绍/" itemprop="commentCount"></span>
+                <a href="/2017/04/20/MySQL索引优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/20/MySQL索引优化/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,23 +397,27 @@
       
 
       
-        <h1 id="一-什么是消息中间件"><a href="#一-什么是消息中间件" class="headerlink" title="一.什么是消息中间件"></a>一.什么是消息中间件</h1><h2 id="1-什么是消息中间件？"><a href="#1-什么是消息中间件？" class="headerlink" title="1.什么是消息中间件？"></a>1.什么是消息中间件？</h2><p>消息中间件利用高效可靠的消息传递机制进行平台无关的数据交流，分布式系统中重要的组件，主要解<br>决应用耦合，异步消息，流量削锋。实现高性能，高可用，可伸缩和最终一致性架构。是大型分<br>布式系统不可缺少的中间件。</p>
-<h2 id="2-消息中间件工作场景"><a href="#2-消息中间件工作场景" class="headerlink" title="2.消息中间件工作场景"></a>2.消息中间件工作场景</h2><ul>
-<li>消息中间件适用于需要可靠的数据传送的分布式环境。采用消息中间件机制的系统中，不同的对象之间通过传递消息来激活对方的事件，完成相应的操作。发送者将消息发送给消息服务器，消息服务器将消息存放在若干队列中，在合适的时候再将消息转发给接收者。</li>
-<li>消息中间件能在不同平台之间通信，它常被用来屏蔽掉各种平台及协议之间的特性，实现应用程序之间的协同，其优点在于能够在客户和服务器之间提供同步和异步的连接，并且在任何时刻都可以将消息进行传送或者存储转发，这也是它比远程过程调用更进一步的原因。</li>
+        <p>[toc]</p>
+<h2 id="1-索引的类型"><a href="#1-索引的类型" class="headerlink" title="1.索引的类型"></a>1.索引的类型</h2><ul>
+<li>普通索引：最基本的索引类型，没唯一性之类限制。</li>
+<li>唯一索引unique：和普通索引基本相同，但所有的索引列值保持唯一性。</li>
+<li>主键索引：是一种唯一索引，但必须指定为primary key。</li>
+<li>全文索引：全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。但是全文索引对中文的支持很弱，所以基本上做全文检索时不用mysql的全文索引。</li>
+<li>哈希索引：只有Memory, NDB两种引擎支持，Memory引擎默认支持哈希索引，如果多个hash值相同，出现哈希碰撞，那么索引以链表方式存储。Hash 索引结构的特殊性,其检索效率非常高,索引的检索可以一次定位,不像B-Tree 索引需要从根节点到枝节点,最后才能访问到。但是hash索引存放的是hash值,所以仅支持 &lt; = &gt; 以及 IN 操作,而且碰撞多后，性能会变差。</li>
 </ul>
-<h1 id="二-关于RocketMQ"><a href="#二-关于RocketMQ" class="headerlink" title="二.关于RocketMQ"></a>二.关于RocketMQ</h1><h2 id="1-RocketMQ产品定义"><a href="#1-RocketMQ产品定义" class="headerlink" title="1.RocketMQ产品定义"></a>1.RocketMQ产品定义</h2><p>产品基于高可用分布式集群技术，提供消息发布订阅、消息轨迹查询、定时（延时）消息、资源统计、监控<br>报警等一系列消息云服务，是企业级互联网架构的核心产品。</p>
-<h2 id="2-RocketMQ的角色"><a href="#2-RocketMQ的角色" class="headerlink" title="2.RocketMQ的角色"></a>2.RocketMQ的角色</h2><p><img src="http://ohoyk8evb.bkt.clouddn.com/rocketmq.png" alt="image"></p>
-<ul>
-<li>Producer消息生产者，一般由业务系统产生消息。</li>
-<li>Consumer消息消费者，一般由服务端异步消费。（有两种，push consumer;pull consumer）</li>
-<li>Broker消息中转角色，存储消息，转发消息。(很多线上部署是用的多主无从)</li>
-<li>NameServer无状态节点，用来保存活跃的broker列表，topic列表。（可集群部署）</li>
+<p>大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)使用B树中存储。空间列类型的索引使用R-树，适用用范围查找，很少用。</p>
+<h2 id="2-索引的方式"><a href="#2-索引的方式" class="headerlink" title="2.索引的方式"></a>2.索引的方式</h2><ul>
+<li>单列索引:对相关的列使用索引是提高SELECT操作性能的最佳途径之一。</li>
+<li>多列索引：可以为多个列创建索引，一个索引可以包含15个列。对于某些索引，可以索引列的左前缀。</li>
 </ul>
-<h2 id="3-流程"><a href="#3-流程" class="headerlink" title="3.流程"></a>3.流程</h2><ul>
-<li>先需要一个NameServer节点。类似于路由。Producer,Consumer,Broker之间的联系都需要通过访问NameServer，拿到需要的路由信息才能进行联系。</li>
-<li>启动Broker</li>
-<li>启动NameServer和Broker后则可以在控制台进行topic的增加和订阅。之后Producer就可以发送已有的topic消息，Consumer被broker允许后，便可以收到生产者的消息。</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">最左前缀原则：</div><div class="line">比如建立了多列索引为key(firstname lastname age)，</div><div class="line">其实相当于建立了key(firstname lastname)和key(firstname)。</div></pre></td></tr></table></figure>
+<p>eg:建立索引gender-username-weixin多列索引，索引三个字段。<br><img src="http://ohoyqlwj0.bkt.clouddn.com/%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AE%B5%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png" alt="三个字段乱序都可以使用索引"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/gender-weixin-%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png" alt="gender-weixin不会使用索引，符合最左前缀原则"></p>
+<p>经过测试：当where条件句为gender或者gender username或者三个字段全部出现（任意顺序），皆可使用索引。但是出现gender weixin则不会使用索引。</p>
+<h2 id="3-建立索引的建议"><a href="#3-建立索引的建议" class="headerlink" title="3.建立索引的建议"></a>3.建立索引的建议</h2><ul>
+<li>越小的数据类型越好：越小的数据类型通常在磁盘、内存和CPU缓存中都需要更少的空间，处理起来更快。</li>
+<li>简单的数据类型更好：整型数据比起字符，处理开销更小，因为字符串的比较更复杂。</li>
+<li>尽量避免值出现NULL：应该指定列为NOT NULL，除非你想存储NULL。MySQL对含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算做起来更加复杂。建议用0、一个特殊的值或者一个空串代替空值。</li>
 </ul>
 
       
@@ -443,7 +448,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/RocketMQ/" rel="tag"># RocketMQ</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/索引/" rel="tag"># 索引</a>
           
         </div>
       
@@ -456,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/13/关于RocketMQ-第二篇-安装及启动/" rel="next" title="关于RocketMQ-第二篇-安装及启动">
-                <i class="fa fa-chevron-left"></i> 关于RocketMQ-第二篇-安装及启动
+              <a href="/2017/04/23/数据库事务四大特性及隔离级别/" rel="next" title="数据库事务四大特性及隔离级别">
+                <i class="fa fa-chevron-left"></i> 数据库事务四大特性及隔离级别
               </a>
             
           </div>
@@ -466,8 +473,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/10/JAVA位运算/" rel="prev" title="JAVA位运算">
-                JAVA位运算 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/15/MySQL慢查询优化/" rel="prev" title="MySQL慢查询优化">
+                MySQL慢查询优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -500,8 +507,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/12/关于RocketMQ-第一篇-介绍/"
-           data-title="关于RocketMQ-第一篇-介绍" data-url="http://yoursite.com/2017/02/12/关于RocketMQ-第一篇-介绍/">
+      <div class="ds-thread" data-thread-key="2017/04/20/MySQL索引优化/"
+           data-title="MySQL索引介绍及建议" data-url="http://yoursite.com/2017/04/20/MySQL索引优化/">
       </div>
     
   </div>
@@ -607,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-什么是消息中间件"><span class="nav-number">1.</span> <span class="nav-text">一.什么是消息中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是消息中间件？"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是消息中间件？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-消息中间件工作场景"><span class="nav-number">1.2.</span> <span class="nav-text">2.消息中间件工作场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-关于RocketMQ"><span class="nav-number">2.</span> <span class="nav-text">二.关于RocketMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RocketMQ产品定义"><span class="nav-number">2.1.</span> <span class="nav-text">1.RocketMQ产品定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RocketMQ的角色"><span class="nav-number">2.2.</span> <span class="nav-text">2.RocketMQ的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-流程"><span class="nav-number">2.3.</span> <span class="nav-text">3.流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-索引的类型"><span class="nav-number">1.</span> <span class="nav-text">1.索引的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-索引的方式"><span class="nav-number">2.</span> <span class="nav-text">2.索引的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-建立索引的建议"><span class="nav-number">3.</span> <span class="nav-text">3.建立索引的建议</span></a></li></ol></div>
             
 
           </div>

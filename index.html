@@ -290,6 +290,354 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/23/数据库事务四大特性及隔离级别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/23/数据库事务四大特性及隔离级别/" itemprop="url">
+                  数据库事务四大特性及隔离级别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-23T22:56:31+08:00">
+                2017-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/23/数据库事务四大特性及隔离级别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/23/数据库事务四大特性及隔离级别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-事物四大特性ACID"><a href="#1-事物四大特性ACID" class="headerlink" title="1.事物四大特性ACID"></a>1.事物四大特性ACID</h2><ul>
+<li>原子性Atomicity:原子性是指一个事务包含的所有操作要么全部成功，要么全部失败回滚。</li>
+<li>一致性Consistency:一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。拿转账来说，假设用户A和用户B两者的钱加起来一共是5000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是5000，这就是事务的一致性。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">但是事务可以不同程度的一致性：</div><div class="line"> 强一致性：读操作可以立即读到提交的更新操作。</div><div class="line"> 弱一致性：提交的更新操作，不一定立即会被读操作读到，此种情况会存在一个不一致窗口，指的是读操作可以读到最新值的一段时间。</div><div class="line"> 最终一致性：是弱一致性的特例。事务更新一份数据，最终一致性保证在没有其他事务更新同样的值的话，最终所有的事务都会读到之前事务更新的最新值。如果没有错误发生，不一致窗口的大小依赖于：通信延迟，系统负载等。</div><div class="line"> 其他一致性变体还有：</div><div class="line"> 单调一致性：如果一个进程已经读到一个值，那么后续不会读到更早的值。</div><div class="line"> 会话一致性：保证客户端和服务器交互的会话过程中，读操作可以读到更新操作后的最新值。</div></pre></td></tr></table></figure>
+<ul>
+<li>隔离性Isolation:并发事务之间互相影响的程度，比如一个事务会不会读取到另一个未提交的事务修改的数据。比如一个事务会不会读取到另一个未提交的事务修改的数据。在工程实践中，为了性能的考虑会对隔离性进行折中，下文会介绍几种隔离级别。</li>
+<li>持久性durability：持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</li>
+</ul>
+<h2 id="2-脏读幻读不可重复读"><a href="#2-脏读幻读不可重复读" class="headerlink" title="2.脏读幻读不可重复读"></a>2.脏读幻读不可重复读</h2><p>如果不考虑事务的隔离性，会发生的几种问题：</p>
+<ul>
+<li>脏读：事务A修改了一个数据，但未提交，事务B读到了事务A未提交的更新结果，如果事务A提交失败，事务B读到的就是脏数据。</li>
+<li>不可重复读：在同一个事务中，对于同一份数据读取到的结果不一致。比如，事务B在事务A提交前读到的结果，和提交后读到的结果可能不同。不可重复读出现的原因就是事务并发修改记录，要避免这种情况，最简单的方法就是对要修改的记录加锁，这回导致锁竞争加剧，影响性能。另一种方法是通过MVCC可以在无锁的情况下，避免不可重复读。</li>
+<li>幻读：在同一个事务中，同一个查询多次返回的结果不一致。事务A新增了一条记录，事务B在事务A提交前后各执行了一次查询操作，发现后一次比前一次多了一条记录。幻读是由于并发事务增加记录导致的，这个不能像不可重复读通过记录加锁解决，因为对于新增的记录根本无法加锁。需要将事务串行化，才能避免幻读。</li>
+</ul>
+<h2 id="3-四种隔离级别"><a href="#3-四种隔离级别" class="headerlink" title="3.四种隔离级别"></a>3.四种隔离级别</h2><p>从低到高：</p>
+<ul>
+<li>Read Uncommitted：最低的隔离级别，什么都不需要做，一个事务可以读到另一个事务未提交的结果。所有的并发事务问题都会发生。</li>
+<li>Read Committed：只有在事务提交后，其更新结果才会被其他事务看见。可以解决脏读问题。</li>
+<li>Repeated Read：在一个事务中，对于同一份数据的读取结果总是相同的，无论是否有其他事务对这份数据进行操作，以及这个事务是否提交。可以解决脏读、不可重复读。</li>
+<li>Serialization：事务串行化执行，隔离级别最高，牺牲了系统的并发性。可以解决并发事务的所有问题。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/MySQL索引优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/20/MySQL索引优化/" itemprop="url">
+                  MySQL索引介绍及建议
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T20:16:32+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/20/MySQL索引优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/20/MySQL索引优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[toc]</p>
+<h2 id="1-索引的类型"><a href="#1-索引的类型" class="headerlink" title="1.索引的类型"></a>1.索引的类型</h2><ul>
+<li>普通索引：最基本的索引类型，没唯一性之类限制。</li>
+<li>唯一索引unique：和普通索引基本相同，但所有的索引列值保持唯一性。</li>
+<li>主键索引：是一种唯一索引，但必须指定为primary key。</li>
+<li>全文索引：全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。但是全文索引对中文的支持很弱，所以基本上做全文检索时不用mysql的全文索引。</li>
+<li>哈希索引：只有Memory, NDB两种引擎支持，Memory引擎默认支持哈希索引，如果多个hash值相同，出现哈希碰撞，那么索引以链表方式存储。Hash 索引结构的特殊性,其检索效率非常高,索引的检索可以一次定位,不像B-Tree 索引需要从根节点到枝节点,最后才能访问到。但是hash索引存放的是hash值,所以仅支持 &lt; = &gt; 以及 IN 操作,而且碰撞多后，性能会变差。</li>
+</ul>
+<p>大多数MySQL索引(PRIMARY KEY、UNIQUE、INDEX和FULLTEXT)使用B树中存储。空间列类型的索引使用R-树，适用用范围查找，很少用。</p>
+<h2 id="2-索引的方式"><a href="#2-索引的方式" class="headerlink" title="2.索引的方式"></a>2.索引的方式</h2><ul>
+<li>单列索引:对相关的列使用索引是提高SELECT操作性能的最佳途径之一。</li>
+<li>多列索引：可以为多个列创建索引，一个索引可以包含15个列。对于某些索引，可以索引列的左前缀。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">最左前缀原则：</div><div class="line">比如建立了多列索引为key(firstname lastname age)，</div><div class="line">其实相当于建立了key(firstname lastname)和key(firstname)。</div></pre></td></tr></table></figure>
+<p>eg:建立索引gender-username-weixin多列索引，索引三个字段。<br><img src="http://ohoyqlwj0.bkt.clouddn.com/%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AE%B5%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png" alt="三个字段乱序都可以使用索引"></p>
+<p><img src="http://ohoyqlwj0.bkt.clouddn.com/gender-weixin-%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95.png" alt="gender-weixin不会使用索引，符合最左前缀原则"></p>
+<p>经过测试：当where条件句为gender或者gender username或者三个字段全部出现（任意顺序），皆可使用索引。但是出现gender weixin则不会使用索引。</p>
+<h2 id="3-建立索引的建议"><a href="#3-建立索引的建议" class="headerlink" title="3.建立索引的建议"></a>3.建立索引的建议</h2><ul>
+<li>越小的数据类型越好：越小的数据类型通常在磁盘、内存和CPU缓存中都需要更少的空间，处理起来更快。</li>
+<li>简单的数据类型更好：整型数据比起字符，处理开销更小，因为字符串的比较更复杂。</li>
+<li>尽量避免值出现NULL：应该指定列为NOT NULL，除非你想存储NULL。MySQL对含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算做起来更加复杂。建议用0、一个特殊的值或者一个空串代替空值。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/15/MySQL慢查询优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1777,518 +2125,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/06/Redis-5.服务器相关命令/" itemprop="url">
-                  Redis-5.服务器相关命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-06T20:38:03+08:00">
-                2017-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/06/Redis-5.服务器相关命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/06/Redis-5.服务器相关命令/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Redis-5-服务器相关命令"><a href="#Redis-5-服务器相关命令" class="headerlink" title="Redis-5.服务器相关命令"></a>Redis-5.服务器相关命令</h1><h2 id="Redis-服务器命令主要是用于管理-redis-服务"><a href="#Redis-服务器命令主要是用于管理-redis-服务" class="headerlink" title="Redis 服务器命令主要是用于管理 redis 服务"></a>Redis 服务器命令主要是用于管理 redis 服务</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Info</td>
-<td>命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值</td>
-<td>Info</td>
-<td>省略</td>
-</tr>
-<tr>
-<td>DBSIZE</td>
-<td>返回当前数据库的 key 的数量</td>
-<td>DBSIZE</td>
-<td>(integer) 5</td>
-</tr>
-<tr>
-<td>FLUSHDB</td>
-<td>用于清空当前数据库中的所有 key</td>
-<td>FLUSHDB</td>
-<td>OK</td>
-</tr>
-<tr>
-<td>FLUSHALL</td>
-<td>用于清空整个 Redis 服务器的数据(删除所有数据库的所有 key )</td>
-<td>FLUSHALL</td>
-<td>OK</td>
-</tr>
-<tr>
-<td>SAVE</td>
-<td>执行一个同步保存操作，将当前 Redis 实例的所有数据快照(snapshot)以 RDB 文件的形式保存到硬盘</td>
-<td>SAVE</td>
-<td>OK</td>
-</tr>
-<tr>
-<td>ROLE</td>
-<td>查看主从实例所属的角色，角色有master, slave, sentinel</td>
-<td>ROLE</td>
-<td>所属角色</td>
-</tr>
-<tr>
-<td>MONITOR</td>
-<td>用于实时打印出 Redis 服务器接收到的命令，调试用</td>
-<td>MONITOR</td>
-<td>打印出正在执行的语句</td>
-</tr>
-<tr>
-<td>LASTSAVE</td>
-<td>返回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示</td>
-<td>LASTSAVE</td>
-<td>1486282788</td>
-</tr>
-<tr>
-<td>SLOWLOG subcommand [argument]</td>
-<td>Redis 用来记录查询执行时间的日志系统</td>
-<td>slowlog get:列出所有;slowlog get N:列出最近N条;SLOWLOG LEN 日志数量;SLOWLOG RESET 清空日志</td>
-<td>省略</td>
-</tr>
-<tr>
-<td>SLAVEOF host port</td>
-<td>将当前服务器转变为指定服务器的从属服务器(slave server)</td>
-<td>SLAVEOF 127.0.0.1 6379</td>
-<td>OK</td>
-</tr>
-</tbody>
-</table>
-<p>还有更多命令可以参考<a href="http://www.redis.net.cn/tutorial/3518.html" target="_blank" rel="external">http://www.redis.net.cn/tutorial/3518.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/" itemprop="url">
-                  Redis-4.深入HyperLogLog、事务、发布订阅等
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-05T19:58:01+08:00">
-                2017-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/05/Redis-4.深入-HyperLogLog、事务等/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Redis-4-深入HyperLogLog、事务、发布订阅等"><a href="#Redis-4-深入HyperLogLog、事务、发布订阅等" class="headerlink" title="Redis-4.深入HyperLogLog、事务、发布订阅等"></a>Redis-4.深入HyperLogLog、事务、发布订阅等</h1><h2 id="1-HyperLogLog"><a href="#1-HyperLogLog" class="headerlink" title="1.HyperLogLog"></a>1.HyperLogLog</h2><p> HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了比上面效率更高的算法。</p>
-<p>顾名思义，Hyper LogLog计数器就是估算Nmax为基数的数据集仅需使用loglog(Nmax)+O(1) bits就可以。如线性计数器的Hyper LogLog计数器允许设计人员指定所需的精度值，在Hyper LogLog的情况下，这是通过定义所需的相对标准差和预期要计数的最大基数。大部分计数器通过一个输入数据流M，并应用一个哈希函数设置h(M)来工作。这将产生一个S = h(M) of {0,1}^∞字符串的可观测结果。通过分割哈希输入流成m个子字符串，并对每个子输入流保持m的值可观测 ，这就是相当一个新Hyper LogLog（一个子m就是一个新的Hyper LogLog）。利用额外的观测值的平均值，产生一个计数器，其精度随着m的增长而提高，这只需要对输入集合中的每个元素执行几步操作就可以完成。其结果是，这个计数器可以仅使用1.5 kb的空间计算精度为2%的十亿个不同的数据元素。与执行 HashSet所需的120 兆字节进行比较，这种算法的效率很明显。这就是传说中的”如何仅用1.5KB内存为十亿对象计数“。（还需多研究，此处很多地方还不是很理解）</p>
-<p>以上摘自</p>
-<p><a href="http://blog.csdn.net/Androidlushangderen/article/details/40683763" target="_blank" rel="external">http://blog.csdn.net/Androidlushangderen/article/details/40683763</a></p>
-<p><a href="http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html" target="_blank" rel="external">http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html</a></p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PFADD key element [element …]</td>
-<td>将所有元素参数添加到 HyperLogLog 数据结构中</td>
-<td>PFADD hyperlogtest ashine shitou masha guanyou guaishou</td>
-<td>如果至少有个元素被添加返回 1， 否则返回 0</td>
-</tr>
-<tr>
-<td>PFCOUNT key [key …]</td>
-<td>返回给定 HyperLogLog 的基数估算值</td>
-<td>PFCOUNT hyperlogtest hyperlogtest1</td>
-<td>整数，返回给定 HyperLogLog 的基数值，如果多个 HyperLogLog 则返回基数估值之和</td>
-</tr>
-<tr>
-<td>PFMERGE destkey sourcekey [sourcekey …]</td>
-<td>将多个 HyperLogLog 合并为一个 HyperLogLog ，合并后的 HyperLogLog 的基数估算值是通过对所有 给定 HyperLogLog 进行并集计算得出的</td>
-<td>PFMERGE hypermain hyperlogtest hyperlogtest1</td>
-<td>OK</td>
-</tr>
-</tbody>
-</table>
-<h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2.事务"></a>2.事务</h2><p>事务，和关系型数据库的事务应该是一个道理。<br>事务四大特性(简称ACID) </p>
-<ul>
-<li>1、原子性(Atomicity)：事务中的全部操作在数据库中是不可分割的，要么全部完成，要么均不执行。</li>
-<li>2、一致性(Consistency)：几个并行执行的事务，其执行结果必须与按某一顺序串行执行的结果相一致。</li>
-<li>3、隔离性(Isolation)：事务的执行不受其他事务的干扰。</li>
-<li>4、持久性(Durability)：对于任意已提交事务，系统必须保证该事务对数据库的改变不被丢失，即使数据库出现故障。 </li>
-</ul>
-<p>我们主要来看下下面的命令。</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Multi</td>
-<td>用于标记一个事务块的开始。事务块内的多条命令会按照先后顺序被放进一个队列当中，最后由 EXEC 命令原子性(atomic)地执行。</td>
-<td>MULTI 然后INCR test 然后INCR test 然后EXEC 执行</td>
-<td>事务块内所有命令的返回值，按命令执行的先后顺序排列。 当操作被打断时，返回空值 nil </td>
-</tr>
-<tr>
-<td>Exec</td>
-<td>执行所有事务块内的命令</td>
-<td>同上</td>
-<td>同上一起用</td>
-</tr>
-<tr>
-<td>Watch</td>
-<td>用于监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断</td>
-<td>WATCH test test1</td>
-<td>OK</td>
-</tr>
-<tr>
-<td>UNWATCH</td>
-<td>用于取消 WATCH 命令对所有 key 的监视</td>
-<td>UNWATCH</td>
-<td>OK</td>
-</tr>
-<tr>
-<td>DISCARD</td>
-<td>用于取消事务，放弃执行事务块内的所有命令</td>
-<td>DISCARD</td>
-<td>OK</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-发布订阅"><a href="#3-发布订阅" class="headerlink" title="3.发布订阅"></a>3.发布订阅</h2><p>Redis 发布订阅(pub/sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。</p>
-<p>Redis 客户端可以订阅任意数量的频道。 </p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SUBSCRIBE channel [channel…]</td>
-<td>用于订阅给定的一个或多个频道的信息</td>
-<td>SUBSCRIBE musicnews</td>
-<td>1) “subscribe” 2) “musicnews” 3) (integer) 1 </td>
-</tr>
-<tr>
-<td>PUBLISH channel message</td>
-<td>用于将信息发送到指定的频道</td>
-<td>PUBLISH musicnews mayday</td>
-<td>命令返回接收到信息的订阅者数量；而在订阅此channel的客户端出现如下结果1) “message” 2) “musicnews” 3) “mayday”</td>
-</tr>
-<tr>
-<td>UNSUBSCRIBE channel [channel …]</td>
-<td>用于退订给定的一个或多个频道的信息</td>
-<td>UNSUBSCRIBE musicnews</td>
-<td>在不同的客户端中有不同的表现</td>
-</tr>
-<tr>
-<td>PSUBSCRIBE pattern [pattern …]</td>
-<td>订阅一个或多个符合给定模式的频道。每个模式以 <em> 作为匹配符，比如 it</em> 匹配所有以 it 开头的频道( it.news 、 it.blog 、 it.tweets 等等)</td>
-<td>PSUBSCRIBE *news</td>
-<td>接收到的信息</td>
-</tr>
-<tr>
-<td>PUNSUBSCRIBE [pattern [pattern …]]</td>
-<td>用于退订所有给定模式的频道</td>
-<td>PUNSUBSCRIBE *news</td>
-<td>在不同的客户端中有不同的表现</td>
-</tr>
-<tr>
-<td>PUBSUB <subcommand> [argument [argument …]]</subcommand></td>
-<td>用于退订所有给定模式的频道</td>
-<td>PUBSUB CHANNELS(后面不接即打出所有) s*</td>
-<td>由活跃频道组成的列表</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2338,7 +2174,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2360,7 +2196,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

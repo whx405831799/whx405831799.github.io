@@ -290,6 +290,518 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/06/Redis-5.服务器相关命令/" itemprop="url">
+                  Redis-5.服务器相关命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-06T20:38:03+08:00">
+                2017-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/06/Redis-5.服务器相关命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/06/Redis-5.服务器相关命令/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Redis-5-服务器相关命令"><a href="#Redis-5-服务器相关命令" class="headerlink" title="Redis-5.服务器相关命令"></a>Redis-5.服务器相关命令</h1><h2 id="Redis-服务器命令主要是用于管理-redis-服务"><a href="#Redis-服务器命令主要是用于管理-redis-服务" class="headerlink" title="Redis 服务器命令主要是用于管理 redis 服务"></a>Redis 服务器命令主要是用于管理 redis 服务</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Info</td>
+<td>命令以一种易于理解和阅读的格式，返回关于 Redis 服务器的各种信息和统计数值</td>
+<td>Info</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>DBSIZE</td>
+<td>返回当前数据库的 key 的数量</td>
+<td>DBSIZE</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>FLUSHDB</td>
+<td>用于清空当前数据库中的所有 key</td>
+<td>FLUSHDB</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>FLUSHALL</td>
+<td>用于清空整个 Redis 服务器的数据(删除所有数据库的所有 key )</td>
+<td>FLUSHALL</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>SAVE</td>
+<td>执行一个同步保存操作，将当前 Redis 实例的所有数据快照(snapshot)以 RDB 文件的形式保存到硬盘</td>
+<td>SAVE</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>ROLE</td>
+<td>查看主从实例所属的角色，角色有master, slave, sentinel</td>
+<td>ROLE</td>
+<td>所属角色</td>
+</tr>
+<tr>
+<td>MONITOR</td>
+<td>用于实时打印出 Redis 服务器接收到的命令，调试用</td>
+<td>MONITOR</td>
+<td>打印出正在执行的语句</td>
+</tr>
+<tr>
+<td>LASTSAVE</td>
+<td>返回最近一次 Redis 成功将数据保存到磁盘上的时间，以 UNIX 时间戳格式表示</td>
+<td>LASTSAVE</td>
+<td>1486282788</td>
+</tr>
+<tr>
+<td>SLOWLOG subcommand [argument]</td>
+<td>Redis 用来记录查询执行时间的日志系统</td>
+<td>slowlog get:列出所有;slowlog get N:列出最近N条;SLOWLOG LEN 日志数量;SLOWLOG RESET 清空日志</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>SLAVEOF host port</td>
+<td>将当前服务器转变为指定服务器的从属服务器(slave server)</td>
+<td>SLAVEOF 127.0.0.1 6379</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<p>还有更多命令可以参考<a href="http://www.redis.net.cn/tutorial/3518.html" target="_blank" rel="external">http://www.redis.net.cn/tutorial/3518.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/05/Redis-4.深入-HyperLogLog、事务等/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/" itemprop="url">
+                  Redis-4.深入HyperLogLog、事务、发布订阅等
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-05T19:58:01+08:00">
+                2017-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/05/Redis-4.深入-HyperLogLog、事务等/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/05/Redis-4.深入-HyperLogLog、事务等/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Redis-4-深入HyperLogLog、事务、发布订阅等"><a href="#Redis-4-深入HyperLogLog、事务、发布订阅等" class="headerlink" title="Redis-4.深入HyperLogLog、事务、发布订阅等"></a>Redis-4.深入HyperLogLog、事务、发布订阅等</h1><h2 id="1-HyperLogLog"><a href="#1-HyperLogLog" class="headerlink" title="1.HyperLogLog"></a>1.HyperLogLog</h2><p> HyperLogLog其实是基数估计算法。作为一种基数统计算法，比如统计一篇莎士比亚的文章中，不同单词出现的个数，如果按照平常我们想到的做法，把里面的单词都存到hashset中，求出容量即可，但是当面对的是海量数据的时候，这得占据多大的内存呢？后来就有了位图法（这里就不说了），但是hyperLogLog提供了比上面效率更高的算法。</p>
+<p>顾名思义，Hyper LogLog计数器就是估算Nmax为基数的数据集仅需使用loglog(Nmax)+O(1) bits就可以。如线性计数器的Hyper LogLog计数器允许设计人员指定所需的精度值，在Hyper LogLog的情况下，这是通过定义所需的相对标准差和预期要计数的最大基数。大部分计数器通过一个输入数据流M，并应用一个哈希函数设置h(M)来工作。这将产生一个S = h(M) of {0,1}^∞字符串的可观测结果。通过分割哈希输入流成m个子字符串，并对每个子输入流保持m的值可观测 ，这就是相当一个新Hyper LogLog（一个子m就是一个新的Hyper LogLog）。利用额外的观测值的平均值，产生一个计数器，其精度随着m的增长而提高，这只需要对输入集合中的每个元素执行几步操作就可以完成。其结果是，这个计数器可以仅使用1.5 kb的空间计算精度为2%的十亿个不同的数据元素。与执行 HashSet所需的120 兆字节进行比较，这种算法的效率很明显。这就是传说中的”如何仅用1.5KB内存为十亿对象计数“。（还需多研究，此处很多地方还不是很理解）</p>
+<p>以上摘自</p>
+<p><a href="http://blog.csdn.net/Androidlushangderen/article/details/40683763" target="_blank" rel="external">http://blog.csdn.net/Androidlushangderen/article/details/40683763</a></p>
+<p><a href="http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html" target="_blank" rel="external">http://www.cnblogs.com/ysuzhaixuefei/p/4052110.html</a></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PFADD key element [element …]</td>
+<td>将所有元素参数添加到 HyperLogLog 数据结构中</td>
+<td>PFADD hyperlogtest ashine shitou masha guanyou guaishou</td>
+<td>如果至少有个元素被添加返回 1， 否则返回 0</td>
+</tr>
+<tr>
+<td>PFCOUNT key [key …]</td>
+<td>返回给定 HyperLogLog 的基数估算值</td>
+<td>PFCOUNT hyperlogtest hyperlogtest1</td>
+<td>整数，返回给定 HyperLogLog 的基数值，如果多个 HyperLogLog 则返回基数估值之和</td>
+</tr>
+<tr>
+<td>PFMERGE destkey sourcekey [sourcekey …]</td>
+<td>将多个 HyperLogLog 合并为一个 HyperLogLog ，合并后的 HyperLogLog 的基数估算值是通过对所有 给定 HyperLogLog 进行并集计算得出的</td>
+<td>PFMERGE hypermain hyperlogtest hyperlogtest1</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2.事务"></a>2.事务</h2><p>事务，和关系型数据库的事务应该是一个道理。<br>事务四大特性(简称ACID) </p>
+<ul>
+<li>1、原子性(Atomicity)：事务中的全部操作在数据库中是不可分割的，要么全部完成，要么均不执行。</li>
+<li>2、一致性(Consistency)：几个并行执行的事务，其执行结果必须与按某一顺序串行执行的结果相一致。</li>
+<li>3、隔离性(Isolation)：事务的执行不受其他事务的干扰。</li>
+<li>4、持久性(Durability)：对于任意已提交事务，系统必须保证该事务对数据库的改变不被丢失，即使数据库出现故障。 </li>
+</ul>
+<p>我们主要来看下下面的命令。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi</td>
+<td>用于标记一个事务块的开始。事务块内的多条命令会按照先后顺序被放进一个队列当中，最后由 EXEC 命令原子性(atomic)地执行。</td>
+<td>MULTI 然后INCR test 然后INCR test 然后EXEC 执行</td>
+<td>事务块内所有命令的返回值，按命令执行的先后顺序排列。 当操作被打断时，返回空值 nil </td>
+</tr>
+<tr>
+<td>Exec</td>
+<td>执行所有事务块内的命令</td>
+<td>同上</td>
+<td>同上一起用</td>
+</tr>
+<tr>
+<td>Watch</td>
+<td>用于监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断</td>
+<td>WATCH test test1</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>UNWATCH</td>
+<td>用于取消 WATCH 命令对所有 key 的监视</td>
+<td>UNWATCH</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>DISCARD</td>
+<td>用于取消事务，放弃执行事务块内的所有命令</td>
+<td>DISCARD</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-发布订阅"><a href="#3-发布订阅" class="headerlink" title="3.发布订阅"></a>3.发布订阅</h2><p>Redis 发布订阅(pub/sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。</p>
+<p>Redis 客户端可以订阅任意数量的频道。 </p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUBSCRIBE channel [channel…]</td>
+<td>用于订阅给定的一个或多个频道的信息</td>
+<td>SUBSCRIBE musicnews</td>
+<td>1) “subscribe” 2) “musicnews” 3) (integer) 1 </td>
+</tr>
+<tr>
+<td>PUBLISH channel message</td>
+<td>用于将信息发送到指定的频道</td>
+<td>PUBLISH musicnews mayday</td>
+<td>命令返回接收到信息的订阅者数量；而在订阅此channel的客户端出现如下结果1) “message” 2) “musicnews” 3) “mayday”</td>
+</tr>
+<tr>
+<td>UNSUBSCRIBE channel [channel …]</td>
+<td>用于退订给定的一个或多个频道的信息</td>
+<td>UNSUBSCRIBE musicnews</td>
+<td>在不同的客户端中有不同的表现</td>
+</tr>
+<tr>
+<td>PSUBSCRIBE pattern [pattern …]</td>
+<td>订阅一个或多个符合给定模式的频道。每个模式以 <em> 作为匹配符，比如 it</em> 匹配所有以 it 开头的频道( it.news 、 it.blog 、 it.tweets 等等)</td>
+<td>PSUBSCRIBE *news</td>
+<td>接收到的信息</td>
+</tr>
+<tr>
+<td>PUNSUBSCRIBE [pattern [pattern …]]</td>
+<td>用于退订所有给定模式的频道</td>
+<td>PUNSUBSCRIBE *news</td>
+<td>在不同的客户端中有不同的表现</td>
+</tr>
+<tr>
+<td>PUBSUB <subcommand> [argument [argument …]]</subcommand></td>
+<td>用于退订所有给定模式的频道</td>
+<td>PUBSUB CHANNELS(后面不接即打出所有) s*</td>
+<td>由活跃频道组成的列表</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1247,171 +1759,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
-                  Redis-1.安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
-                2017-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
-<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
-<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
-<p>接下来继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
-<p>启动、进入、关闭redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
-<p>也可以指定端口启动和结束</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
-<p>设置密码<br>修改redis.conf</p>
-<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-2.数据类型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1553,6 +1900,171 @@
 <p>注意：在上面的例子中ashine加了两次，但由于唯一性只加一次。</p>
 <p>参考链接命令：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/commands.html</a></p>
 <p>参考链接数据类型：<a href="http://note.youdao.com/" target="_blank" rel="external">http://www.redis.cn/topics/data-types-intro.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Redis-1.安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/03/Redis-1.安装/" itemprop="url">
+                  Redis-1.安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T19:06:06+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/03/Redis-1.安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Redis-1.安装/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="redis是啥"><a href="#redis是啥" class="headerlink" title="redis是啥"></a>redis是啥</h1><p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。</p>
+<h1 id="linux安装redis"><a href="#linux安装redis" class="headerlink" title="linux安装redis"></a>linux安装redis</h1><p>安装redis必须已经安装了gcc,如果没安装gcc 就使用命令 yum install -y gcc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/share</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar xvf redis-3.2.6.tar.gz</div><div class="line">cd redis-3.2.6/</div><div class="line">make(如果报错，请使用make MALLOC=libc)</div><div class="line">make test(如果报tcl错请安装 yum install -y tcl)</div></pre></td></tr></table></figure>
+<p>如果make test报错，[exception]: Executing test client: NOREPLICAS Not enough good slaves to write..<br>则修改配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim tests/integration/replication-2.tcl</div><div class="line">- after 1000</div><div class="line">+ after 10000</div></pre></td></tr></table></figure>
+<p>接下来继续安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure>
+<p>启动、进入、关闭redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server redis.conf ##启动redis</div><div class="line">redis-cli ##进入redis客户端(无密码状态)  |  redis-cli -a yourpassword ##进入redis客户端(有密码状态)</div><div class="line">redis-cli shutdown ##停止redis服务</div></pre></td></tr></table></figure>
+<p>也可以指定端口启动和结束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-server --port 6379</div><div class="line">redis-cli -p 6380 shutdown</div></pre></td></tr></table></figure>
+<p>设置密码<br>修改redis.conf</p>
+<p>#requirepass foobared去掉注释，foobared改为自己的密码</p>
 
           
         
@@ -2269,7 +2781,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2291,7 +2803,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
