@@ -290,6 +290,219 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/多线程必知必会源码系列-Semaphore信号量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/14/多线程必知必会源码系列-Semaphore信号量/" itemprop="url">
+                  多线程必知必会源码系列-Semaphore信号量
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T17:15:00+08:00">
+                2017-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/14/多线程必知必会源码系列-Semaphore信号量/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/14/多线程必知必会源码系列-Semaphore信号量/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Semaphpre信号量"><a href="#1-Semaphpre信号量" class="headerlink" title="1.Semaphpre信号量"></a>1.Semaphpre信号量</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p>信号量用来控制同时访问某个特定资源的操作数量。还可以用来实现某种资源池，或者对容器施加边界。Semaphore可以控制某个资源可被同时访问的个数。</p>
+<h3 id="1-1-主要方法"><a href="#1-1-主要方法" class="headerlink" title="1.1 主要方法"></a>1.1 主要方法</h3><ul>
+<li>public void acquire()  从此信号量获取一个许可，在提供一个许可前一直将线程阻塞，否则线程被中断。</li>
+<li>public void acquire(int permits)从此信号量获取给定数目的许可，在提供这些许可前一直将线程阻塞，或者线程已被中断。</li>
+<li>public void release() 释放一个许可，将其返回给信号量。</li>
+<li>public void release(int permits)释放给定数目的许可，将其返回到信号量。</li>
+</ul>
+<h3 id="1-2-例子用法"><a href="#1-2-例子用法" class="headerlink" title="1.2 例子用法"></a>1.2 例子用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">package concurrent;</div><div class="line"></div><div class="line">import java.util.concurrent.Executor;</div><div class="line">import java.util.concurrent.ExecutorService;</div><div class="line">import java.util.concurrent.Executors;</div><div class="line">import java.util.concurrent.Semaphore;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Administrator on 2017/5/11.</div><div class="line"> * 总共十个人吃饭，但是只有3个位置吃饭，需要等吃完其他人才能去吃</div><div class="line"> */</div><div class="line">public class TestSemaphore &#123;</div><div class="line">    //信号量设置3个，也就是同时只能有三个吃饭</div><div class="line">    final Semaphore semaphore = new Semaphore(3);</div><div class="line"></div><div class="line">    //吃饭的任务</div><div class="line">    class  DinnerTask implements Runnable&#123;</div><div class="line">        private int i;</div><div class="line">        public DinnerTask(int i) &#123;</div><div class="line">            this.i = i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            try &#123;</div><div class="line">                semaphore.acquire();</div><div class="line">                System.out.println(&quot;我是无名&quot; + i + &quot;，正在吃饭！现在可利用的信号量数量为&quot; + semaphore.availablePermits());</div><div class="line">                //Thread.currentThread().sleep(1000);</div><div class="line">                semaphore.release();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        TestSemaphore testSemaphore = new TestSemaphore();</div><div class="line">        ExecutorService executor = Executors.newFixedThreadPool(10);</div><div class="line">        for (int i = 1 ;i &lt;= 10 ;i++)&#123;</div><div class="line">            executor.submit(testSemaphore.new DinnerTask(i));</div><div class="line">        &#125;</div><div class="line">        Thread.currentThread().sleep(3000);</div><div class="line">        System.out.println(&quot;现在可利用的信号量为&quot; + testSemaphore.semaphore.availablePermits());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">结果为：</div><div class="line">我是无名2，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名6，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名10，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名3，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名7，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名4，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名8，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名1，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名5，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名9，正在吃饭！现在可利用的信号量数量为2</div><div class="line">现在可利用的信号量为3</div></pre></td></tr></table></figure>
+<h2 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2.源码分析"></a>2.源码分析</h2><p>会罗列出方法及关键代码解析。</p>
+<h3 id="2-1-所有方法"><a href="#2-1-所有方法" class="headerlink" title="2.1 所有方法"></a>2.1 所有方法</h3><h4 id="2-1-1-构造方法"><a href="#2-1-1-构造方法" class="headerlink" title="2.1.1 构造方法"></a>2.1.1 构造方法</h4><ul>
+<li>Semaphore(int permits)  创建具有给定的许可数和非公平的公平设置的 Semaphore。</li>
+<li>Semaphore(int permits, boolean fair)<br>创建具有给定的许可数和给定的公平设置的 Semaphore。</li>
+</ul>
+<h4 id="2-1-2-方法"><a href="#2-1-2-方法" class="headerlink" title="2.1.2 方法"></a>2.1.2 方法</h4><ul>
+<li>1.1中的四个方法就不重复写了。</li>
+<li>public void acquireUninterruptibly()从此信号量中获取许可，在有可用的许可前将其阻塞。</li>
+<li>public void acquireUninterruptibly(int permits)从此信号量获取给定数目的许可，在提供这些许可前一直将线程阻塞。</li>
+<li>public int availablePermits()返回此信号量中当前可用的许可数。</li>
+<li>public int drainPermits()获取并返回立即可用的所有许可。</li>
+<li>protected Collection<thread> getQueuedThreads()返回一个 collection，包含可能等待获取的线程。</thread></li>
+<li>public final int getQueueLength()返回正在等待获取的线程的估计数目。</li>
+<li>public final boolean hasQueuedThreads()查询是否有线程正在等待获取。</li>
+<li>public boolean isFair()返回此信号量公平设置的状态。</li>
+<li>protected void reducePermits根据指定的缩减量减小可用许可的数目。</li>
+<li>public String toString()返回标识此信号量的字符串，以及信号量的状态。</li>
+<li>public boolean tryAcquire()仅在调用时此信号量存在一个可用许可，才从信号量获取许可。</li>
+<li>public boolean tryAcquire(int permits)仅在调用时此信号量中有给定数目的许可时，才从此信号量中获取这些许可。</li>
+<li>public boolean tryAcquire(long timeout, TimeUnit unit)如果在给定的等待时间内，此信号量有可用的许可并且当前线程未被中断，则从此信号量获取一个许可。</li>
+<li>public boolean tryAcquire(int permits, long timeout, TimeUnit unit)如果在给定的等待时间内此信号量有可用的所有许可，并且当前线程未被中断，则从此信号量获取给定数目的许可。</li>
+</ul>
+<h3 id="2-2-关键源码解析"><a href="#2-2-关键源码解析" class="headerlink" title="2.2 关键源码解析"></a>2.2 关键源码解析</h3><h4 id="2-2-1-acquire方法获取许可"><a href="#2-2-1-acquire方法获取许可" class="headerlink" title="2.2.1 acquire方法获取许可"></a>2.2.1 acquire方法获取许可</h4><p>acquire方法，实际上调用了sync的acquireSharedInterruptibly()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">private final Sync sync;</div><div class="line">...</div><div class="line">public void acquire() throws InterruptedException &#123;</div><div class="line">    sync.acquireSharedInterruptibly(1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着看Sync类的acquireSharedInterruptibly()方法，Sync是Semaphore的静态内部类，Sync继承了AbstractQueuedSynchronizer。acquireSharedInterruptibly()方法实际上是AQS的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public final void acquireSharedInterruptibly(int arg)</div><div class="line">        throws InterruptedException &#123;</div><div class="line">    //如果线程状态是中断状态，则抛出异常</div><div class="line">    if (Thread.interrupted())</div><div class="line">        throw new InterruptedException();</div><div class="line">    //获取共享锁，如果获取失败则调用doAcquireSharedInterruptibly</div><div class="line">    if (tryAcquireShared(arg) &lt; 0)</div><div class="line">        doAcquireSharedInterruptibly(arg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着看tryAcquireShared()方法。这里的调用会分成公平模式和非公平模式，不同的模式会有不同的实现。当你实例化Semaphore时，会调用对应的构造方法，默认的构造方法是非公平模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Semaphore(int permits) &#123;</div><div class="line">    sync = new NonfairSync(permits);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们先来看<strong>非公平模式</strong>的tryAcquireShared()。实际上是调用了NonfairSync父类Sync的nonfairTryAcquireShared方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">static final class NonfairSync extends Sync &#123;</div><div class="line">    private static final long serialVersionUID = -2694183684443567898L;</div><div class="line"></div><div class="line">    NonfairSync(int permits) &#123;</div><div class="line">        super(permits);</div><div class="line">    &#125;</div><div class="line">    //实际上是去调用了父类Sync的nonfairTryAcquireShared方法</div><div class="line">    protected int tryAcquireShared(int acquires) &#123;</div><div class="line">        return nonfairTryAcquireShared(acquires);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Sync的nonfairTryAcquireShared方法。getState是一个许可数的方法。在Semaphore的构造方法中，new Sync时，会调用AQS中的setState方法设置volatile变量state为许可数。getState则可以获取当前的信号量许可数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">final int nonfairTryAcquireShared(int acquires) &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            //获取信号量的许可数</div><div class="line">            int available = getState();</div><div class="line">            //remaining为目前可用许可数减去当前要申请的许可数</div><div class="line">            int remaining = available - acquires;</div><div class="line">            //如果remaining小于0或者remaining大于0的同时compareAndSetState方法返回true，则直接返回remaining,然后当remaining&lt;0调用acquireSharedInterruptibly()方法中的doAcquireSharedInterruptibly()方法处理,当remaining大于0则代表获取信号量成功;</div><div class="line">            //如果remaining大于等于0而且compareAndSetState()返回false，则继续循环。</div><div class="line">            //compareAndSetState方法实际上是采用CAS去更新state值，最终会调用一个compareAndSwapInt的native方法。当更新成功则返回true。</div><div class="line">            if (remaining &lt; 0 ||</div><div class="line">                compareAndSetState(available, remaining))</div><div class="line">                return remaining;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>上面描述及注释中说到了获取信号量成功的情况，下面看看当remaining返回小于0的情况。这时会调用acquireSharedInterruptibly()的doAcquireSharedInterruptibly()方法，此方法也是AbstractQueuedSynchronizer种的方法。此方法的作用应该是要将当前线程放入到等待队列中去。</p>
+<p>为了理解下面代码，可以先看这里的AQS队列的介绍，再去看代码。参考网上AQS介绍，可以知道：AQS是一个双向链表，通过节点里的next指向当前节点后一个节点，prev变量指向当前节点前一个节点。每个节点中都包含了一个线程和一个类型变量（用于识别节点是独占节点还是共享节点。btw，ReadWriteLock是共享锁的实现，ReentrantLock是独占锁的实现）。头节点中的线程为目前正在占有锁的线程，其他节点的线程表示为正在等待获取锁的线程。如下图所示：<br><img src="http://ohoyqlwj0.bkt.clouddn.com/AQS%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.png" alt="image"><br>头节点，表示正在占有锁的节点，其他的节点（node1,node2）为正在等待获取锁的节点，它们通过next、pre变量指向前后节点，形成了AQS中的双向链表。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">private void doAcquireSharedInterruptibly(int arg)</div><div class="line">    throws InterruptedException &#123;</div><div class="line">    //创建共享锁类型的节点，并通过addWaiter方法添加到队列尾部</div><div class="line">    final Node node = addWaiter(Node.SHARED);</div><div class="line">    boolean failed = true;</div><div class="line">    try &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            //获取prev节点</div><div class="line">            final Node p = node.predecessor();</div><div class="line">            if (p == head) &#123;</div><div class="line">                //如果p为头结点，则去尝试获取锁</div><div class="line">                int r = tryAcquireShared(arg);</div><div class="line">                if (r &gt;= 0) &#123;</div><div class="line">                    //获取成功后设置头结点并唤醒其他节点</div><div class="line">                    setHeadAndPropagate(node, r);</div><div class="line">                    p.next = null; // help GC</div><div class="line">                    failed = false;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            //如果当前节点上一个节点不是头结点，则会调用shouldParkAfterFailedAcquire方法设置此节点的prev节点的waitStatus状态为SIGNAL，代表后续节点都需要唤醒</div><div class="line">            //parkAndCheckInterrupt会通过park方法阻塞当前线程</div><div class="line">            if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;</div><div class="line">                parkAndCheckInterrupt())</div><div class="line">                throw new InterruptedException();</div><div class="line">        &#125;</div><div class="line">    &#125; finally &#123;</div><div class="line">        if (failed)</div><div class="line">            cancelAcquire(node);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">private Node addWaiter(Node mode) &#123;</div><div class="line">    Node node = new Node(Thread.currentThread(), mode);</div><div class="line">    // Try the fast path of enq; backup to full enq on failure</div><div class="line">    Node pred = tail;</div><div class="line">    if (pred != null) &#123;</div><div class="line">        node.prev = pred;</div><div class="line">        if (compareAndSetTail(pred, node)) &#123;</div><div class="line">            pred.next = node;</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    enq(node);</div><div class="line">    return node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面可能会有两个疑问点，setHeadAndPropagate()方法怎么处理的以及shouldParkAfterFailedAcquir()怎么设置node的waitStatus状态。我们先来看看Node类的一些变量及shouldParkAfterFailedAcquir()方法、parkAndCheckInterrupt()方法的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">static final class Node &#123;</div><div class="line">  ...</div><div class="line">  /** 此状态代表线程被取消 */</div><div class="line">  static final int CANCELLED =  1;</div><div class="line">  /** 此状态代表后续节点处于等待状态，需要被唤醒 */</div><div class="line">  static final int SIGNAL    = -1;</div><div class="line">  /** 节点在等待队列中，节点线程等待在Condition上，</div><div class="line">    *当其他线程对Condition调用了signal()方法后，该节点将会 </div><div class="line">    *从等待队里中转移到同步队列中，加入对同步状态的获取</div><div class="line">    */</div><div class="line">  static final int CONDITION = -2;</div><div class="line">  /**</div><div class="line">   * 表示下一次共享式同步状态获取将会无条件地被传播下去 </div><div class="line">   */</div><div class="line">  static final int PROPAGATE = -3;</div><div class="line">  /**</div><div class="line">   * 状态值可以为CANCELLED、SINGNAL、CONDITION、PROPAGATE、0 </div><div class="line">   */</div><div class="line">  volatile int waitStatus;</div><div class="line">  ...</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) &#123;</div><div class="line">    //获取prev节点的waitStatus状态</div><div class="line">    int ws = pred.waitStatus;</div><div class="line">    //如果为SIGNAL,直接返回</div><div class="line">    if (ws == Node.SIGNAL)</div><div class="line">        return true;</div><div class="line">    //如果大于0，则为取消状态，则会把当前节点的prev节点移除，把当前节点的prev换成更前一个节点</div><div class="line">    if (ws &gt; 0) &#123;</div><div class="line">        do &#123;</div><div class="line">            node.prev = pred = pred.prev;</div><div class="line">        &#125; while (pred.waitStatus &gt; 0);</div><div class="line">        pred.next = node;</div><div class="line">    &#125; else &#123;</div><div class="line">        //如果状态为0或者PROPAGATE，则通过CAS替换状态为SIGNAL</div><div class="line">        compareAndSetWaitStatus(pred, ws, Node.SIGNAL);</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">private final boolean parkAndCheckInterrupt() &#123;</div><div class="line">    //把线程置于waiting状态</div><div class="line">    LockSupport.park(this);</div><div class="line">    return Thread.interrupted();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码是在当节点的prev节点不为头结点时调用的，接下来我们再看一下当prev节点为头结点调用的setHeadAndPropagate()方法。主要是为了把当前节点设置为头结点，然后释放共享锁，唤醒unpack后续线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">private void setHeadAndPropagate(Node node, int propagate) &#123;</div><div class="line">    Node h = head; // Record old head for check below</div><div class="line">    setHead(node); //设置node节点为头结点</div><div class="line">    /*</div><div class="line">     * unnecessary wake-ups, but only when there are multiple</div><div class="line">     * racing acquires/releases, so most need signals now or soon</div><div class="line">     * anyway.</div><div class="line">     * 其实这里我有一点不明白为什么h可能为null？</div><div class="line">     */</div><div class="line">    if (propagate &gt; 0 || h == null || h.waitStatus &lt; 0) &#123;</div><div class="line">        Node s = node.next;</div><div class="line">        //当next节点为空或者为共享模式的节点，则执行doReleaseShared</div><div class="line">        if (s == null || s.isShared())</div><div class="line">            doReleaseShared();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>zhihou 我们看一下doReleaseShared()方法。当头结点的waitStatus为SIGNAL时，会通过CAS设置头结点的为0.设置成功后，将调用unparkSuccessor()，目的是找到后续节点，然后唤醒。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private void doReleaseShared() &#123;</div><div class="line">    /*</div><div class="line">     * fails, if so rechecking.</div><div class="line">     */</div><div class="line">    for (;;) &#123;</div><div class="line">        Node h = head;</div><div class="line">        if (h != null &amp;&amp; h != tail) &#123;</div><div class="line">            int ws = h.waitStatus;</div><div class="line">            if (ws == Node.SIGNAL) &#123;</div><div class="line">                if (!compareAndSetWaitStatus(h, Node.SIGNAL, 0))</div><div class="line">                    continue;            // loop to recheck cases</div><div class="line">                //找到后续节点，然后唤醒</div><div class="line">                unparkSuccessor(h);</div><div class="line">            &#125;</div><div class="line">            else if (ws == 0 &amp;&amp;</div><div class="line">                     !compareAndSetWaitStatus(h, 0, Node.PROPAGATE))</div><div class="line">                continue;                // loop on failed CAS</div><div class="line">        &#125;</div><div class="line">        if (h == head)                   // loop if head changed</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后就看一下unparkSuccessor()方法，主要是找到头结点的后续节点，直到找到一个waitStatus不大于0，也就是非取消状态的节点，然后通过unpark唤醒此节点的线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private void unparkSuccessor(Node node) &#123;</div><div class="line">        //获取头节点状态</div><div class="line">        int ws = node.waitStatus;</div><div class="line">        if (ws &lt; 0)</div><div class="line">            compareAndSetWaitStatus(node, ws, 0);</div><div class="line">        //寻找头结点的后续节点，当遇到取消状态的节点就略过继续找下一个节点</div><div class="line">        Node s = node.next;</div><div class="line">        if (s == null || s.waitStatus &gt; 0) &#123;</div><div class="line">            s = null;</div><div class="line">            for (Node t = tail; t != null &amp;&amp; t != node; t = t.prev)</div><div class="line">                if (t.waitStatus &lt;= 0)</div><div class="line">                    s = t;</div><div class="line">        &#125;</div><div class="line">        if (s != null)</div><div class="line">            //唤醒此节点的线程</div><div class="line">            LockSupport.unpark(s.thread);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>说到这里，就说完了非公平模式的的tryAcquireShared()及后续过程；那公平模式的区别是什么呢？区别只在这里，公平模式的tryAcquireShared()中会有一个判断当前线程是不是在AQS队列的头部的next节点的方法，如果此线程不在头部的next节点，则会交由上文中的doAcquireSharedInterruptibly()方法直接放入队列尾部。我们来看看公平模式的tryAcquireShared方法，多了个hasQueuedPredecessors()判断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">protected int tryAcquireShared(int acquires) &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            if (hasQueuedPredecessors())</div><div class="line">                return -1;</div><div class="line">            int available = getState();</div><div class="line">            int remaining = available - acquires;</div><div class="line">            if (remaining &lt; 0 ||</div><div class="line">                compareAndSetState(available, remaining))</div><div class="line">                return remaining;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"> public final boolean hasQueuedPredecessors() &#123;</div><div class="line">        //目的就是判断是否是头结点的next节点的线程</div><div class="line">        Node t = tail;  </div><div class="line">        Node h = head;</div><div class="line">        Node s;</div><div class="line">        return h != t &amp;&amp;</div><div class="line">            ((s = h.next) == null || s.thread != Thread.currentThread());</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>那么acquire方法就介绍完了。</p>
+<h4 id="2-2-2-release方法释放许可"><a href="#2-2-2-release方法释放许可" class="headerlink" title="2.2.2 release方法释放许可"></a>2.2.2 release方法释放许可</h4><p>释放就没有分为公平和非公平模式了。<br>先来看第一个方法release(),实际上是调用了Sync的父类AbstractQueuedSynchronizer的releaseShared()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void release() &#123;</div><div class="line">    sync.releaseShared(1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们来看看releaseShared()方法，先去调用了tryReleaseShared()尝试释放锁。如果成功，则去做和申请许可中一样的doReleaseShared()方法去唤醒后续线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public final boolean releaseShared(int arg) &#123;</div><div class="line">    //尝试释放信号量</div><div class="line">    if (tryReleaseShared(arg)) &#123;</div><div class="line">    //释放成功则去唤醒后续线程</div><div class="line">        doReleaseShared();</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>doReleaseShared()在上文中已经介绍过，接下来只看看tryReleaseShared方法。这个是由Sync重写了。方法目的是释放信号量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">protected final boolean tryReleaseShared(int releases) &#123;</div><div class="line">    for (;;) &#123;</div><div class="line">        //获取当前可用信号量</div><div class="line">        int current = getState();</div><div class="line">        //加上当前要释放的信号量</div><div class="line">        int next = current + releases;</div><div class="line">        if (next &lt; current) // overflow</div><div class="line">            throw new Error(&quot;Maximum permit count exceeded&quot;);</div><div class="line">        //通过CAS去设置新的可用信号量数量</div><div class="line">        if (compareAndSetState(current, next))</div><div class="line">            return true;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>release()方法也介绍完了。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>本文主要讲解了信号量的常用方法及举例，然后分析了acquire()和release()的源码。有些地方可能分析比较单薄，还需要经常回顾加深理解。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/23/数据库事务四大特性及隔离级别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1953,178 +2166,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/08/关于hashcode方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/08/关于hashcode方法/" itemprop="url">
-                  关于hashcode方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-08T21:38:03+08:00">
-                2017-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/08/关于hashcode方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/08/关于hashcode方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一-总述"><a href="#一-总述" class="headerlink" title="一.总述"></a>一.总述</h1><blockquote>
-<p>下面内容主要学习两点。第一点是hashCode方法的相关介绍；第二点是为什么java中修改了equals就要修改hashCode方法。</p>
-</blockquote>
-<h1 id="二-hashCode方法"><a href="#二-hashCode方法" class="headerlink" title="二.hashCode方法"></a>二.hashCode方法</h1><h2 id="1-数据结构-哈希表"><a href="#1-数据结构-哈希表" class="headerlink" title="1.数据结构-哈希表"></a>1.数据结构-哈希表</h2><p>　　哈希表是一种根据关键码值(Key value)而直接进行访问的数据结构，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做散列函数，存放记录的数组叫做散列表。</p>
-<p>　　哈希表可以提供快速的查找操作，插入操作。所以优点就是快，易用；缺点就是基于数组的，量大后性能会下降严重。</p>
-<h2 id="2-hashCode方法"><a href="#2-hashCode方法" class="headerlink" title="2.hashCode方法"></a>2.hashCode方法</h2><p>hashCode方法的作用是为了配合基于散列的集合运行，这些散列集合包括HashSet、HashMap及HashTable等。</p>
-<p>为什么这些散列集合会用到hashcode呢？当集合中不允许重复元素的时候。插入对象的时候肯定要判断集合中是否已存在此对象，用equals方法显然是效率有问题的。所有就得用到hashCode方法了。</p>
-<p>简单来说就是：==当集合要添加新的对象时，先调用这个对象的hashCode方法，得到对应的hashcode值，实际上在HashMap的具体实现中会用一个table保存已经存进去的对象的hashcode值，如果table中没有该hashcode值，它就可以直接存进去，不用再进行任何比较了；如果存在该hashcode值，就调用它的equals方法与新元素进行比较，相同的话就不存了，不相同就散列其它的地址，所以这里存在一个冲突解决的问题，这样一来实际调用equals方法的次数就大大降低了==。</p>
-<p>换一种方式说，Java里hashCode方法就是按某些规则将与对象有关联的信息（例如对象的字段或存储地址）映射成一个数值，次值称作为散列值。可以看看这段代码，此代码是java.util.HashMap的中put方法的实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public V put(K key, V value) &#123;</div><div class="line">        if (table == EMPTY_TABLE) &#123;</div><div class="line">            inflateTable(threshold);</div><div class="line">        &#125;</div><div class="line">        if (key == null)</div><div class="line">            return putForNullKey(value);</div><div class="line">        int hash = hash(key);</div><div class="line">        int i = indexFor(hash, table.length);</div><div class="line">        for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;</div><div class="line">            Object k;</div><div class="line">            if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;</div><div class="line">                V oldValue = e.value;</div><div class="line">                e.value = value;</div><div class="line">                e.recordAccess(this);</div><div class="line">                return oldValue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        modCount++;</div><div class="line">        addEntry(hash, key, value, i);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">     final int hash(Object k) &#123;</div><div class="line">        int h = hashSeed;</div><div class="line">        if (0 != h &amp;&amp; k instanceof String) &#123;</div><div class="line">            return sun.misc.Hashing.stringHash32((String) k);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        h ^= k.hashCode();</div><div class="line"></div><div class="line">        // This function ensures that hashCodes that differ only by</div><div class="line">        // constant multiples at each bit position have a bounded</div><div class="line">        // number of collisions (approximately 8 at default load factor).</div><div class="line">        h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);</div><div class="line">        return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>HashMap的put方法是用来向HashMap中添加新的元素，看以上代码克制，会先调用hashCode方法得到该元素的hashCode值，然后对比table中是否存在此hashCode值，如果存在则调用equals方法重新确定是否存在该元素（以为不同对象的hashcode值有可能相同），如果存在此值，则更新value，否则将新的元素添加到HashMap中。所以，hashCode方法存在的一个意义是是为了减少equals方法的调用次数，从而提高程序执行的效率。</p>
-<h4 id="总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。"><a href="#总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。" class="headerlink" title="==总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。=="></a>==总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。==</h4><h2 id="3-重写equals的同时，一定要重写hashCode方法"><a href="#3-重写equals的同时，一定要重写hashCode方法" class="headerlink" title="3.重写equals的同时，一定要重写hashCode方法"></a>3.重写equals的同时，一定要重写hashCode方法</h2><p>为何这么说？我们看一段代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    private String name;</div><div class="line">    private String idCard;</div><div class="line"></div><div class="line">    public User(String name, String idCard) &#123;</div><div class="line">        super();</div><div class="line">        this.name = name;</div><div class="line">        this.idCard = idCard;</div><div class="line">    &#125;</div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">    public String getIdCard() &#123;</div><div class="line">        return idCard;</div><div class="line">    &#125;</div><div class="line">    public void setIdCard(String idCard) &#123;</div><div class="line">        this.idCard = idCard;</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public boolean equals(Object obj) &#123;</div><div class="line">        return this.getName().equals(((User) obj).getName()) &amp;&amp; this.getIdCard().equals(((User)obj).getIdCard());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">public class HashCodeAndEqualsTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        User user1 = new User(&quot;mayday&quot;, &quot;55555&quot;);</div><div class="line">        User user2 = new User(&quot;mayday&quot;, &quot;55555&quot;);</div><div class="line">        System.out.println(&quot;user1的hashcode为：&quot; + user1.hashCode());</div><div class="line">        System.out.println(&quot;user1的hashcode为：&quot; + user2.hashCode());</div><div class="line">        System.out.println(&quot;user1和user2是否equals？&quot; + user1.equals(user2));</div><div class="line">        Map map = new HashMap&lt;&gt;();</div><div class="line">        map.put(user1,&quot;test&quot;);</div><div class="line">        System.out.println(&quot;通过equals为true的user2取得的值为&quot; + map.get(user2));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">console：</div><div class="line">user1的hashcode为：1876189785</div><div class="line">user1的hashcode为：1619327594</div><div class="line">user1和user2是否equals？true</div><div class="line">通过equals为true的user2取得的值为null</div></pre></td></tr></table></figure>
-<p>这里只重写了equals方法。本来是想map.get(user2)打印出test,但是输出的是“null”。原因就是重写equals方法的同时忘记重写hashCode方法。</p>
-<p>可以看看HashMap的get方法代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public V get(Object key) &#123;</div><div class="line">    if (key == null)</div><div class="line">        return getForNullKey();</div><div class="line">    Entry&lt;K,V&gt; entry = getEntry(key);</div><div class="line"></div><div class="line">    return null == entry ? null : entry.getValue();</div><div class="line">&#125;</div><div class="line"></div><div class="line">final Entry&lt;K,V&gt; getEntry(Object key) &#123;</div><div class="line">    if (size == 0) &#123;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    int hash = (key == null) ? 0 : hash(key);</div><div class="line">    for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];</div><div class="line">         e != null;</div><div class="line">         e = e.next) &#123;</div><div class="line">        Object k;</div><div class="line">        if (e.hash == hash &amp;&amp;</div><div class="line">            ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">            return e;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果想上述代码输出结果为test，只需要重写hashCode方法，让equals方法和hashCode方法始终在逻辑上保持一致。</p>
-<p>比如重写hashCode方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public int hashCode() &#123;</div><div class="line">    // TODO Auto-generated method stub</div><div class="line">    return idcard.hashCode()*19+name.hashCode();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>还有一点就是，在重写hashCode方法和equals方法时，千万不要依赖易变的字段。。<br>再强调一下，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2174,7 +2215,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2196,7 +2237,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

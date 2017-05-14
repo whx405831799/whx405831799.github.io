@@ -290,6 +290,178 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/08/关于hashcode方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/08/关于hashcode方法/" itemprop="url">
+                  关于hashcode方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-08T21:38:03+08:00">
+                2017-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/08/关于hashcode方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/08/关于hashcode方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一-总述"><a href="#一-总述" class="headerlink" title="一.总述"></a>一.总述</h1><blockquote>
+<p>下面内容主要学习两点。第一点是hashCode方法的相关介绍；第二点是为什么java中修改了equals就要修改hashCode方法。</p>
+</blockquote>
+<h1 id="二-hashCode方法"><a href="#二-hashCode方法" class="headerlink" title="二.hashCode方法"></a>二.hashCode方法</h1><h2 id="1-数据结构-哈希表"><a href="#1-数据结构-哈希表" class="headerlink" title="1.数据结构-哈希表"></a>1.数据结构-哈希表</h2><p>　　哈希表是一种根据关键码值(Key value)而直接进行访问的数据结构，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做散列函数，存放记录的数组叫做散列表。</p>
+<p>　　哈希表可以提供快速的查找操作，插入操作。所以优点就是快，易用；缺点就是基于数组的，量大后性能会下降严重。</p>
+<h2 id="2-hashCode方法"><a href="#2-hashCode方法" class="headerlink" title="2.hashCode方法"></a>2.hashCode方法</h2><p>hashCode方法的作用是为了配合基于散列的集合运行，这些散列集合包括HashSet、HashMap及HashTable等。</p>
+<p>为什么这些散列集合会用到hashcode呢？当集合中不允许重复元素的时候。插入对象的时候肯定要判断集合中是否已存在此对象，用equals方法显然是效率有问题的。所有就得用到hashCode方法了。</p>
+<p>简单来说就是：==当集合要添加新的对象时，先调用这个对象的hashCode方法，得到对应的hashcode值，实际上在HashMap的具体实现中会用一个table保存已经存进去的对象的hashcode值，如果table中没有该hashcode值，它就可以直接存进去，不用再进行任何比较了；如果存在该hashcode值，就调用它的equals方法与新元素进行比较，相同的话就不存了，不相同就散列其它的地址，所以这里存在一个冲突解决的问题，这样一来实际调用equals方法的次数就大大降低了==。</p>
+<p>换一种方式说，Java里hashCode方法就是按某些规则将与对象有关联的信息（例如对象的字段或存储地址）映射成一个数值，次值称作为散列值。可以看看这段代码，此代码是java.util.HashMap的中put方法的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public V put(K key, V value) &#123;</div><div class="line">        if (table == EMPTY_TABLE) &#123;</div><div class="line">            inflateTable(threshold);</div><div class="line">        &#125;</div><div class="line">        if (key == null)</div><div class="line">            return putForNullKey(value);</div><div class="line">        int hash = hash(key);</div><div class="line">        int i = indexFor(hash, table.length);</div><div class="line">        for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;</div><div class="line">            Object k;</div><div class="line">            if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;</div><div class="line">                V oldValue = e.value;</div><div class="line">                e.value = value;</div><div class="line">                e.recordAccess(this);</div><div class="line">                return oldValue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        modCount++;</div><div class="line">        addEntry(hash, key, value, i);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">     final int hash(Object k) &#123;</div><div class="line">        int h = hashSeed;</div><div class="line">        if (0 != h &amp;&amp; k instanceof String) &#123;</div><div class="line">            return sun.misc.Hashing.stringHash32((String) k);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        h ^= k.hashCode();</div><div class="line"></div><div class="line">        // This function ensures that hashCodes that differ only by</div><div class="line">        // constant multiples at each bit position have a bounded</div><div class="line">        // number of collisions (approximately 8 at default load factor).</div><div class="line">        h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);</div><div class="line">        return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>HashMap的put方法是用来向HashMap中添加新的元素，看以上代码克制，会先调用hashCode方法得到该元素的hashCode值，然后对比table中是否存在此hashCode值，如果存在则调用equals方法重新确定是否存在该元素（以为不同对象的hashcode值有可能相同），如果存在此值，则更新value，否则将新的元素添加到HashMap中。所以，hashCode方法存在的一个意义是是为了减少equals方法的调用次数，从而提高程序执行的效率。</p>
+<h4 id="总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。"><a href="#总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。" class="headerlink" title="==总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。=="></a>==总的来说，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。==</h4><h2 id="3-重写equals的同时，一定要重写hashCode方法"><a href="#3-重写equals的同时，一定要重写hashCode方法" class="headerlink" title="3.重写equals的同时，一定要重写hashCode方法"></a>3.重写equals的同时，一定要重写hashCode方法</h2><p>为何这么说？我们看一段代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    private String name;</div><div class="line">    private String idCard;</div><div class="line"></div><div class="line">    public User(String name, String idCard) &#123;</div><div class="line">        super();</div><div class="line">        this.name = name;</div><div class="line">        this.idCard = idCard;</div><div class="line">    &#125;</div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">    public String getIdCard() &#123;</div><div class="line">        return idCard;</div><div class="line">    &#125;</div><div class="line">    public void setIdCard(String idCard) &#123;</div><div class="line">        this.idCard = idCard;</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public boolean equals(Object obj) &#123;</div><div class="line">        return this.getName().equals(((User) obj).getName()) &amp;&amp; this.getIdCard().equals(((User)obj).getIdCard());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">public class HashCodeAndEqualsTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        User user1 = new User(&quot;mayday&quot;, &quot;55555&quot;);</div><div class="line">        User user2 = new User(&quot;mayday&quot;, &quot;55555&quot;);</div><div class="line">        System.out.println(&quot;user1的hashcode为：&quot; + user1.hashCode());</div><div class="line">        System.out.println(&quot;user1的hashcode为：&quot; + user2.hashCode());</div><div class="line">        System.out.println(&quot;user1和user2是否equals？&quot; + user1.equals(user2));</div><div class="line">        Map map = new HashMap&lt;&gt;();</div><div class="line">        map.put(user1,&quot;test&quot;);</div><div class="line">        System.out.println(&quot;通过equals为true的user2取得的值为&quot; + map.get(user2));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">console：</div><div class="line">user1的hashcode为：1876189785</div><div class="line">user1的hashcode为：1619327594</div><div class="line">user1和user2是否equals？true</div><div class="line">通过equals为true的user2取得的值为null</div></pre></td></tr></table></figure>
+<p>这里只重写了equals方法。本来是想map.get(user2)打印出test,但是输出的是“null”。原因就是重写equals方法的同时忘记重写hashCode方法。</p>
+<p>可以看看HashMap的get方法代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public V get(Object key) &#123;</div><div class="line">    if (key == null)</div><div class="line">        return getForNullKey();</div><div class="line">    Entry&lt;K,V&gt; entry = getEntry(key);</div><div class="line"></div><div class="line">    return null == entry ? null : entry.getValue();</div><div class="line">&#125;</div><div class="line"></div><div class="line">final Entry&lt;K,V&gt; getEntry(Object key) &#123;</div><div class="line">    if (size == 0) &#123;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    int hash = (key == null) ? 0 : hash(key);</div><div class="line">    for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];</div><div class="line">         e != null;</div><div class="line">         e = e.next) &#123;</div><div class="line">        Object k;</div><div class="line">        if (e.hash == hash &amp;&amp;</div><div class="line">            ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">            return e;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果想上述代码输出结果为test，只需要重写hashCode方法，让equals方法和hashCode方法始终在逻辑上保持一致。</p>
+<p>比如重写hashCode方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public int hashCode() &#123;</div><div class="line">    // TODO Auto-generated method stub</div><div class="line">    return idcard.hashCode()*19+name.hashCode();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还有一点就是，在重写hashCode方法和equals方法时，千万不要依赖易变的字段。。<br>再强调一下，如果hashcode值相等，对象不一定相等，还需要equals；如果equals相当，hashcode值一定相等；如果hashcode不相等，对象一定不等。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/06/Redis-5.服务器相关命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -802,6 +974,468 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" itemprop="url">
+                  Redis-3.命令之list,set,sorted set
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T19:10:01+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Redis命令-第二部分list-set-sorted-set"><a href="#Redis命令-第二部分list-set-sorted-set" class="headerlink" title="Redis命令-第二部分list,set,sorted set"></a>Redis命令-第二部分list,set,sorted set</h1><h2 id="5-Redis的list命令"><a href="#5-Redis的list命令" class="headerlink" title="5.Redis的list命令"></a>5.Redis的list命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LPUSH KEY_NAME VALUE1.. VALUEN</td>
+<td>Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误</td>
+<td>LPUSH newlist wukong sanzang bajie</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>LPUSHX KEY_NAME VALUE1.. VALUEN</td>
+<td>将一个或多个值插入到已存在的列表头部，列表不存在时操作无效</td>
+<td>LPUSHX listnew wukong</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>RPUSH KEY_NAME VALUE1..VALUEN</td>
+<td>用于将一个或多个值插入到列表的尾部(最右边)。如果列表不存在，一个空列表会被创建并执行 RPUSH 操作。 当列表存在但不是列表类型时，返回一个错误</td>
+<td>RPUSH newlist bailongma shashen</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>RPUSHX KEY_NAME VALUE1..VALUEN</td>
+<td>将一个或多个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</td>
+<td>RPUSHX listnew wukong</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>LPOP KEY_NAME</td>
+<td>移除并返回列表的第一个元素</td>
+<td>LPOP newlist</td>
+<td>“bajie”</td>
+</tr>
+<tr>
+<td>BLPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
+<td>移出并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BLPOP maydaylist newlist 10</td>
+<td>1) “maydaylist”2) “masha”注意你写多个list,按顺序下来，哪个先弹出及返回，并不是所有list都弹出一个。</td>
+</tr>
+<tr>
+<td>RPOP KEY_NAME</td>
+<td>移除并返回列表的最后一个元素</td>
+<td>RPOP newlist</td>
+<td>同lpop</td>
+</tr>
+<tr>
+<td>BRPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
+<td>移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BRPOP maydayli newlist 10</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>RPOPLPUSH SOURCE_KEY_NAME DESTINATION_KEY_NAME</td>
+<td>移除列表的最后一个元素，并将该元素添加到另一个列表并返回</td>
+<td>RPOPLPUSH newlist xiyoulist</td>
+<td>“shashen”</td>
+</tr>
+<tr>
+<td>BRPOPLPUSH LIST1 ANOTHER_LIST TIMEOUT</td>
+<td>从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
+<td>BRPOPLPUSH newlist xiyoulist 10</td>
+<td>“bailongma”</td>
+</tr>
+<tr>
+<td>LINDEX KEY_NAME INDEX_POSITION</td>
+<td>通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
+<td>LINDEX newlist -1</td>
+<td>“wukong”</td>
+</tr>
+<tr>
+<td>LINSERT KEY_NAME BEFORE/AFTER EXISTING_VALUE NEW_VALUE</td>
+<td>在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作。 当列表不存在时，被视为空列表，不执行任何操作。 如果 key 不是列表类型，返回一个错误</td>
+<td>LINSERT newlist BEFORE bailongma beforetudi</td>
+<td>(integer) 6</td>
+</tr>
+<tr>
+<td>LLEN KEY_NAME</td>
+<td>用于返回列表的长度。 如果列表 key 不存在，则 key 被解释为一个空列表，返回 0 。 如果 key 不是列表类型，返回一个错误</td>
+<td>LLEN newlist</td>
+<td>(integer) 6</td>
+</tr>
+<tr>
+<td>LREM KEY_NAME COUNT VALUE</td>
+<td>根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素。count &gt; 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。count &lt; 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值</td>
+<td>LREM newlist -2 wukong</td>
+<td>(integer) 2 </td>
+</tr>
+<tr>
+<td>LSET KEY_NAME INDEX VALUE</td>
+<td>通过索引来设置元素的值。当索引参数超出范围，或对一个空列表进行 LSET 时，返回一个错误</td>
+<td>LSET newlist 0 newwukong</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>LTRIM KEY_NAME START STOP</td>
+<td>对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。下标 0 表示列表的第一个元素，以 1 表示列表的第二个元素，以此类推。 你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
+<td>LTRIM newlist 1 -1</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-Redis的set命令"><a href="#6-Redis的set命令" class="headerlink" title="6.Redis的set命令"></a>6.Redis的set命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SADD KEY_NAME VALUE1..VALUEN</td>
+<td>将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略。假如集合 key 不存在，则创建一个只包含添加的元素作成员的集合。当集合 key 不是集合类型时，返回一个错误</td>
+<td>SADD xiyouset wukong wujing wuneng sanzang bailongma</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>SCARD KEY_NAME</td>
+<td>返回集合中元素的数量</td>
+<td>SCARD xiyouset</td>
+<td>(integer) 5</td>
+</tr>
+<tr>
+<td>SDIFF FIRST_KEY OTHER_KEY1..OTHER_KEYN</td>
+<td>返回给定集合之间的差集(后面的与第一个的差积)。不存在的集合 key 将视为空集</td>
+<td>SDIFF maydayset xiyouset newset</td>
+<td>返回了maydayset中wukong以外的值</td>
+</tr>
+<tr>
+<td>SDIFFSTORE DESTINATION_KEY KEY1..KEYN</td>
+<td>将给定集合之间的差集存储在指定的集合中。如果指定的集合 key 已存在，则会被覆盖</td>
+<td>SDIFFSTORE diffset maydayset xiyouset</td>
+<td>(integer) 4</td>
+</tr>
+<tr>
+<td>SINTER KEY KEY1..KEYN</td>
+<td>返回给定所有给定集合的交集。 不存在的集合 key 被视为空集。 当给定集合当中有一个空集时，结果也为空集</td>
+<td>SINTER xiyouset maydayset</td>
+<td>“wukong”</td>
+</tr>
+<tr>
+<td>SINTERSTORE DESTINATION_KEY KEY KEY1..KEYN</td>
+<td>将给定集合之间的交集存储在指定的集合中。如果指定的集合已经存在，则将其覆盖</td>
+<td>SINTERSTORE hahaset xiyouset maydayset</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SUNION KEY KEY1..KEYN</td>
+<td>返回给定集合的并集。不存在的集合 key 被视为空集</td>
+<td>SUNION xiyouset maydayset</td>
+<td>返回并集</td>
+</tr>
+<tr>
+<td>SISMEMBER KEY VALUE</td>
+<td>判断成员元素是否是集合的成员</td>
+<td>SISMEMBER xiyouset wukong</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SUNIONSTORE DESTINATION KEY KEY1..KEYN</td>
+<td>命令将给定集合的并集存储在指定的集合 destination 中</td>
+<td>SUNIONSTORE newhahaset xiyouset maydayset</td>
+<td>(integer) 9</td>
+</tr>
+<tr>
+<td>SISMEMBER KEY VALUE</td>
+<td>判断成员元素是否是集合的成员</td>
+<td>SISMEMBER xiyouset wukong</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SRANDMEMBER KEY [count]</td>
+<td>用于返回集合中的一个随机元素。如果 count为正数，且小于集合基数，返回一个包含count个元素的数组，不重复。如果 count 大于等于集合长度，返回整个集合。如果count为负数，返回一个数组，元素可重复，数的长度为 count 的绝对值</td>
+<td>SRANDMEMBER xiyouset 3</td>
+<td>随机返回了三个元素</td>
+</tr>
+<tr>
+<td>SMOVE SOURCE DESTINATION MEMBER</td>
+<td>将指定成员 member元素从source集合移动到destination集合，是原子性操作。source 集合不存在或不包含指定的 member 元素，则不执行操作，返回0；否则，移除元素，并添加到 destination 集合中</td>
+<td>SMOVE xiyouset maydayset wujing</td>
+<td>(integer) 1</td>
+</tr>
+<tr>
+<td>SPOP KEY</td>
+<td>用于移除并返回集合中的一个随机元素</td>
+<td>SPOP maydayset</td>
+<td>“guaishou”</td>
+</tr>
+<tr>
+<td>SREM KEY MEMBER1..MEMBERN</td>
+<td>用于移除集合中的一个或多个成员元素，不存在的成员元素会被忽略</td>
+<td>SREM maydayset shitou guaishou</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>SSCAN KEY [MATCH pattern] [COUNT count]</td>
+<td>用于迭代集合键中的元素</td>
+<td>SSCAN maydayset 0 MATCH a* COUNT 3</td>
+<td>1) “1” 2) 1)  “ashine2” 2) “a5” 3) “a3”  这里的游标还不太清楚（当scan命令的游标为0时，服务器开始新的迭代，当服务器返回值为0的游标时，表示迭代结束）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-Redis的sorted-set命令"><a href="#7-Redis的sorted-set命令" class="headerlink" title="7.Redis的sorted set命令"></a>7.Redis的sorted set命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN</td>
+<td>将一个或多个成员元素及其分数值加入到有序集当中</td>
+<td>ZADD sortedkey 1 whx 2 ashine 3 tmac</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>ZCARD KEY_NAME</td>
+<td>返回集合中元素的数量</td>
+<td>ZCARD sortedkey</td>
+<td>(integer) 3</td>
+</tr>
+<tr>
+<td>ZCOUNT key min max</td>
+<td>计算有序集合中指定分数区间的成员数量</td>
+<td>ZCOUNT sortedkey 1 2</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZINCRBY key increment member</td>
+<td>对有序集合中指定成员的分数加上增量 increment,可增加负数</td>
+<td>ZINCRBY sortedkey -6 tmac</td>
+<td>“-3”</td>
+</tr>
+<tr>
+<td>ZRANGE key start stop [WITHSCORES]</td>
+<td>返回有序集中，指定区间内的成员，顺序默认按分数从小到大，相同分数按字典顺序，0表示第一个成员，1表示第二个成员；-1表示最后，-2表示倒数第二个</td>
+<td>ZRANGE sortedkey 0 -1</td>
+<td>1) “tmac” 2) “whx” 3) “ashine”</td>
+</tr>
+<tr>
+<td>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</td>
+<td>返回有序集合中指定分数区间的成员列表，区间的取值使用闭区间 (小于等于或大于等于)，也可以通过给参数前增加 (符号来使用可选的开区间 (小于或大于)</td>
+<td>ZRANGEBYSCORE zset (1 5</td>
+<td>省略</td>
+</tr>
+<tr>
+<td>ZREVRANGE key start stop [WITHSCORES]</td>
+<td>返回有序集中，指定区间内的成员，从大到小</td>
+<td>ZREVRANGE sortedkey 0 -1 WITHSCORES</td>
+<td>1) “ashine” 2) “2” 3) “whx” 4) “1” 5) “tmac” 6) “-3”</td>
+</tr>
+<tr>
+<td>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</td>
+<td>返回有序集中指定分数区间内的所有的成员</td>
+<td>ZREVRANGEBYSCORE sortedkey   2 0</td>
+<td>1) “ashine” 2) “whx”</td>
+</tr>
+<tr>
+<td>ZRANK key member</td>
+<td>返回有序集中指定成员的排名。其中有序集成员按分数值递增(从小到大)顺序排列 如果成员不是有序集 key 的成员，返回 nil。</td>
+<td>ZRANK sortedkey tmac</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>ZREVRANK key member</td>
+<td>返回有序集中成员的排名。其中有序集成员按分数值递减(从大到小)排序，最大位0</td>
+<td>ZREVRANK sortedkey whx</td>
+<td>(integer) 0</td>
+</tr>
+<tr>
+<td>ZREM key member</td>
+<td>移除有序集中的一个或多个成员，不存在的成员将被忽略</td>
+<td>ZREM sortedkey tmac ashine</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZREMRANGEBYRANK key start stop</td>
+<td>用于移除有序集中，指定排名(rank)区间内的所有成员</td>
+</tr>
+<tr>
+<td></td>
+<td>ZREMRANGEBYRANK sortedkey 1 2</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td>ZREMRANGEBYSCORE key min max</td>
+<td>用于移除有序集中，指定分数（score）区间内的所有成员</td>
+<td>ZREMRANGEBYSCORE sortedkey 0 1</td>
+<td>(integer) 2</td>
+</tr>
+<tr>
+<td> ZSCORE key member</td>
+<td>返回有序集中，成员的分数值。 如果成员元素不是有序集 key 的成员，或 key 不存在，返回 nil</td>
+<td>SREM ZSCORE sortedkey whx</td>
+<td>“1”</td>
+</tr>
+</tbody>
+</table>
+<p>有序列表还有交集，并集及迭代，还有字典遍历相关，需要时再查询。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第一部分key,String,Hash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1254,468 +1888,6 @@
 </tr>
 </tbody>
 </table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" itemprop="url">
-                  Redis-3.命令之list,set,sorted set
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T19:10:01+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/15/Redis-3.命令-第二部分list,set,sorted set/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/15/Redis-3.命令-第二部分list,set,sorted set/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Redis命令-第二部分list-set-sorted-set"><a href="#Redis命令-第二部分list-set-sorted-set" class="headerlink" title="Redis命令-第二部分list,set,sorted set"></a>Redis命令-第二部分list,set,sorted set</h1><h2 id="5-Redis的list命令"><a href="#5-Redis的list命令" class="headerlink" title="5.Redis的list命令"></a>5.Redis的list命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>LPUSH KEY_NAME VALUE1.. VALUEN</td>
-<td>Redis Lpush 命令将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。 当 key 存在但不是列表类型时，返回一个错误</td>
-<td>LPUSH newlist wukong sanzang bajie</td>
-<td>(integer) 3</td>
-</tr>
-<tr>
-<td>LPUSHX KEY_NAME VALUE1.. VALUEN</td>
-<td>将一个或多个值插入到已存在的列表头部，列表不存在时操作无效</td>
-<td>LPUSHX listnew wukong</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>RPUSH KEY_NAME VALUE1..VALUEN</td>
-<td>用于将一个或多个值插入到列表的尾部(最右边)。如果列表不存在，一个空列表会被创建并执行 RPUSH 操作。 当列表存在但不是列表类型时，返回一个错误</td>
-<td>RPUSH newlist bailongma shashen</td>
-<td>(integer) 5</td>
-</tr>
-<tr>
-<td>RPUSHX KEY_NAME VALUE1..VALUEN</td>
-<td>将一个或多个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</td>
-<td>RPUSHX listnew wukong</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>LPOP KEY_NAME</td>
-<td>移除并返回列表的第一个元素</td>
-<td>LPOP newlist</td>
-<td>“bajie”</td>
-</tr>
-<tr>
-<td>BLPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
-<td>移出并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
-<td>BLPOP maydaylist newlist 10</td>
-<td>1) “maydaylist”2) “masha”注意你写多个list,按顺序下来，哪个先弹出及返回，并不是所有list都弹出一个。</td>
-</tr>
-<tr>
-<td>RPOP KEY_NAME</td>
-<td>移除并返回列表的最后一个元素</td>
-<td>RPOP newlist</td>
-<td>同lpop</td>
-</tr>
-<tr>
-<td>BRPOP LIST1 LIST2 .. LISTN TIMEOUT</td>
-<td>移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
-<td>BRPOP maydayli newlist 10</td>
-<td>同上</td>
-</tr>
-<tr>
-<td>RPOPLPUSH SOURCE_KEY_NAME DESTINATION_KEY_NAME</td>
-<td>移除列表的最后一个元素，并将该元素添加到另一个列表并返回</td>
-<td>RPOPLPUSH newlist xiyoulist</td>
-<td>“shashen”</td>
-</tr>
-<tr>
-<td>BRPOPLPUSH LIST1 ANOTHER_LIST TIMEOUT</td>
-<td>从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
-<td>BRPOPLPUSH newlist xiyoulist 10</td>
-<td>“bailongma”</td>
-</tr>
-<tr>
-<td>LINDEX KEY_NAME INDEX_POSITION</td>
-<td>通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
-<td>LINDEX newlist -1</td>
-<td>“wukong”</td>
-</tr>
-<tr>
-<td>LINSERT KEY_NAME BEFORE/AFTER EXISTING_VALUE NEW_VALUE</td>
-<td>在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作。 当列表不存在时，被视为空列表，不执行任何操作。 如果 key 不是列表类型，返回一个错误</td>
-<td>LINSERT newlist BEFORE bailongma beforetudi</td>
-<td>(integer) 6</td>
-</tr>
-<tr>
-<td>LLEN KEY_NAME</td>
-<td>用于返回列表的长度。 如果列表 key 不存在，则 key 被解释为一个空列表，返回 0 。 如果 key 不是列表类型，返回一个错误</td>
-<td>LLEN newlist</td>
-<td>(integer) 6</td>
-</tr>
-<tr>
-<td>LREM KEY_NAME COUNT VALUE</td>
-<td>根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素。count &gt; 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。count &lt; 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值</td>
-<td>LREM newlist -2 wukong</td>
-<td>(integer) 2 </td>
-</tr>
-<tr>
-<td>LSET KEY_NAME INDEX VALUE</td>
-<td>通过索引来设置元素的值。当索引参数超出范围，或对一个空列表进行 LSET 时，返回一个错误</td>
-<td>LSET newlist 0 newwukong</td>
-<td>ok</td>
-</tr>
-<tr>
-<td>LTRIM KEY_NAME START STOP</td>
-<td>对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。下标 0 表示列表的第一个元素，以 1 表示列表的第二个元素，以此类推。 你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推</td>
-<td>LTRIM newlist 1 -1</td>
-<td>ok</td>
-</tr>
-</tbody>
-</table>
-<h2 id="6-Redis的set命令"><a href="#6-Redis的set命令" class="headerlink" title="6.Redis的set命令"></a>6.Redis的set命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SADD KEY_NAME VALUE1..VALUEN</td>
-<td>将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略。假如集合 key 不存在，则创建一个只包含添加的元素作成员的集合。当集合 key 不是集合类型时，返回一个错误</td>
-<td>SADD xiyouset wukong wujing wuneng sanzang bailongma</td>
-<td>(integer) 5</td>
-</tr>
-<tr>
-<td>SCARD KEY_NAME</td>
-<td>返回集合中元素的数量</td>
-<td>SCARD xiyouset</td>
-<td>(integer) 5</td>
-</tr>
-<tr>
-<td>SDIFF FIRST_KEY OTHER_KEY1..OTHER_KEYN</td>
-<td>返回给定集合之间的差集(后面的与第一个的差积)。不存在的集合 key 将视为空集</td>
-<td>SDIFF maydayset xiyouset newset</td>
-<td>返回了maydayset中wukong以外的值</td>
-</tr>
-<tr>
-<td>SDIFFSTORE DESTINATION_KEY KEY1..KEYN</td>
-<td>将给定集合之间的差集存储在指定的集合中。如果指定的集合 key 已存在，则会被覆盖</td>
-<td>SDIFFSTORE diffset maydayset xiyouset</td>
-<td>(integer) 4</td>
-</tr>
-<tr>
-<td>SINTER KEY KEY1..KEYN</td>
-<td>返回给定所有给定集合的交集。 不存在的集合 key 被视为空集。 当给定集合当中有一个空集时，结果也为空集</td>
-<td>SINTER xiyouset maydayset</td>
-<td>“wukong”</td>
-</tr>
-<tr>
-<td>SINTERSTORE DESTINATION_KEY KEY KEY1..KEYN</td>
-<td>将给定集合之间的交集存储在指定的集合中。如果指定的集合已经存在，则将其覆盖</td>
-<td>SINTERSTORE hahaset xiyouset maydayset</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>SUNION KEY KEY1..KEYN</td>
-<td>返回给定集合的并集。不存在的集合 key 被视为空集</td>
-<td>SUNION xiyouset maydayset</td>
-<td>返回并集</td>
-</tr>
-<tr>
-<td>SISMEMBER KEY VALUE</td>
-<td>判断成员元素是否是集合的成员</td>
-<td>SISMEMBER xiyouset wukong</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>SUNIONSTORE DESTINATION KEY KEY1..KEYN</td>
-<td>命令将给定集合的并集存储在指定的集合 destination 中</td>
-<td>SUNIONSTORE newhahaset xiyouset maydayset</td>
-<td>(integer) 9</td>
-</tr>
-<tr>
-<td>SISMEMBER KEY VALUE</td>
-<td>判断成员元素是否是集合的成员</td>
-<td>SISMEMBER xiyouset wukong</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>SRANDMEMBER KEY [count]</td>
-<td>用于返回集合中的一个随机元素。如果 count为正数，且小于集合基数，返回一个包含count个元素的数组，不重复。如果 count 大于等于集合长度，返回整个集合。如果count为负数，返回一个数组，元素可重复，数的长度为 count 的绝对值</td>
-<td>SRANDMEMBER xiyouset 3</td>
-<td>随机返回了三个元素</td>
-</tr>
-<tr>
-<td>SMOVE SOURCE DESTINATION MEMBER</td>
-<td>将指定成员 member元素从source集合移动到destination集合，是原子性操作。source 集合不存在或不包含指定的 member 元素，则不执行操作，返回0；否则，移除元素，并添加到 destination 集合中</td>
-<td>SMOVE xiyouset maydayset wujing</td>
-<td>(integer) 1</td>
-</tr>
-<tr>
-<td>SPOP KEY</td>
-<td>用于移除并返回集合中的一个随机元素</td>
-<td>SPOP maydayset</td>
-<td>“guaishou”</td>
-</tr>
-<tr>
-<td>SREM KEY MEMBER1..MEMBERN</td>
-<td>用于移除集合中的一个或多个成员元素，不存在的成员元素会被忽略</td>
-<td>SREM maydayset shitou guaishou</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td>SSCAN KEY [MATCH pattern] [COUNT count]</td>
-<td>用于迭代集合键中的元素</td>
-<td>SSCAN maydayset 0 MATCH a* COUNT 3</td>
-<td>1) “1” 2) 1)  “ashine2” 2) “a5” 3) “a3”  这里的游标还不太清楚（当scan命令的游标为0时，服务器开始新的迭代，当服务器返回值为0的游标时，表示迭代结束）</td>
-</tr>
-</tbody>
-</table>
-<h2 id="7-Redis的sorted-set命令"><a href="#7-Redis的sorted-set命令" class="headerlink" title="7.Redis的sorted set命令"></a>7.Redis的sorted set命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN</td>
-<td>将一个或多个成员元素及其分数值加入到有序集当中</td>
-<td>ZADD sortedkey 1 whx 2 ashine 3 tmac</td>
-<td>(integer) 3</td>
-</tr>
-<tr>
-<td>ZCARD KEY_NAME</td>
-<td>返回集合中元素的数量</td>
-<td>ZCARD sortedkey</td>
-<td>(integer) 3</td>
-</tr>
-<tr>
-<td>ZCOUNT key min max</td>
-<td>计算有序集合中指定分数区间的成员数量</td>
-<td>ZCOUNT sortedkey 1 2</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td>ZINCRBY key increment member</td>
-<td>对有序集合中指定成员的分数加上增量 increment,可增加负数</td>
-<td>ZINCRBY sortedkey -6 tmac</td>
-<td>“-3”</td>
-</tr>
-<tr>
-<td>ZRANGE key start stop [WITHSCORES]</td>
-<td>返回有序集中，指定区间内的成员，顺序默认按分数从小到大，相同分数按字典顺序，0表示第一个成员，1表示第二个成员；-1表示最后，-2表示倒数第二个</td>
-<td>ZRANGE sortedkey 0 -1</td>
-<td>1) “tmac” 2) “whx” 3) “ashine”</td>
-</tr>
-<tr>
-<td>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</td>
-<td>返回有序集合中指定分数区间的成员列表，区间的取值使用闭区间 (小于等于或大于等于)，也可以通过给参数前增加 (符号来使用可选的开区间 (小于或大于)</td>
-<td>ZRANGEBYSCORE zset (1 5</td>
-<td>省略</td>
-</tr>
-<tr>
-<td>ZREVRANGE key start stop [WITHSCORES]</td>
-<td>返回有序集中，指定区间内的成员，从大到小</td>
-<td>ZREVRANGE sortedkey 0 -1 WITHSCORES</td>
-<td>1) “ashine” 2) “2” 3) “whx” 4) “1” 5) “tmac” 6) “-3”</td>
-</tr>
-<tr>
-<td>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</td>
-<td>返回有序集中指定分数区间内的所有的成员</td>
-<td>ZREVRANGEBYSCORE sortedkey   2 0</td>
-<td>1) “ashine” 2) “whx”</td>
-</tr>
-<tr>
-<td>ZRANK key member</td>
-<td>返回有序集中指定成员的排名。其中有序集成员按分数值递增(从小到大)顺序排列 如果成员不是有序集 key 的成员，返回 nil。</td>
-<td>ZRANK sortedkey tmac</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>ZREVRANK key member</td>
-<td>返回有序集中成员的排名。其中有序集成员按分数值递减(从大到小)排序，最大位0</td>
-<td>ZREVRANK sortedkey whx</td>
-<td>(integer) 0</td>
-</tr>
-<tr>
-<td>ZREM key member</td>
-<td>移除有序集中的一个或多个成员，不存在的成员将被忽略</td>
-<td>ZREM sortedkey tmac ashine</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td>ZREMRANGEBYRANK key start stop</td>
-<td>用于移除有序集中，指定排名(rank)区间内的所有成员</td>
-</tr>
-<tr>
-<td></td>
-<td>ZREMRANGEBYRANK sortedkey 1 2</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td>ZREMRANGEBYSCORE key min max</td>
-<td>用于移除有序集中，指定分数（score）区间内的所有成员</td>
-<td>ZREMRANGEBYSCORE sortedkey 0 1</td>
-<td>(integer) 2</td>
-</tr>
-<tr>
-<td> ZSCORE key member</td>
-<td>返回有序集中，成员的分数值。 如果成员元素不是有序集 key 的成员，或 key 不存在，返回 nil</td>
-<td>SREM ZSCORE sortedkey whx</td>
-<td>“1”</td>
-</tr>
-</tbody>
-</table>
-<p>有序列表还有交集，并集及迭代，还有字典遍历相关，需要时再查询。</p>
 
           
         
@@ -2781,7 +2953,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2803,7 +2975,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="多线程,源码," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.Semaphpre信号量1.1 定义信号量用来控制同时访问某个特定资源的操作数量。还可以用来实现某种资源池，或者对容器施加边界。Semaphore可以控制某个资源可被同时访问的个数。 1.1 主要方法 public void acquire()  从此信号量获取一个许可，在提供一个许可前一直将线程阻塞，否则线程被中断。 public void acquire(int permits)从此信号量">
+<meta name="keywords" content="多线程,源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程必知必会源码系列-Semaphore信号量">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/多线程必知必会源码系列-Semaphore信号量/index.html">
+<meta property="og:site_name" content="ashine's blog">
+<meta property="og:description" content="1.Semaphpre信号量1.1 定义信号量用来控制同时访问某个特定资源的操作数量。还可以用来实现某种资源池，或者对容器施加边界。Semaphore可以控制某个资源可被同时访问的个数。 1.1 主要方法 public void acquire()  从此信号量获取一个许可，在提供一个许可前一直将线程阻塞，否则线程被中断。 public void acquire(int permits)从此信号量">
+<meta property="og:image" content="http://ohoyqlwj0.bkt.clouddn.com/AQS%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.png">
+<meta property="og:updated_time" content="2017-05-14T10:05:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程必知必会源码系列-Semaphore信号量">
+<meta name="twitter:description" content="1.Semaphpre信号量1.1 定义信号量用来控制同时访问某个特定资源的操作数量。还可以用来实现某种资源池，或者对容器施加边界。Semaphore可以控制某个资源可被同时访问的个数。 1.1 主要方法 public void acquire()  从此信号量获取一个许可，在提供一个许可前一直将线程阻塞，否则线程被中断。 public void acquire(int permits)从此信号量">
+<meta name="twitter:image" content="http://ohoyqlwj0.bkt.clouddn.com/AQS%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/多线程必知必会源码系列-Semaphore信号量/"/>
+
+
+
+
+
+  <title> 多线程必知必会源码系列-Semaphore信号量 | ashine's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f7aba61662d6673c4cd5176f20fedcfa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ashine's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/多线程必知必会源码系列-Semaphore信号量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多线程必知必会源码系列-Semaphore信号量
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T17:15:00+08:00">
+                2017-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/14/多线程必知必会源码系列-Semaphore信号量/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/14/多线程必知必会源码系列-Semaphore信号量/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Semaphpre信号量"><a href="#1-Semaphpre信号量" class="headerlink" title="1.Semaphpre信号量"></a>1.Semaphpre信号量</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p>信号量用来控制同时访问某个特定资源的操作数量。还可以用来实现某种资源池，或者对容器施加边界。Semaphore可以控制某个资源可被同时访问的个数。</p>
+<h3 id="1-1-主要方法"><a href="#1-1-主要方法" class="headerlink" title="1.1 主要方法"></a>1.1 主要方法</h3><ul>
+<li>public void acquire()  从此信号量获取一个许可，在提供一个许可前一直将线程阻塞，否则线程被中断。</li>
+<li>public void acquire(int permits)从此信号量获取给定数目的许可，在提供这些许可前一直将线程阻塞，或者线程已被中断。</li>
+<li>public void release() 释放一个许可，将其返回给信号量。</li>
+<li>public void release(int permits)释放给定数目的许可，将其返回到信号量。</li>
+</ul>
+<h3 id="1-2-例子用法"><a href="#1-2-例子用法" class="headerlink" title="1.2 例子用法"></a>1.2 例子用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">package concurrent;</div><div class="line"></div><div class="line">import java.util.concurrent.Executor;</div><div class="line">import java.util.concurrent.ExecutorService;</div><div class="line">import java.util.concurrent.Executors;</div><div class="line">import java.util.concurrent.Semaphore;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Administrator on 2017/5/11.</div><div class="line"> * 总共十个人吃饭，但是只有3个位置吃饭，需要等吃完其他人才能去吃</div><div class="line"> */</div><div class="line">public class TestSemaphore &#123;</div><div class="line">    //信号量设置3个，也就是同时只能有三个吃饭</div><div class="line">    final Semaphore semaphore = new Semaphore(3);</div><div class="line"></div><div class="line">    //吃饭的任务</div><div class="line">    class  DinnerTask implements Runnable&#123;</div><div class="line">        private int i;</div><div class="line">        public DinnerTask(int i) &#123;</div><div class="line">            this.i = i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            try &#123;</div><div class="line">                semaphore.acquire();</div><div class="line">                System.out.println(&quot;我是无名&quot; + i + &quot;，正在吃饭！现在可利用的信号量数量为&quot; + semaphore.availablePermits());</div><div class="line">                //Thread.currentThread().sleep(1000);</div><div class="line">                semaphore.release();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        TestSemaphore testSemaphore = new TestSemaphore();</div><div class="line">        ExecutorService executor = Executors.newFixedThreadPool(10);</div><div class="line">        for (int i = 1 ;i &lt;= 10 ;i++)&#123;</div><div class="line">            executor.submit(testSemaphore.new DinnerTask(i));</div><div class="line">        &#125;</div><div class="line">        Thread.currentThread().sleep(3000);</div><div class="line">        System.out.println(&quot;现在可利用的信号量为&quot; + testSemaphore.semaphore.availablePermits());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">结果为：</div><div class="line">我是无名2，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名6，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名10，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名3，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名7，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名4，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名8，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名1，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名5，正在吃饭！现在可利用的信号量数量为2</div><div class="line">我是无名9，正在吃饭！现在可利用的信号量数量为2</div><div class="line">现在可利用的信号量为3</div></pre></td></tr></table></figure>
+<h2 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2.源码分析"></a>2.源码分析</h2><p>会罗列出方法及关键代码解析。</p>
+<h3 id="2-1-所有方法"><a href="#2-1-所有方法" class="headerlink" title="2.1 所有方法"></a>2.1 所有方法</h3><h4 id="2-1-1-构造方法"><a href="#2-1-1-构造方法" class="headerlink" title="2.1.1 构造方法"></a>2.1.1 构造方法</h4><ul>
+<li>Semaphore(int permits)  创建具有给定的许可数和非公平的公平设置的 Semaphore。</li>
+<li>Semaphore(int permits, boolean fair)<br>创建具有给定的许可数和给定的公平设置的 Semaphore。</li>
+</ul>
+<h4 id="2-1-2-方法"><a href="#2-1-2-方法" class="headerlink" title="2.1.2 方法"></a>2.1.2 方法</h4><ul>
+<li>1.1中的四个方法就不重复写了。</li>
+<li>public void acquireUninterruptibly()从此信号量中获取许可，在有可用的许可前将其阻塞。</li>
+<li>public void acquireUninterruptibly(int permits)从此信号量获取给定数目的许可，在提供这些许可前一直将线程阻塞。</li>
+<li>public int availablePermits()返回此信号量中当前可用的许可数。</li>
+<li>public int drainPermits()获取并返回立即可用的所有许可。</li>
+<li>protected Collection<thread> getQueuedThreads()返回一个 collection，包含可能等待获取的线程。</thread></li>
+<li>public final int getQueueLength()返回正在等待获取的线程的估计数目。</li>
+<li>public final boolean hasQueuedThreads()查询是否有线程正在等待获取。</li>
+<li>public boolean isFair()返回此信号量公平设置的状态。</li>
+<li>protected void reducePermits根据指定的缩减量减小可用许可的数目。</li>
+<li>public String toString()返回标识此信号量的字符串，以及信号量的状态。</li>
+<li>public boolean tryAcquire()仅在调用时此信号量存在一个可用许可，才从信号量获取许可。</li>
+<li>public boolean tryAcquire(int permits)仅在调用时此信号量中有给定数目的许可时，才从此信号量中获取这些许可。</li>
+<li>public boolean tryAcquire(long timeout, TimeUnit unit)如果在给定的等待时间内，此信号量有可用的许可并且当前线程未被中断，则从此信号量获取一个许可。</li>
+<li>public boolean tryAcquire(int permits, long timeout, TimeUnit unit)如果在给定的等待时间内此信号量有可用的所有许可，并且当前线程未被中断，则从此信号量获取给定数目的许可。</li>
+</ul>
+<h3 id="2-2-关键源码解析"><a href="#2-2-关键源码解析" class="headerlink" title="2.2 关键源码解析"></a>2.2 关键源码解析</h3><h4 id="2-2-1-acquire方法获取许可"><a href="#2-2-1-acquire方法获取许可" class="headerlink" title="2.2.1 acquire方法获取许可"></a>2.2.1 acquire方法获取许可</h4><p>acquire方法，实际上调用了sync的acquireSharedInterruptibly()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">private final Sync sync;</div><div class="line">...</div><div class="line">public void acquire() throws InterruptedException &#123;</div><div class="line">    sync.acquireSharedInterruptibly(1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着看Sync类的acquireSharedInterruptibly()方法，Sync是Semaphore的静态内部类，Sync继承了AbstractQueuedSynchronizer。acquireSharedInterruptibly()方法实际上是AQS的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public final void acquireSharedInterruptibly(int arg)</div><div class="line">        throws InterruptedException &#123;</div><div class="line">    //如果线程状态是中断状态，则抛出异常</div><div class="line">    if (Thread.interrupted())</div><div class="line">        throw new InterruptedException();</div><div class="line">    //获取共享锁，如果获取失败则调用doAcquireSharedInterruptibly</div><div class="line">    if (tryAcquireShared(arg) &lt; 0)</div><div class="line">        doAcquireSharedInterruptibly(arg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着看tryAcquireShared()方法。这里的调用会分成公平模式和非公平模式，不同的模式会有不同的实现。当你实例化Semaphore时，会调用对应的构造方法，默认的构造方法是非公平模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Semaphore(int permits) &#123;</div><div class="line">    sync = new NonfairSync(permits);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们先来看<strong>非公平模式</strong>的tryAcquireShared()。实际上是调用了NonfairSync父类Sync的nonfairTryAcquireShared方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">static final class NonfairSync extends Sync &#123;</div><div class="line">    private static final long serialVersionUID = -2694183684443567898L;</div><div class="line"></div><div class="line">    NonfairSync(int permits) &#123;</div><div class="line">        super(permits);</div><div class="line">    &#125;</div><div class="line">    //实际上是去调用了父类Sync的nonfairTryAcquireShared方法</div><div class="line">    protected int tryAcquireShared(int acquires) &#123;</div><div class="line">        return nonfairTryAcquireShared(acquires);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Sync的nonfairTryAcquireShared方法。getState是一个许可数的方法。在Semaphore的构造方法中，new Sync时，会调用AQS中的setState方法设置volatile变量state为许可数。getState则可以获取当前的信号量许可数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">final int nonfairTryAcquireShared(int acquires) &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            //获取信号量的许可数</div><div class="line">            int available = getState();</div><div class="line">            //remaining为目前可用许可数减去当前要申请的许可数</div><div class="line">            int remaining = available - acquires;</div><div class="line">            //如果remaining小于0或者remaining大于0的同时compareAndSetState方法返回true，则直接返回remaining,然后当remaining&lt;0调用acquireSharedInterruptibly()方法中的doAcquireSharedInterruptibly()方法处理,当remaining大于0则代表获取信号量成功;</div><div class="line">            //如果remaining大于等于0而且compareAndSetState()返回false，则继续循环。</div><div class="line">            //compareAndSetState方法实际上是采用CAS去更新state值，最终会调用一个compareAndSwapInt的native方法。当更新成功则返回true。</div><div class="line">            if (remaining &lt; 0 ||</div><div class="line">                compareAndSetState(available, remaining))</div><div class="line">                return remaining;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>上面描述及注释中说到了获取信号量成功的情况，下面看看当remaining返回小于0的情况。这时会调用acquireSharedInterruptibly()的doAcquireSharedInterruptibly()方法，此方法也是AbstractQueuedSynchronizer种的方法。此方法的作用应该是要将当前线程放入到等待队列中去。</p>
+<p>为了理解下面代码，可以先看这里的AQS队列的介绍，再去看代码。参考网上AQS介绍，可以知道：AQS是一个双向链表，通过节点里的next指向当前节点后一个节点，prev变量指向当前节点前一个节点。每个节点中都包含了一个线程和一个类型变量（用于识别节点是独占节点还是共享节点。btw，ReadWriteLock是共享锁的实现，ReentrantLock是独占锁的实现）。头节点中的线程为目前正在占有锁的线程，其他节点的线程表示为正在等待获取锁的线程。如下图所示：<br><img src="http://ohoyqlwj0.bkt.clouddn.com/AQS%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.png" alt="image"><br>头节点，表示正在占有锁的节点，其他的节点（node1,node2）为正在等待获取锁的节点，它们通过next、pre变量指向前后节点，形成了AQS中的双向链表。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">private void doAcquireSharedInterruptibly(int arg)</div><div class="line">    throws InterruptedException &#123;</div><div class="line">    //创建共享锁类型的节点，并通过addWaiter方法添加到队列尾部</div><div class="line">    final Node node = addWaiter(Node.SHARED);</div><div class="line">    boolean failed = true;</div><div class="line">    try &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            //获取prev节点</div><div class="line">            final Node p = node.predecessor();</div><div class="line">            if (p == head) &#123;</div><div class="line">                //如果p为头结点，则去尝试获取锁</div><div class="line">                int r = tryAcquireShared(arg);</div><div class="line">                if (r &gt;= 0) &#123;</div><div class="line">                    //获取成功后设置头结点并唤醒其他节点</div><div class="line">                    setHeadAndPropagate(node, r);</div><div class="line">                    p.next = null; // help GC</div><div class="line">                    failed = false;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            //如果当前节点上一个节点不是头结点，则会调用shouldParkAfterFailedAcquire方法设置此节点的prev节点的waitStatus状态为SIGNAL，代表后续节点都需要唤醒</div><div class="line">            //parkAndCheckInterrupt会通过park方法阻塞当前线程</div><div class="line">            if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;</div><div class="line">                parkAndCheckInterrupt())</div><div class="line">                throw new InterruptedException();</div><div class="line">        &#125;</div><div class="line">    &#125; finally &#123;</div><div class="line">        if (failed)</div><div class="line">            cancelAcquire(node);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">private Node addWaiter(Node mode) &#123;</div><div class="line">    Node node = new Node(Thread.currentThread(), mode);</div><div class="line">    // Try the fast path of enq; backup to full enq on failure</div><div class="line">    Node pred = tail;</div><div class="line">    if (pred != null) &#123;</div><div class="line">        node.prev = pred;</div><div class="line">        if (compareAndSetTail(pred, node)) &#123;</div><div class="line">            pred.next = node;</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    enq(node);</div><div class="line">    return node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面可能会有两个疑问点，setHeadAndPropagate()方法怎么处理的以及shouldParkAfterFailedAcquir()怎么设置node的waitStatus状态。我们先来看看Node类的一些变量及shouldParkAfterFailedAcquir()方法、parkAndCheckInterrupt()方法的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">static final class Node &#123;</div><div class="line">  ...</div><div class="line">  /** 此状态代表线程被取消 */</div><div class="line">  static final int CANCELLED =  1;</div><div class="line">  /** 此状态代表后续节点处于等待状态，需要被唤醒 */</div><div class="line">  static final int SIGNAL    = -1;</div><div class="line">  /** 节点在等待队列中，节点线程等待在Condition上，</div><div class="line">    *当其他线程对Condition调用了signal()方法后，该节点将会 </div><div class="line">    *从等待队里中转移到同步队列中，加入对同步状态的获取</div><div class="line">    */</div><div class="line">  static final int CONDITION = -2;</div><div class="line">  /**</div><div class="line">   * 表示下一次共享式同步状态获取将会无条件地被传播下去 </div><div class="line">   */</div><div class="line">  static final int PROPAGATE = -3;</div><div class="line">  /**</div><div class="line">   * 状态值可以为CANCELLED、SINGNAL、CONDITION、PROPAGATE、0 </div><div class="line">   */</div><div class="line">  volatile int waitStatus;</div><div class="line">  ...</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) &#123;</div><div class="line">    //获取prev节点的waitStatus状态</div><div class="line">    int ws = pred.waitStatus;</div><div class="line">    //如果为SIGNAL,直接返回</div><div class="line">    if (ws == Node.SIGNAL)</div><div class="line">        return true;</div><div class="line">    //如果大于0，则为取消状态，则会把当前节点的prev节点移除，把当前节点的prev换成更前一个节点</div><div class="line">    if (ws &gt; 0) &#123;</div><div class="line">        do &#123;</div><div class="line">            node.prev = pred = pred.prev;</div><div class="line">        &#125; while (pred.waitStatus &gt; 0);</div><div class="line">        pred.next = node;</div><div class="line">    &#125; else &#123;</div><div class="line">        //如果状态为0或者PROPAGATE，则通过CAS替换状态为SIGNAL</div><div class="line">        compareAndSetWaitStatus(pred, ws, Node.SIGNAL);</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">private final boolean parkAndCheckInterrupt() &#123;</div><div class="line">    //把线程置于waiting状态</div><div class="line">    LockSupport.park(this);</div><div class="line">    return Thread.interrupted();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码是在当节点的prev节点不为头结点时调用的，接下来我们再看一下当prev节点为头结点调用的setHeadAndPropagate()方法。主要是为了把当前节点设置为头结点，然后释放共享锁，唤醒unpack后续线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">private void setHeadAndPropagate(Node node, int propagate) &#123;</div><div class="line">    Node h = head; // Record old head for check below</div><div class="line">    setHead(node); //设置node节点为头结点</div><div class="line">    /*</div><div class="line">     * unnecessary wake-ups, but only when there are multiple</div><div class="line">     * racing acquires/releases, so most need signals now or soon</div><div class="line">     * anyway.</div><div class="line">     * 其实这里我有一点不明白为什么h可能为null？</div><div class="line">     */</div><div class="line">    if (propagate &gt; 0 || h == null || h.waitStatus &lt; 0) &#123;</div><div class="line">        Node s = node.next;</div><div class="line">        //当next节点为空或者为共享模式的节点，则执行doReleaseShared</div><div class="line">        if (s == null || s.isShared())</div><div class="line">            doReleaseShared();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>zhihou 我们看一下doReleaseShared()方法。当头结点的waitStatus为SIGNAL时，会通过CAS设置头结点的为0.设置成功后，将调用unparkSuccessor()，目的是找到后续节点，然后唤醒。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private void doReleaseShared() &#123;</div><div class="line">    /*</div><div class="line">     * fails, if so rechecking.</div><div class="line">     */</div><div class="line">    for (;;) &#123;</div><div class="line">        Node h = head;</div><div class="line">        if (h != null &amp;&amp; h != tail) &#123;</div><div class="line">            int ws = h.waitStatus;</div><div class="line">            if (ws == Node.SIGNAL) &#123;</div><div class="line">                if (!compareAndSetWaitStatus(h, Node.SIGNAL, 0))</div><div class="line">                    continue;            // loop to recheck cases</div><div class="line">                //找到后续节点，然后唤醒</div><div class="line">                unparkSuccessor(h);</div><div class="line">            &#125;</div><div class="line">            else if (ws == 0 &amp;&amp;</div><div class="line">                     !compareAndSetWaitStatus(h, 0, Node.PROPAGATE))</div><div class="line">                continue;                // loop on failed CAS</div><div class="line">        &#125;</div><div class="line">        if (h == head)                   // loop if head changed</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后就看一下unparkSuccessor()方法，主要是找到头结点的后续节点，直到找到一个waitStatus不大于0，也就是非取消状态的节点，然后通过unpark唤醒此节点的线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private void unparkSuccessor(Node node) &#123;</div><div class="line">        //获取头节点状态</div><div class="line">        int ws = node.waitStatus;</div><div class="line">        if (ws &lt; 0)</div><div class="line">            compareAndSetWaitStatus(node, ws, 0);</div><div class="line">        //寻找头结点的后续节点，当遇到取消状态的节点就略过继续找下一个节点</div><div class="line">        Node s = node.next;</div><div class="line">        if (s == null || s.waitStatus &gt; 0) &#123;</div><div class="line">            s = null;</div><div class="line">            for (Node t = tail; t != null &amp;&amp; t != node; t = t.prev)</div><div class="line">                if (t.waitStatus &lt;= 0)</div><div class="line">                    s = t;</div><div class="line">        &#125;</div><div class="line">        if (s != null)</div><div class="line">            //唤醒此节点的线程</div><div class="line">            LockSupport.unpark(s.thread);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>说到这里，就说完了非公平模式的的tryAcquireShared()及后续过程；那公平模式的区别是什么呢？区别只在这里，公平模式的tryAcquireShared()中会有一个判断当前线程是不是在AQS队列的头部的next节点的方法，如果此线程不在头部的next节点，则会交由上文中的doAcquireSharedInterruptibly()方法直接放入队列尾部。我们来看看公平模式的tryAcquireShared方法，多了个hasQueuedPredecessors()判断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">protected int tryAcquireShared(int acquires) &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            if (hasQueuedPredecessors())</div><div class="line">                return -1;</div><div class="line">            int available = getState();</div><div class="line">            int remaining = available - acquires;</div><div class="line">            if (remaining &lt; 0 ||</div><div class="line">                compareAndSetState(available, remaining))</div><div class="line">                return remaining;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"> public final boolean hasQueuedPredecessors() &#123;</div><div class="line">        //目的就是判断是否是头结点的next节点的线程</div><div class="line">        Node t = tail;  </div><div class="line">        Node h = head;</div><div class="line">        Node s;</div><div class="line">        return h != t &amp;&amp;</div><div class="line">            ((s = h.next) == null || s.thread != Thread.currentThread());</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>那么acquire方法就介绍完了。</p>
+<h4 id="2-2-2-release方法释放许可"><a href="#2-2-2-release方法释放许可" class="headerlink" title="2.2.2 release方法释放许可"></a>2.2.2 release方法释放许可</h4><p>释放就没有分为公平和非公平模式了。<br>先来看第一个方法release(),实际上是调用了Sync的父类AbstractQueuedSynchronizer的releaseShared()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void release() &#123;</div><div class="line">    sync.releaseShared(1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们来看看releaseShared()方法，先去调用了tryReleaseShared()尝试释放锁。如果成功，则去做和申请许可中一样的doReleaseShared()方法去唤醒后续线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public final boolean releaseShared(int arg) &#123;</div><div class="line">    //尝试释放信号量</div><div class="line">    if (tryReleaseShared(arg)) &#123;</div><div class="line">    //释放成功则去唤醒后续线程</div><div class="line">        doReleaseShared();</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>doReleaseShared()在上文中已经介绍过，接下来只看看tryReleaseShared方法。这个是由Sync重写了。方法目的是释放信号量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">protected final boolean tryReleaseShared(int releases) &#123;</div><div class="line">    for (;;) &#123;</div><div class="line">        //获取当前可用信号量</div><div class="line">        int current = getState();</div><div class="line">        //加上当前要释放的信号量</div><div class="line">        int next = current + releases;</div><div class="line">        if (next &lt; current) // overflow</div><div class="line">            throw new Error(&quot;Maximum permit count exceeded&quot;);</div><div class="line">        //通过CAS去设置新的可用信号量数量</div><div class="line">        if (compareAndSetState(current, next))</div><div class="line">            return true;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>release()方法也介绍完了。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>本文主要讲解了信号量的常用方法及举例，然后分析了acquire()和release()的源码。有些地方可能分析比较单薄，还需要经常回顾加深理解。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/23/数据库事务四大特性及隔离级别/" rel="prev" title="数据库事务四大特性及隔离级别">
+                数据库事务四大特性及隔离级别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/14/多线程必知必会源码系列-Semaphore信号量/"
+           data-title="多线程必知必会源码系列-Semaphore信号量" data-url="http://yoursite.com/2017/05/14/多线程必知必会源码系列-Semaphore信号量/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg"
+               alt="ashine" />
+          <p class="site-author-name" itemprop="name">ashine</p>
+           
+              <p class="site-description motion-element" itemprop="description">人生海海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Semaphpre信号量"><span class="nav-number">1.</span> <span class="nav-text">1.Semaphpre信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-定义"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-主要方法"><span class="nav-number">1.2.</span> <span class="nav-text">1.1 主要方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-例子用法"><span class="nav-number">1.3.</span> <span class="nav-text">1.2 例子用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-源码分析"><span class="nav-number">2.</span> <span class="nav-text">2.源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-所有方法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 所有方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-构造方法"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-方法"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-关键源码解析"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 关键源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-acquire方法获取许可"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 acquire方法获取许可</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-release方法释放许可"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 release方法释放许可</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3.总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ashine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ashine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
