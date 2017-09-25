@@ -89,12 +89,13 @@
 
 <meta name="description" content="人生海海">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ashine's blog">
+<meta property="og:title" content="ashine&#39;s blog">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="ashine's blog">
+<meta property="og:site_name" content="ashine&#39;s blog">
 <meta property="og:description" content="人生海海">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ashine's blog">
+<meta name="twitter:title" content="ashine&#39;s blog">
 <meta name="twitter:description" content="人生海海">
 
 
@@ -280,6 +281,245 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/10/JAVA位运算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ashine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ashine's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/10/JAVA位运算/" itemprop="url">
+                  JAVA位运算
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-10T13:31:05+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA服务端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/10/JAVA位运算/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/JAVA位运算/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一-总述"><a href="#一-总述" class="headerlink" title="一.总述"></a>一.总述</h1><p>JAVA位运算是通过按位操作符操作整数基本数据类型中的单个“比特”（bit）即二进制位安慰操作符会对两个参数中对应的位执行布尔代数运算，最终生成一个结果。(＞＞,＜＜,＞＞＞,&amp;,|,^,～)</p>
+<p>（按JAVA思想中的说法，是JAVA设计的初衷是嵌入电视机顶盒，所以这种面向底层的操作被保留了下来，平常运用不多）<br>本文主要是学习JAVA的位运算。</p>
+<h1 id="二-数据类型的位数"><a href="#二-数据类型的位数" class="headerlink" title="二.数据类型的位数"></a>二.数据类型的位数</h1><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>8</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>8</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32</td>
+</tr>
+<tr>
+<td>long</td>
+<td>64</td>
+</tr>
+<tr>
+<td>float</td>
+<td>32</td>
+</tr>
+<tr>
+<td>double</td>
+<td>64</td>
+</tr>
+<tr>
+<td>char</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>byte short int long 四种整数类型。<br>计算机表示数字正负不是用+ -加减号来表示，而是用最高位数字来表示，0表示正，1表示负<br>所以比如-4用二进制原码表示就是1111 1111 1111 1111 1111 1111 1111 1100</p>
+<h1 id="三-临时学习下补码、反码、原码"><a href="#三-临时学习下补码、反码、原码" class="headerlink" title="三.临时学习下补码、反码、原码"></a>三.临时学习下补码、反码、原码</h1><h2 id="1-原码"><a href="#1-原码" class="headerlink" title="1.原码"></a>1.原码</h2><ul>
+<li>原码就是符号位加上数字的二进制表示，第一位表示符号 (0正数 1负数)，简单期间一个字节表示。</li>
+<li>+7的原码为： 00000111</li>
+<li>-7的原码为： 10000111</li>
+<li>对于原码来说，绝对值相等的正数和负数只有符号位不同。</li>
+</ul>
+<h2 id="2-反码"><a href="#2-反码" class="headerlink" title="2.反码"></a>2.反码</h2><ul>
+<li>正数的反码与原码相同；负数的符号位为1，(符号位不变化，其余位数取反)。</li>
+<li>为了简单起见，我们用1个字节来表示一个整数：</li>
+<li>+7的反码为：00000111</li>
+<li>-7的反码为： 11111000</li>
+</ul>
+<h2 id="3-补码"><a href="#3-补码" class="headerlink" title="3.补码"></a>3.补码</h2><ul>
+<li>正数的原码、反码、补码相同；负数的补码是，转换为反码然后加1(反码加1就是补码)。为了简单起见，我们用1个字节来表示一个整数：</li>
+<li>+7的补码为： 00000111</li>
+<li>-7的补码为： 11111001</li>
+</ul>
+<h2 id="4-深入"><a href="#4-深入" class="headerlink" title="4.深入"></a>4.深入</h2><p>为什么要使用反码，补码，是因为想让计算机的计算尽量简单，只做加法运算！<br>更多细节可以看下面这个blog,写的很好！<br><a href="http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html" target="_blank" rel="external">http://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html</a></p>
+<h1 id="四-运算方式–与或非等"><a href="#四-运算方式–与或非等" class="headerlink" title="四.运算方式–与或非等"></a>四.运算方式–与或非等</h1><ul>
+<li><p>如果两个输入位都是1，则按位“与”操作符（&amp;）生成一个输出位1，否则是0。（负数要用补码的形式做运算）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">与运算例子：2&amp;-1 （记住-1要用补码运算）</div><div class="line">-1的原码是 10000001</div><div class="line">-1的反码是 11111110</div><div class="line">-1的补码是 11111111</div><div class="line"> 2的原码是 00000010</div><div class="line"> 按位与运算 00000010</div><div class="line"> 结果为2</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果两个输入位只要有一个是1，则按位“或”（|）生成一个输出位1，只有两个输入位都是0的情况，才输出位0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">或运算例子：-2&amp;1 （记住-2要用补码运算）</div><div class="line">-2的原码是 10000010</div><div class="line">-2的反码是 11111101</div><div class="line">-2的补码是 11111110</div><div class="line"> 1的原码是 00000001</div><div class="line"> 按位或运算 11111111</div><div class="line"> 因为计算机里全是用补码表示，所以转换为十进制 减一 取反 为 原码  结果为 -1</div><div class="line"> 也可以这么计算 负数按位取反+1 =负数的绝对值</div></pre></td></tr></table></figure>
+</li>
+<li><p>按位“异或”（^）相同为0不同为1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">或运算例子：-2^1 （记住-2要用补码运算）</div><div class="line">-2的原码是 10000010</div><div class="line">-2的反码是 11111101</div><div class="line">-2的补码是 11111110</div><div class="line"> 1的原码是 00000001</div><div class="line"> 按位^运算 11111111</div><div class="line"> 因为计算机里全是用补码表示，所以转换为十进制 减一 取反 为 原码  结果为 -1</div></pre></td></tr></table></figure>
+</li>
+<li><p>按位“非”（~）也叫取反操作符，属于一元操作符，只对一个操作数操作。若输入0，则输出1，反之亦然。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">或运算例子：~1 </div><div class="line"> 1的原码是 00000001</div><div class="line"> 按位取反  11111110</div><div class="line"> 计算结果  负数按位取反+1 =负数的绝对值   -1</div><div class="line"> 因为计算机里全是用补码表示，所以转换为十进制 减一 取反 为 原码  结果为 -1</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="四-运算方式–移位"><a href="#四-运算方式–移位" class="headerlink" title="四.运算方式–移位"></a>四.运算方式–移位</h1><ul>
+<li><p>左移运算符 &lt;&lt;左移，将左边的操作数的二进制数据向左移动n位，移动后低位补0。（在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &lt;&lt; 2  00010100 </div><div class="line">结果为 5 * 2^2 = 20</div></pre></td></tr></table></figure>
+</li>
+<li><p>右移运算符&gt;&gt; ，二进制数据向右移动n位，如果为正数，则再高位插入0，若为负数，则再高位插入1。（右移一位相当于除2，右移n位相当于除以2的n次方）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">5的二进制 00000101</div><div class="line">5 &gt;&gt; 2  00000001 </div><div class="line">结果为 5/(2^2) 1</div></pre></td></tr></table></figure>
+</li>
+<li><p>无符号的右移运算符&gt;&gt;&gt; ，忽略符号位，无论正负，都在高位插入0.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">运算例子：</div><div class="line">-5 &gt;&gt;&gt; 1</div><div class="line">-5的二进制 10000101</div><div class="line">-5的补码是 11111011</div><div class="line">右移一个则为01111101</div><div class="line">原码为本身（因为是正数）</div><div class="line"> 01111101</div><div class="line">结果为 2147483645</div></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -2674,241 +2914,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/06/JAVA服务端-测试相关-jacoco测试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ashine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ohoyk8evb.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720161205105836.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ashine's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/06/JAVA服务端-测试相关-jacoco测试/" itemprop="url">
-                  jacoco覆盖率测试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-06T12:06:06+08:00">
-                2016-12-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/12/06/JAVA服务端-测试相关-jacoco测试/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/06/JAVA服务端-测试相关-jacoco测试/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1两种方式"><a href="#1两种方式" class="headerlink" title="1两种方式"></a>1两种方式</h1><h2 id="1-1-eclipse直接安装插件测试"><a href="#1-1-eclipse直接安装插件测试" class="headerlink" title="1.1 eclipse直接安装插件测试"></a>1.1 eclipse直接安装插件测试</h2><p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco1.png" alt="image"></p>
-<p><strong>install new soft 安装插件 eclemma java code coverage</strong></p>
-<p>运行<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco2.png" alt="image"></p>
-<p>结果<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco3.png" alt="image"></p>
-<p>插件导出单元测试报告<br><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco4.png" alt="image"></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco5.png" alt="image"></p>
-<h2 id="1-2-通过maven加入插件，打印单元测试报告"><a href="#1-2-通过maven加入插件，打印单元测试报告" class="headerlink" title="1.2 通过maven加入插件，打印单元测试报告"></a>1.2 通过maven加入插件，打印单元测试报告</h2><p><strong>pom.xml文件中加入对应的部分，plugin部分</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">    &lt;groupId&gt;cn.whx&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jacoco-test&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.11&lt;/version&gt;</div><div class="line">            &lt;scope&gt;compile&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line">    &lt;build&gt;</div><div class="line">          &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.jacoco&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;0.7.1.201405082137&lt;/version&gt;</div><div class="line">                &lt;executions&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;prepare-agent&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                    &lt;execution&gt;</div><div class="line">                        &lt;id&gt;report&lt;/id&gt;</div><div class="line">                        &lt;phase&gt;prepare-package&lt;/phase&gt;</div><div class="line">                        &lt;goals&gt;</div><div class="line">                            &lt;goal&gt;report&lt;/goal&gt;</div><div class="line">                        &lt;/goals&gt;</div><div class="line">                    &lt;/execution&gt;</div><div class="line">                &lt;/executions&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<p><strong>maven clean package 即可有报告 在target文件中 site index.html</strong></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco6.png" alt="image"></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco7.png" alt="image"></p>
-<p>结果</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco8.png" alt="image"></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco9.png" alt="image"></p>
-<p><strong>注：有时候你会发现会爆出这个问题Skipping JaCoCo execution due to missing execution data file，大多数原因是因为没有编译测试类，可以使用 clean package -Dmaven.test.skip=false</strong></p>
-<h1 id="2-关于检测指标"><a href="#2-关于检测指标" class="headerlink" title="2.关于检测指标"></a>2.关于检测指标</h1><p>（可大概理解其意思，英文网址附上）<br><a href="http://note.youdao.com/" target="_blank" rel="external">http://www.eclemma.org/jacoco/trunk/doc/counters.html</a></p>
-<p><strong>Instructions (C0 Coverage)</strong></p>
-<ul>
-<li>主要是计算字节码文件的覆盖率。</li>
-</ul>
-<p><strong>Branches (C1 Coverage)</strong></p>
-<ul>
-<li>JaCoCo也计算分支覆盖所有if和 switch语句。主要是计算分支的。</li>
-<li>没有覆盖：在该行没有分支机构已执行（红钻）</li>
-<li>部分覆盖：只有在该行分支机构的一部分已经被执行（黄钻）</li>
-<li>全覆盖：在该行各分支机构已执行（绿钻）</li>
-</ul>
-<p><strong>Cyclomatic Complexity </strong></p>
-<ul>
-<li>圈复杂度(Cyclomatic Complexity)是一种代码复杂度的衡量标准。它可以用来衡量一个模块判定结构的复杂程度，数量上表现为独立现行路径条数，也可理解为覆盖所有的可能情况最少使用的测试用例数。圈复杂度大说明程序代码的判断逻辑复杂，可能质量低且难于测试和维护。程序的可能错误和高的圈复杂度有着很大关系。请注意，JaCoCo不考虑异常处理的分支机构try-catch块也不会增加复杂性。总体和分支正相关。实际上，过去几年的各种研究已经确定：一个方法的圈复杂度（或 CC）大于 10 的方法存在很大的出错风险。</li>
-<li><p>关于圈复杂度的理解，可以看以下链接。</p>
-</li>
-<li><p><a href="http://note.youdao.com/" target="_blank" rel="external">http://blog.csdn.net/lg707415323/article/details/7790660 </a></p>
-</li>
-<li><p><a href="http://note.youdao.com/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-cq03316/</a></p>
-</li>
-<li><p>以及一个图</p>
-</li>
-</ul>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco10.png" alt="image"></p>
-<p><strong>Lines</strong></p>
-<ul>
-<li>主要计算基于覆盖的实际源代码行类和源文件行覆盖。通常会标识三种状态。</li>
-<li>没有覆盖：在该行任何指令执行（红色背景）</li>
-<li>部分覆盖：只有在该行的指示的一部分已经被执行（黄色背景）</li>
-<li>全覆盖：在该行的所有指令已执行（绿色背景）</li>
-</ul>
-<p><strong>Methods</strong></p>
-<ul>
-<li>每个非抽象方法包含至少一个指令。构造函数和静态初始化都算作方法。</li>
-</ul>
-<h1 id="4-完整例子"><a href="#4-完整例子" class="headerlink" title="4.完整例子"></a>4.完整例子</h1><p><strong>先贴上代码<br>被测试类：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">package utils;</div><div class="line"></div><div class="line">import java.math.BigDecimal;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 安全转换钱的单位</div><div class="line"> * </div><div class="line"> * @author rutine</div><div class="line"> * @time Apr 28, 2015 3:52:18 PM</div><div class="line"> */</div><div class="line">public class MoneyUtil &#123;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * &lt;pre&gt;</div><div class="line">     * 功能说明 : 安全转换double类型, 将单位元的钱转为分</div><div class="line">     *     如: 19.9(元), 最终结果: 1990(分)</div><div class="line">     * &lt;/pre&gt;</div><div class="line">     * </div><div class="line">     * @param money 金额(元)</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static int getFenMoney(String money) &#123;</div><div class="line">        BigDecimal hundred = new BigDecimal(100);</div><div class="line">        BigDecimal decimalMoney = new BigDecimal(money);</div><div class="line">        return decimalMoney.multiply(hundred).intValue();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 功能说明 : 获取单价, 保留小数点两位数</div><div class="line">     * </div><div class="line">     * @param money 总金额(元)</div><div class="line">     * @param quantity 数量</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static double getUnitMoney(String money, int quantity) &#123;</div><div class="line">        if (&quot;50&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch1&quot;);</div><div class="line">        &#125;else if (&quot;60&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch2&quot;);</div><div class="line">        &#125;else if (&quot;70&quot;.equals(money)) &#123;</div><div class="line">            System.out.println(&quot;branch3&quot;);</div><div class="line">        &#125;else &#123;</div><div class="line">            System.out.println(&quot;other branch&quot;);</div><div class="line">        &#125;</div><div class="line">        BigDecimal decimalMoney = new BigDecimal(money);</div><div class="line">        BigDecimal unitMoney = decimalMoney.divide(new BigDecimal(quantity), 2, BigDecimal.ROUND_HALF_UP);</div><div class="line"></div><div class="line">        return unitMoney.doubleValue();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>测试类：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line">import org.junit.Test;</div><div class="line"></div><div class="line">import utils.MoneyUtil;</div><div class="line"></div><div class="line">public class TestMoney &#123;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void testGetUnitMoney()&#123;</div><div class="line">        MoneyUtil.getUnitMoney(&quot;50&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;60&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;70&quot;, 2);</div><div class="line">        MoneyUtil.getUnitMoney(&quot;75&quot;, 2);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>测试结果，指标分析</strong></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco11.png" alt="image"></p>
-<p>这一项指标instructions，指的是字节码文件的行数。18/62的意思是  18为未执行的指令行数，62为总指令行数。</p>
-<p> <img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco12.png" alt="image"></p>
-<p> <img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco13.png" alt="image"></p>
-<p>这一项指标branches，指的是分支的覆盖情况。0/6中0为未执行的分支行数，6为总分支行数。这里else不会计入到分支行数中。但是如果你不写else,则覆盖率不会为100%。</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco14.png" alt="image"></p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco15.png" alt="image"></p>
-<p>这一项指标，为圈复杂度。missed 为未测试的数量，cxty为总数。</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco16.png" alt="image"></p>
-<p>我们来看看这个圈复杂度为啥是4</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco17.png" alt="image"></p>
-<p>简单的画个控制流图</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco18.png" alt="image"></p>
-<p>v=e-n+2   8条边 - 6个节点 + 2 = 4</p>
-<p>这一项指标，为行的覆盖情况。missed 为未测试的数量，lines为总数。</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco19.png" alt="image"></p>
-<p>同样的，看看这个例子</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco20.png" alt="image"></p>
-<p>正好是10行。未检测的是0行。</p>
-<p>这一项指标，为方法的覆盖情况。missed 为未测试的数量，methods为总数。</p>
-<p><img src="http://ohoyqlwj0.bkt.clouddn.com/jacoco21.png" alt="image"></p>
-<p>最后，请注意，覆盖率达到100%，不代表你的程序就ok了！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2953,7 +2963,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2964,7 +2974,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2975,7 +2985,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
